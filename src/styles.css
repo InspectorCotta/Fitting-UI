@@ -2008,7 +2008,7 @@ a {
   overflow-y: auto;
   border: 1px solid #343941;
   border-radius: 12px;
-  background: #0b0d11;
+  background: var(--canvas);
   box-shadow: 0 30px 160px #000;
   z-index: 80;
   padding: 28px;
