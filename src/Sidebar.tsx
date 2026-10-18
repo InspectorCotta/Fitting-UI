@@ -58,21 +58,35 @@ export function Sidebar({
   const [menu, setMenu] = useState<null | 'notifications' | 'profile'>(null);
   const [readExperiment, setReadExperiment] = useState<string | null>(null);
   const root = useRef<HTMLElement>(null);
+  const notificationsTrigger = useRef<HTMLButtonElement>(null);
+  const profileTrigger = useRef<HTMLButtonElement>(null);
   useEffect(() => setMenu(null), [workspace]);
   useEffect(() => {
+    if (!menu) return;
+    const trigger =
+      menu === 'notifications' ? notificationsTrigger.current : profileTrigger.current;
+    const anchor = trigger?.closest('.dropdown-anchor');
     const outside = (event: PointerEvent) => {
-      if (!root.current?.contains(event.target as Node)) setMenu(null);
+      if (!anchor?.contains(event.target as Node)) setMenu(null);
     };
     const escape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMenu(null);
+      if (event.key === 'Escape') {
+        setMenu(null);
+        trigger?.focus();
+      }
+    };
+    const blur = (event: FocusEvent) => {
+      if (!anchor?.contains(event.target as Node)) setMenu(null);
     };
     document.addEventListener('pointerdown', outside);
     document.addEventListener('keydown', escape);
+    document.addEventListener('focusin', blur);
     return () => {
       document.removeEventListener('pointerdown', outside);
       document.removeEventListener('keydown', escape);
+      document.removeEventListener('focusin', blur);
     };
-  }, []);
+  }, [menu]);
   function navigate(destination: Workspace) {
     setMenu(null);
     onNavigate(destination);
@@ -133,6 +147,7 @@ export function Sidebar({
           <button
             className="sidebar-button"
             aria-label="Notifications"
+            ref={notificationsTrigger}
             title="Notifications"
             aria-expanded={menu === 'notifications'}
             aria-controls={menu === 'notifications' ? 'sidebar-notifications' : undefined}
@@ -143,7 +158,10 @@ export function Sidebar({
             <span className="sidebar-tooltip">Notifications</span>
           </button>
           {menu === 'notifications' && (
-            <div className="dropdown notification-menu sidebar-popover" id="sidebar-notifications">
+            <div
+              className="menu-surface dropdown notification-menu sidebar-popover"
+              id="sidebar-notifications"
+            >
               <div className="dropdown-title">
                 <strong>Activity</strong>
                 <button
@@ -200,6 +218,7 @@ export function Sidebar({
           <button
             className="sidebar-button sidebar-profile"
             aria-label="John Doe account"
+            ref={profileTrigger}
             title="John Doe · account"
             aria-expanded={menu === 'profile'}
             aria-controls={menu === 'profile' ? 'sidebar-account' : undefined}
@@ -209,7 +228,10 @@ export function Sidebar({
             <span className="sidebar-tooltip">John Doe</span>
           </button>
           {menu === 'profile' && (
-            <div className="dropdown profile-menu sidebar-popover" id="sidebar-account">
+            <div
+              className="menu-surface dropdown profile-menu sidebar-popover"
+              id="sidebar-account"
+            >
               <strong>John Doe</strong>
               <small>Modeling team · local workspace</small>
               <button

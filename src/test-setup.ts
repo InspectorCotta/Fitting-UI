@@ -1,5 +1,11 @@
 import '@testing-library/jest-dom/vitest';
 import { vi } from 'vitest';
+// Browser APIs used by the accessible select's pointer and focus management.
+window.PointerEvent = MouseEvent as typeof PointerEvent;
+HTMLElement.prototype.hasPointerCapture = () => false;
+HTMLElement.prototype.setPointerCapture = () => {};
+HTMLElement.prototype.releasePointerCapture = () => {};
+HTMLElement.prototype.scrollIntoView = () => {};
 // Exercise our data, lifecycle and interactions without a browser rendering engine.
 vi.mock('./plotly', () => {
   const api = {

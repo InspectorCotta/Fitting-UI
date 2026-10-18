@@ -1,3 +1,4 @@
+import { chooseOption } from './test-select';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -12,6 +13,22 @@ afterEach(() => {
   vi.useRealTimers();
 });
 describe('MOSFit workbench', () => {
+  it('dismisses workspace menus consistently and returns keyboard focus to their triggers', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    for (const name of ['Notifications', 'John Doe account', 'More']) {
+      const trigger = screen.getByRole('button', { name });
+      await user.click(trigger);
+      expect(trigger).toHaveAttribute('aria-expanded', 'true');
+      await user.tab();
+      await user.keyboard('{Escape}');
+      expect(trigger).toHaveAttribute('aria-expanded', 'false');
+      expect(trigger).toHaveFocus();
+      await user.click(trigger);
+      await user.click(screen.getByRole('tab', { name: 'Notes' }));
+      expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    }
+  });
   it('opens all project sections and global workspaces', async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -123,10 +140,10 @@ describe('MOSFit workbench', () => {
     expect(bias).toHaveAttribute('aria-pressed', 'false');
     await user.click(bias);
     expect(bias).toHaveAttribute('aria-pressed', 'true');
-    await user.selectOptions(screen.getByRole('combobox', { name: 'Chart scale' }), 'linear');
-    expect(screen.getByRole('combobox', { name: 'Chart scale' })).toHaveValue('linear');
+    await chooseOption(user, screen.getByRole('combobox', { name: 'Chart scale' }), 'Linear scale');
+    expect(screen.getByRole('combobox', { name: 'Chart scale' })).toHaveTextContent('Linear scale');
     await user.click(screen.getByRole('button', { name: 'Reset chart' }));
-    expect(screen.getByRole('combobox', { name: 'Chart scale' })).toHaveValue('log');
+    expect(screen.getByRole('combobox', { name: 'Chart scale' })).toHaveTextContent('Log scale');
   });
   it('consolidates workspace navigation and tools in the sidebar', async () => {
     const user = userEvent.setup();

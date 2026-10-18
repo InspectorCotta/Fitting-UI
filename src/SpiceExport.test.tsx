@@ -1,3 +1,4 @@
+import { chooseOption } from './test-select';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
@@ -123,7 +124,11 @@ it('invalidates old results when export settings or datasets change and supports
   const { rerender } = render(<SpiceExport {...props} />);
   await advance();
   await user.click(screen.getByRole('checkbox', { name: /Compare automatically/ }));
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Numeric precision' }), '6');
+  await chooseOption(
+    user,
+    screen.getByRole('combobox', { name: 'Numeric precision' }),
+    '6 significant digits',
+  );
   expect(screen.getByRole('status')).toHaveTextContent('Comparison pending');
   expect(screen.getByRole('button', { name: 'Download .lib' })).toBeDisabled();
   await user.click(screen.getByRole('button', { name: 'Run comparison' }));

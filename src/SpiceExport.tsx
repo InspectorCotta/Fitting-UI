@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Check, CheckCheck, Download, FileCode2, Play, RefreshCw, Square, X } from 'lucide-react';
 import { Button } from './components/ui/button';
+import { Select } from './components/ui/select';
 import { SpiceCode } from './SpiceCode';
 import type { SpiceCodeSelection } from './SpiceCode';
 import { CurveChart } from './ScientificChart';
@@ -262,18 +263,21 @@ export function SpiceExport({
           {prepared.error && <p className="spice-field-error">{prepared.error}</p>}
           <label>
             Numeric precision
-            <select
-              value={settings.precision}
-              onChange={(event) =>
-                setSettings((s) => ({ ...s, precision: Number(event.target.value) }))
+            <Select
+              aria-label="Numeric precision"
+              value={String(settings.precision)}
+              onValueChange={(precision) =>
+                setSettings((s) => ({ ...s, precision: Number(precision) }))
               }
-            >
-              {[6, 9, 12].map((n) => (
-                <option key={n} value={n}>
-                  {n} significant digits
-                </option>
-              ))}
-            </select>
+              groups={[
+                {
+                  options: [6, 9, 12].map((n) => ({
+                    value: String(n),
+                    label: `${n} significant digits`,
+                  })),
+                },
+              ]}
+            />
           </label>
           <label className="spice-check-option">
             <input

@@ -45,6 +45,7 @@ import {
 } from 'lucide-react';
 import { Button } from './components/ui/button';
 import { Dialog } from './components/ui/dialog';
+import { Select } from './components/ui/select';
 import { CurveChart } from './Chart';
 import { FitWorkbench } from './FitWorkbench';
 import { WaferArt } from './components/WaferArt';
@@ -117,6 +118,7 @@ export default function App() {
   } = useWorkspaceNavigation();
   const [modal, setModal] = useState<Modal>(null);
   const [menu, setMenu] = useState<null | 'actions'>(null);
+  const actionsTrigger = useRef<HTMLButtonElement>(null);
   const [favorite, setFavorite] = useState(() => readSaved('mosfit:favorite', true));
   const [project, setProject] = useState(() =>
     readSaved('mosfit:project', {
@@ -364,12 +366,29 @@ export default function App() {
     );
   }, [experiments]);
   useEffect(() => {
+    if (!menu) return;
+    const anchor = actionsTrigger.current?.closest('.dropdown-anchor');
     const closeMenu = (event: PointerEvent) => {
-      if (!(event.target as Element).closest('.dropdown-anchor')) setMenu(null);
+      if (!anchor?.contains(event.target as Node)) setMenu(null);
+    };
+    const blur = (event: FocusEvent) => {
+      if (!anchor?.contains(event.target as Node)) setMenu(null);
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenu(null);
+        actionsTrigger.current?.focus();
+      }
     };
     document.addEventListener('pointerdown', closeMenu);
-    return () => document.removeEventListener('pointerdown', closeMenu);
-  }, []);
+    document.addEventListener('focusin', blur);
+    document.addEventListener('keydown', escape);
+    return () => {
+      document.removeEventListener('pointerdown', closeMenu);
+      document.removeEventListener('focusin', blur);
+      document.removeEventListener('keydown', escape);
+    };
+  }, [menu]);
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -1775,13 +1794,16 @@ export default function App() {
               <div className="dropdown-anchor">
                 <Button
                   variant="outline"
+                  aria-expanded={menu === 'actions'}
+                  ref={actionsTrigger}
+                  aria-controls={menu === 'actions' ? 'project-actions' : undefined}
                   onClick={() => setMenu(menu === 'actions' ? null : 'actions')}
                 >
                   <Ellipsis size={16} />
                   <span>More</span>
                 </Button>
                 {menu === 'actions' && (
-                  <div className="dropdown actions-menu">
+                  <div className="menu-surface dropdown actions-menu" id="project-actions">
                     <button onClick={exportProject}>
                       <Download size={15} /> Export workspace
                     </button>
@@ -1951,11 +1973,18 @@ export default function App() {
             <div className="form-grid">
               <label>
                 Algorithm
-                <select value={algorithm} onChange={(e) => setAlgorithm(e.target.value)}>
-                  <option>Levenberg–Marquardt</option>
-                  <option>Differential evolution</option>
-                  <option>Adam</option>
-                </select>
+                <Select
+                  aria-label="Algorithm"
+                  value={algorithm}
+                  onValueChange={setAlgorithm}
+                  groups={[
+                    {
+                      options: ['Levenberg–Marquardt', 'Differential evolution', 'Adam'].map(
+                        (value) => ({ value, label: value }),
+                      ),
+                    },
+                  ]}
+                />
               </label>
               <label>
                 Temperature (K)
@@ -2198,11 +2227,19 @@ export default function App() {
             <div className="form-grid">
               <label>
                 Measurement type
-                <select value={importType} onChange={(e) => setImportType(e.target.value)}>
-                  <option>Transfer</option>
-                  <option>Output</option>
-                  <option>Capacitance</option>
-                </select>
+                <Select
+                  aria-label="Measurement type"
+                  value={importType}
+                  onValueChange={setImportType}
+                  groups={[
+                    {
+                      options: ['Transfer', 'Output', 'Capacitance'].map((value) => ({
+                        value,
+                        label: value,
+                      })),
+                    },
+                  ]}
+                />
               </label>
               <label>
                 Temperature (K)

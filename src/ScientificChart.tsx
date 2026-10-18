@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Download, Expand, Focus, Minus, Plus, RotateCcw } from 'lucide-react';
 import type { PlotMouseEvent } from 'plotly.js';
 import { Button } from './components/ui/button';
+import { Select } from './components/ui/select';
 import { PlotlySurface } from './PlotlySurface';
 import { loadPlotly } from './plotly';
 import { CurveTooltip } from './CurveTooltip';
@@ -174,16 +175,21 @@ export function CurveChart({
           <p>{subtitle || info.subtitle}</p>
         </div>
         <div className="chart-tools">
-          <select
+          <Select
             aria-label="Chart scale"
             value={activeView.scale}
-            onChange={(event) =>
-              update({ scale: event.target.value as ChartView['scale'], yRange: undefined })
+            onValueChange={(scale) =>
+              update({ scale: scale as ChartView['scale'], yRange: undefined })
             }
-          >
-            <option value="log">Log scale</option>
-            <option value="linear">Linear scale</option>
-          </select>
+            groups={[
+              {
+                options: [
+                  { value: 'log', label: 'Log scale' },
+                  { value: 'linear', label: 'Linear scale' },
+                ],
+              },
+            ]}
+          />
           <Button
             variant="outline"
             size="icon"

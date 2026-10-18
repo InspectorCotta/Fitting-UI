@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { Button } from './components/ui/button';
 import { Dialog } from './components/ui/dialog';
+import { Select } from './components/ui/select';
 import { CurveChart } from './Chart';
 import { plotInfo, type ChartView, type PlotKind } from './plotData';
 import {
@@ -176,32 +177,36 @@ export function FitWorkbench({
       <div className="workbench-toolbar">
         <div className="view-picker">
           <label htmlFor="fit-view-preset">View</label>
-          <select
+          <Select
             id="fit-view-preset"
             aria-label="View preset"
             value={selected?.id || ''}
-            onChange={(e) => choosePreset(e.target.value)}
-          >
-            {!selected && <option value="">Custom view</option>}
-            <optgroup label="Built-in views">
-              {builtInPresets.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}
-                  {p.id === selectedId && modified ? ' · modified' : ''}
-                </option>
-              ))}
-            </optgroup>
-            {userPresets.length > 0 && (
-              <optgroup label="Your views">
-                {userPresets.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                    {p.id === selectedId && modified ? ' · modified' : ''}
-                  </option>
-                ))}
-              </optgroup>
-            )}
-          </select>
+            onValueChange={choosePreset}
+            placeholder="Custom view"
+            onOpenChange={(open) => {
+              if (open) setFiltersOpen(false);
+            }}
+            groups={[
+              {
+                label: 'Built-in views',
+                options: builtInPresets.map((p) => ({
+                  value: p.id,
+                  label: p.name + (p.id === selectedId && modified ? ' · modified' : ''),
+                })),
+              },
+              ...(userPresets.length
+                ? [
+                    {
+                      label: 'Your views',
+                      options: userPresets.map((p) => ({
+                        value: p.id,
+                        label: p.name + (p.id === selectedId && modified ? ' · modified' : ''),
+                      })),
+                    },
+                  ]
+                : []),
+            ]}
+          />
           <div
             className="view-plot-filter"
             ref={filterRoot}
@@ -225,7 +230,7 @@ export function FitWorkbench({
             </button>
             {filtersOpen && (
               <div
-                className="plot-filter-panel"
+                className="menu-surface plot-filter-panel"
                 id="visible-plot-filters"
                 role="group"
                 aria-label="Visible plots"

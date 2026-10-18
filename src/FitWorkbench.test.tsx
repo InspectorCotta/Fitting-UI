@@ -1,3 +1,4 @@
+import { chooseOption } from './test-select';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -150,7 +151,7 @@ describe('configurable Plotly workbench', () => {
     const user = userEvent.setup();
     mount();
     const output = within(screen.getByRole('region', { name: 'Output plot panel' }));
-    await user.selectOptions(output.getByRole('combobox', { name: 'Chart scale' }), 'log');
+    await chooseOption(user, output.getByRole('combobox', { name: 'Chart scale' }), 'Log scale');
     await user.click(output.getByRole('button', { name: 'Vgs = 0.4 V' }));
     await user.click(output.getByRole('button', { name: 'Zoom in' }));
     await user.click(screen.getByRole('button', { name: 'Save view' }));
@@ -163,31 +164,38 @@ describe('configurable Plotly workbench', () => {
       hidden: [3],
       xRange: expect.any(Array),
     });
-    await user.selectOptions(
+    await chooseOption(
+      user,
       screen.getByRole('combobox', { name: 'View preset' }),
-      'transfer-detail',
+      'Transfer detail',
     );
     expect(screen.queryByRole('region', { name: 'Output plot panel' })).not.toBeInTheDocument();
-    await user.selectOptions(screen.getByRole('combobox', { name: 'View preset' }), saved.id);
+    await chooseOption(
+      user,
+      screen.getByRole('combobox', { name: 'View preset' }),
+      'DC and caps review',
+    );
     expect(
       within(screen.getByRole('region', { name: 'Output plot panel' })).getByRole('combobox', {
         name: 'Chart scale',
       }),
-    ).toHaveValue('log');
+    ).toHaveTextContent('Log scale');
     await user.click(screen.getByRole('button', { name: '1 column' }));
     await user.click(screen.getByRole('button', { name: 'Save view' }));
     await user.click(screen.getByRole('button', { name: 'Update preset' }));
     expect(JSON.parse(localStorage.getItem(FIT_PRESETS_KEY)!)[0].config.columns).toBe(1);
     cleanup();
     mount();
-    expect(screen.getByRole('combobox', { name: 'View preset' })).toHaveValue(saved.id);
+    expect(screen.getByRole('combobox', { name: 'View preset' })).toHaveTextContent(
+      'DC and caps review',
+    );
     await user.click(screen.getByRole('button', { name: 'Save view' }));
     await user.click(screen.getByRole('button', { name: 'Delete view preset' }));
     expect(JSON.parse(localStorage.getItem(FIT_PRESETS_KEY)!)).toEqual([]);
     expect(screen.getByRole('region', { name: 'Output plot panel' })).toBeInTheDocument();
     cleanup();
     mount();
-    expect(screen.getByRole('combobox', { name: 'View preset' })).toHaveValue('');
+    expect(screen.getByRole('combobox', { name: 'View preset' })).toHaveTextContent('Custom view');
   });
   it('captures native Plotly pan and zoom ranges and expands the chosen plot', async () => {
     const user = userEvent.setup();

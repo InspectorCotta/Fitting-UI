@@ -1,3 +1,4 @@
+import { chooseOption } from './test-select';
 import { StrictMode } from 'react';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -46,7 +47,11 @@ it('resets and changes scales after native zoom in the persisted workbench', asy
   await user.click(chart.querySelector<HTMLButtonElement>('[aria-label="Reset chart"]')!);
   await waitFor(() => expect(graph.layout.xaxis?.range).toEqual([-0.45, 0.8]));
   await waitFor(() => expect(graph.layout.yaxis?.range).toEqual([-11, -3]));
-  await user.selectOptions(chart.querySelector<HTMLSelectElement>('select')!, 'linear');
+  await chooseOption(
+    user,
+    within(chart as HTMLElement).getByRole('combobox', { name: 'Chart scale' }),
+    'Linear scale',
+  );
   await waitFor(() => expect(graph.layout.yaxis?.range).toEqual([0, 0.0004]));
 });
 afterEach(cleanup);
@@ -172,7 +177,7 @@ it('updates the rendered Plotly axes from the toolbar in StrictMode', async () =
   await waitFor(() => expect(graph.layout.xaxis?.range?.[0]).toBeCloseTo(-0.45));
   expect(graph.layout.yaxis?.range?.[0]).toBeCloseTo(-11);
   expect(graph.layout.yaxis?.range?.[1]).toBeCloseTo(-3);
-  await user.selectOptions(screen.getByRole('combobox', { name: 'Chart scale' }), 'linear');
+  await chooseOption(user, screen.getByRole('combobox', { name: 'Chart scale' }), 'Linear scale');
   await waitFor(() => expect(graph.layout.yaxis?.type).toBe('linear'));
   await user.click(screen.getByRole('button', { name: 'Reset chart' }));
   await waitFor(() => expect(graph.layout.xaxis?.range).toEqual([-0.45, 0.8]));
@@ -201,9 +206,9 @@ it('renders toolbar changes for every plot and expands and exports the selected 
     await user.click(panel.getByRole('button', { name: 'Reset chart' }));
     await waitFor(() => expect(graph.layout.yaxis?.range).toEqual(originalY));
     expect(graph.layout.xaxis?.range).toEqual(originalX);
-    await user.selectOptions(panel.getByRole('combobox', { name: 'Chart scale' }), 'log');
+    await chooseOption(user, panel.getByRole('combobox', { name: 'Chart scale' }), 'Log scale');
     await waitFor(() => expect(graph.layout.yaxis?.type).toBe('log'));
-    await user.selectOptions(panel.getByRole('combobox', { name: 'Chart scale' }), 'linear');
+    await chooseOption(user, panel.getByRole('combobox', { name: 'Chart scale' }), 'Linear scale');
     await waitFor(() => expect(graph.layout.yaxis?.type).toBe('linear'));
     await user.click(panel.getByRole('button', { name: 'Expand chart' }));
     expect(screen.getByRole('dialog')).toHaveAccessibleName(new RegExp(`${name} Characteristics`));
