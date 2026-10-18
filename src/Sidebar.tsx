@@ -16,7 +16,7 @@ import {
   Sun,
 } from 'lucide-react';
 import type { Experiment } from './data';
-import { MosfetMark } from './components/MosfetMark';
+import { To220EasterEgg } from './components/To220EasterEgg';
 
 export type Workspace =
   | 'home'
@@ -93,14 +93,7 @@ export function Sidebar({
   }
   return (
     <aside className="sidebar" aria-label="Workspace sidebar" ref={root}>
-      <button
-        className="sidebar-brand"
-        onClick={() => navigate('home')}
-        aria-label="MOSFit Studio home"
-        title="MOSFit Studio · Beta"
-      >
-        <MosfetMark />
-      </button>
+      <To220EasterEgg onHome={() => navigate('home')} />
       <button
         className="sidebar-button sidebar-search"
         aria-label="Search workspace"

@@ -11,6 +11,7 @@ import './menus.css';
 import './fullscreen.css';
 import './interface.css';
 import './fit-comparison.css';
+import './to220-easter-egg.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
