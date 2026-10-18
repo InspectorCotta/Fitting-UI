@@ -1,0 +1,697 @@
+.spice-export {
+  container-type: inline-size;
+  container-name: spice-export;
+}
+.spice-export > .section-heading {
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.spice-engine-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 15px;
+  background: var(--surface, #080a0e);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+}
+.spice-engine-note > svg {
+  color: var(--blue);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.spice-engine-note strong {
+  display: block;
+  font-size: 11px;
+  font-weight: 550;
+  color: var(--text);
+}
+.spice-engine-note span {
+  display: block;
+  font-size: 10px;
+  line-height: 1.7;
+  margin-top: 4px;
+}
+.spice-export-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 16px;
+  align-items: start;
+}
+.spice-source-column {
+  min-width: 0;
+}
+.spice-library {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow: hidden;
+  background: var(--canvas);
+}
+.spice-editor-heading,
+.spice-editor-heading > span,
+.spice-editor-heading > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.spice-editor-heading {
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--panel-bg);
+  border-bottom: 1px solid var(--line);
+}
+.spice-editor-heading > span {
+  min-width: 0;
+  color: var(--text-secondary);
+}
+.spice-editor-heading strong {
+  font:
+    11px Consolas,
+    monospace;
+  overflow-wrap: anywhere;
+}
+.spice-editor-heading .btn {
+  width: 27px;
+  min-height: 27px;
+  padding: 5px;
+}
+.spice-editor-legend,
+.spice-editor-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 13px;
+  color: var(--muted);
+  font-size: 9px;
+}
+.spice-editor-legend > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.spice-editor-legend i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--green) 20%, var(--canvas));
+  border: 1px solid var(--green);
+}
+.spice-editor-footer {
+  border-top: 1px solid var(--line);
+  font-size: 8px;
+}
+.spice-code {
+  height: 464px;
+  overflow: auto;
+  padding: 8px 0 18px;
+  color: var(--text-secondary);
+  background: var(--canvas);
+  font:
+    11px / 22px Consolas,
+    "Cascadia Code",
+    monospace;
+  tab-size: 2;
+  scrollbar-width: thin;
+}
+.spice-code code {
+  font: inherit;
+}
+.spice-code:focus-visible {
+  outline: 1px solid var(--blue);
+  outline-offset: -2px;
+}
+.spice-code-line {
+  display: grid;
+  grid-template-columns: 16px 38px minmax(max-content, 1fr) 70px;
+  width: max-content;
+  min-width: 100%;
+  min-height: 22px;
+  border-left: 2px solid transparent;
+  padding-right: 12px;
+}
+.spice-line-number {
+  color: var(--muted);
+  opacity: 0.55;
+  font-size: 9px;
+  user-select: none;
+  text-align: right;
+  padding-right: 12px;
+}
+.spice-line-source {
+  white-space: pre;
+}
+.spice-line-text {
+  position: relative;
+  white-space: pre;
+}
+.spice-fold-gutter {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.spice-fold-gutter > button {
+  display: grid;
+  place-items: center;
+  width: 15px;
+  height: 22px;
+  color: var(--muted);
+  border-radius: 2px;
+}
+.spice-fold-gutter > button:hover {
+  color: var(--blue);
+  background: var(--selected-bg);
+}
+.spice-fold-gutter > button:focus-visible {
+  outline: 1px solid var(--blue);
+  outline-offset: -1px;
+}
+.spice-scope-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid color-mix(in srgb, var(--blue) 28%, transparent);
+  pointer-events: none;
+}
+.spice-code-line.spice-block-boundary {
+  background: color-mix(in srgb, var(--blue) 4%, var(--canvas));
+  box-shadow: inset 0 1px color-mix(in srgb, var(--blue) 14%, transparent);
+}
+.spice-code-line.spice-block-active {
+  border-left-color: var(--blue);
+  background: color-mix(in srgb, var(--blue) 11%, var(--canvas));
+}
+.spice-block-label {
+  color: var(--blue);
+  font:
+    8px / 22px Inter,
+    "Segoe UI",
+    sans-serif;
+  padding-left: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  user-select: none;
+}
+.spice-fold-summary {
+  display: inline-block;
+  font:
+    9px / 18px Inter,
+    "Segoe UI",
+    sans-serif;
+  margin-left: 14px;
+  padding: 0 6px;
+  color: var(--muted);
+  background: var(--raised-bg);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  user-select: none;
+}
+.spice-structure-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 12px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--panel-bg);
+}
+.spice-structure-bar > button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 0;
+  color: var(--text-secondary);
+  font-size: 10px;
+}
+.spice-structure-bar small {
+  color: var(--muted);
+  font-size: 8px;
+  margin-left: 2px;
+}
+.spice-structure-bar > button:hover {
+  color: var(--blue);
+}
+.spice-structure-bar button[aria-expanded="false"] > svg:last-child {
+  transform: rotate(-90deg);
+}
+.spice-structure-bar .spice-expand-all {
+  font-size: 9px;
+  color: var(--blue);
+}
+.spice-structure-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 150px;
+  overflow: auto;
+  border-bottom: 1px solid var(--line);
+  padding: 5px 0;
+}
+.spice-structure-list[hidden] {
+  display: none;
+}
+.spice-structure-list > button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 12px;
+  text-align: left;
+  min-width: 0;
+}
+.spice-structure-list > button:hover {
+  background: var(--hover-bg);
+}
+.spice-structure-kind {
+  font-size: 7px;
+  letter-spacing: 0.4px;
+  color: var(--blue);
+  min-width: 36px;
+}
+.spice-structure-list strong {
+  font:
+    10px Consolas,
+    monospace;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.spice-structure-list small {
+  margin-left: auto;
+  font-size: 8px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.spice-fitted-marker {
+  visibility: hidden;
+  font:
+    8px / 22px Inter,
+    "Segoe UI",
+    sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--green);
+  padding-left: 7px;
+  user-select: none;
+}
+.spice-code.highlight-fitted .spice-code-line[data-fitted] {
+  background: color-mix(in srgb, var(--green) 8%, var(--canvas));
+  border-left-color: var(--green);
+}
+.highlight-fitted .spice-fitted-marker {
+  visibility: visible;
+}
+.spice-token-comment {
+  color: var(--muted);
+  opacity: 0.8;
+}
+.spice-token-directive {
+  color: var(--curve-2);
+}
+.spice-token-number {
+  color: var(--curve-3);
+}
+.spice-token-identifier {
+  color: var(--blue);
+}
+.spice-source-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 30px;
+  height: 540px;
+  color: var(--muted);
+  text-align: center;
+}
+.spice-source-error strong {
+  font-size: 15px;
+  color: var(--text);
+}
+.spice-source-error p {
+  font-size: 11px;
+  line-height: 1.7;
+  max-width: 340px;
+}
+.spice-settings {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 19px 16px;
+}
+.spice-settings h3 {
+  font-size: 12px;
+  font-weight: 550;
+}
+.spice-settings > label:not(.spice-check-option) {
+  display: block;
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin-top: 20px;
+}
+.spice-settings input:not([type="checkbox"]),
+.spice-settings select {
+  display: block;
+  width: 100%;
+  padding: 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  background: var(--canvas);
+  color: var(--text);
+  font-size: 11px;
+  margin-top: 8px;
+}
+.spice-settings input[aria-invalid="true"] {
+  border-color: var(--error-text);
+}
+.spice-field-error {
+  font-size: 10px;
+  line-height: 1.6;
+  margin-top: 7px;
+  color: var(--error-text);
+}
+.spice-check-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 10px;
+  line-height: 1.5;
+  margin-top: 17px;
+  color: var(--text-secondary);
+}
+.spice-check-option input {
+  accent-color: var(--green);
+  margin-top: 1px;
+}
+.spice-check-option small {
+  display: block;
+  color: var(--muted);
+  margin-top: 4px;
+  font-size: 9px;
+}
+.spice-fitted-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.spice-fitted-heading > span {
+  font-size: 8px;
+  color: var(--muted);
+}
+.spice-parameter-list {
+  margin-top: 6px;
+}
+.spice-parameter-list > button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.spice-parameter-list > button > span:last-child {
+  text-align: right;
+  color: var(--green);
+  font-size: 11px;
+}
+.spice-parameter-list strong {
+  font:
+    11px Consolas,
+    monospace;
+  color: var(--text);
+}
+.spice-parameter-list small {
+  display: block;
+  color: var(--muted);
+  font-size: 8px;
+  margin-top: 4px;
+}
+.spice-parameter-list button:hover strong {
+  color: var(--green);
+}
+.spice-settings-foot {
+  font-size: 9px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-top: 14px;
+}
+.spice-verification {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  min-width: 0;
+}
+.spice-verification-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.spice-verification-heading h3 {
+  font-size: 13px;
+  font-weight: 550;
+}
+.spice-verification-heading p {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 7px;
+  line-height: 1.7;
+}
+.spice-run-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 18px 18px 12px;
+  color: var(--green);
+}
+.spice-run-status strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+.spice-run-status small {
+  font-size: 9px;
+  color: var(--muted);
+}
+.spice-run-status > span:last-child {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 9px;
+}
+.spice-run-status.needs-review {
+  color: var(--curve-3);
+}
+.spice-spinner {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--line-strong);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+.spice-run-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px 25px;
+  list-style: none;
+  margin: 4px 18px 20px;
+  padding: 0;
+}
+.spice-run-steps > li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 9px;
+}
+.spice-run-steps > li > span {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  font-size: 8px;
+}
+.spice-run-steps > .done {
+  color: var(--green);
+}
+.spice-run-steps > .done > span {
+  border-color: color-mix(in srgb, var(--green) 45%, transparent);
+  background: var(--success-bg);
+}
+.spice-run-steps > .active {
+  color: var(--text);
+}
+.spice-run-steps > .active > span {
+  border-color: var(--green);
+}
+.spice-validation-error {
+  margin: 0 18px 20px;
+  padding: 12px;
+  background: var(--error-bg);
+  border-radius: 4px;
+  color: var(--error-text);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.spice-comparison-summary {
+  overflow-x: auto;
+  padding: 0 18px 18px;
+}
+.spice-comparison-summary table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  text-align: left;
+}
+.spice-comparison-summary th {
+  padding: 10px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--surface, #0b0c10);
+}
+.spice-comparison-summary td {
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+.spice-comparison-summary td small {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+  margin-top: 5px;
+}
+.spice-comparison-summary td button {
+  text-align: left;
+}
+.spice-comparison-summary td button:hover {
+  color: var(--blue);
+}
+.spice-comparison-summary p {
+  margin-top: 10px;
+  font-size: 9px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.spice-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  white-space: nowrap;
+}
+.spice-result.pass {
+  color: var(--green);
+}
+.spice-result.review,
+.spice-comparison-summary .outside-target {
+  color: var(--curve-3);
+}
+.spice-validation-plot {
+  border-top: 1px solid var(--line);
+}
+.spice-plot-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--line);
+}
+.spice-plot-tabs > button {
+  padding: 13px 10px;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-size: 10px;
+}
+.spice-plot-tabs > button[aria-selected="true"] {
+  color: var(--text);
+  border-bottom-color: var(--blue);
+}
+.spice-plot-tabs > span {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 9px;
+}
+.spice-coverage-note {
+  padding: 14px 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.7;
+}
+.spice-coverage-note a {
+  color: var(--blue);
+  margin-left: 4px;
+}
+.dialog-wide > .spice-document .spice-code {
+  height: min(70dvh, 760px);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.spice-export button:focus-visible,
+.spice-export input:focus-visible,
+.spice-export select:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+@container spice-export (max-width: 800px) {
+  .spice-export-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .spice-settings {
+    order: -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+  .spice-settings > h3,
+  .spice-fitted-heading,
+  .spice-parameter-list,
+  .spice-settings-foot,
+  .spice-field-error {
+    grid-column: 1 / -1;
+  }
+  .spice-parameter-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 24px;
+  }
+  .spice-code {
+    height: 400px;
+  }
+}
+@container spice-export (max-width: 480px) {
+  .spice-settings {
+    display: block;
+  }
+  .spice-parameter-list {
+    display: block;
+  }
+  .spice-plot-tabs > span {
+    display: none;
+  }
+  .spice-run-status {
+    flex-wrap: wrap;
+  }
+  .spice-run-status > span:last-child {
+    width: 100%;
+    margin-left: 26px;
+  }
+  .spice-editor-legend > span:last-child {
+    font-size: 8px;
+  }
+}

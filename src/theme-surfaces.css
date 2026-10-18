@@ -1,0 +1,289 @@
+/* Light equivalents of the original neutral surfaces and typography. */
+:root[data-theme="white"] ::selection,
+:root[data-theme="white"] .notification-check,
+:root[data-theme="white"] .toast,
+:root[data-theme="white"] .toast > span,
+:root[data-theme="white"] .running-icon,
+:root[data-theme="white"] .progress-track,
+:root[data-theme="white"] .checkbox-label:has(input:checked) {
+  background: var(--success-bg);
+}
+:root[data-theme="white"] ::selection,
+:root[data-theme="white"] .btn-outline,
+:root[data-theme="white"] .btn-ghost:hover,
+:root[data-theme="white"] .breadcrumb,
+:root[data-theme="white"] .breadcrumb button:hover,
+:root[data-theme="white"] .project-title h1,
+:root[data-theme="white"] .favorite.is-favorite,
+:root[data-theme="white"] .project-tabs > button:hover,
+:root[data-theme="white"] .project-tabs > button.active,
+:root[data-theme="white"] .compact-details dd,
+:root[data-theme="white"] .recommendation:hover strong,
+:root[data-theme="white"] .chart-tools select,
+:root[data-theme="white"] .chart-legend > button:hover,
+:root[data-theme="white"] .dropdown button,
+:root[data-theme="white"] .dropdown button:hover,
+:root[data-theme="white"] .toast,
+:root[data-theme="white"] .segmented button.selected,
+:root[data-theme="white"] .segmented button:hover,
+:root[data-theme="white"] .parameter-row output,
+:root[data-theme="white"] .inline-callout strong,
+:root[data-theme="white"] .notes-toolbar > span:first-child,
+:root[data-theme="white"] .dialog-content input:not([type="checkbox"]):not([type="file"]),
+:root[data-theme="white"] .dialog-content textarea,
+:root[data-theme="white"] .dialog-content select,
+:root[data-theme="white"] .checkbox-label strong,
+:root[data-theme="white"] .upload-zone > strong,
+:root[data-theme="white"] .empty-state h3 {
+  color: var(--text);
+}
+:root[data-theme="white"] ::-webkit-scrollbar-track,
+:root[data-theme="white"] .btn-outline,
+:root[data-theme="white"] .avatar-main,
+:root[data-theme="white"] .panel,
+:root[data-theme="white"] .project-tabs,
+:root[data-theme="white"] .chart-tools select,
+:root[data-theme="white"] .inspector,
+:root[data-theme="white"] .dialog-overlay,
+:root[data-theme="white"] .dialog-content input:not([type="checkbox"]):not([type="file"]),
+:root[data-theme="white"] .dialog-content textarea,
+:root[data-theme="white"] .dialog-content select {
+  background: var(--panel-bg);
+}
+:root[data-theme="white"] ::-webkit-scrollbar-thumb,
+:root[data-theme="white"] .btn-secondary,
+:root[data-theme="white"] .tag,
+:root[data-theme="white"] .avatar,
+:root[data-theme="white"] .meta-icon,
+:root[data-theme="white"] .legend-line,
+:root[data-theme="white"] .legend-divider,
+:root[data-theme="white"] .results-panel th,
+:root[data-theme="white"] .sensitivity > i,
+:root[data-theme="white"] .dropdown,
+:root[data-theme="white"] .segmented,
+:root[data-theme="white"] .data-table th,
+:root[data-theme="white"] .dialog-content,
+:root[data-theme="white"] .form-note,
+:root[data-theme="white"] .upload-zone,
+:root[data-theme="white"] .command-search,
+:root[data-theme="white"] .command-results > button > span,
+:root[data-theme="white"] .shortcuts kbd {
+  background: var(--raised-bg);
+}
+:root[data-theme="white"] .link-button,
+:root[data-theme="white"] .link-button:hover,
+:root[data-theme="white"] .dropdown-title .link-button {
+  color: var(--blue);
+}
+:root[data-theme="white"] .btn-outline,
+:root[data-theme="white"] .btn-secondary,
+:root[data-theme="white"] .summary-panel:has(.stretch-link):hover,
+:root[data-theme="white"] .chart-tools .btn,
+:root[data-theme="white"] .checkbox-label:has(input:checked),
+:root[data-theme="white"] .command-results > button:hover,
+:root[data-theme="white"] .command-results > button:focus-visible {
+  border-color: var(--line);
+}
+:root[data-theme="white"] .btn-outline:hover,
+:root[data-theme="white"] .btn-ghost:hover,
+:root[data-theme="white"] .project-metadata button:hover .meta-icon,
+:root[data-theme="white"] .project-tabs > button:hover,
+:root[data-theme="white"] .summary-panel:has(.stretch-link):hover,
+:root[data-theme="white"] .dataset-mini button:hover,
+:root[data-theme="white"] .dropdown button:hover,
+:root[data-theme="white"] .data-table tbody tr:hover,
+:root[data-theme="white"] .project-card:hover,
+:root[data-theme="white"] .upload-zone:hover,
+:root[data-theme="white"] .command-results > button:hover,
+:root[data-theme="white"] .command-results > button:focus-visible {
+  background: var(--hover-bg);
+}
+:root[data-theme="white"] .btn-outline:hover,
+:root[data-theme="white"] .avatar-main,
+:root[data-theme="white"] .project-metadata button:hover .meta-icon,
+:root[data-theme="white"] .project-card:hover,
+:root[data-theme="white"] .upload-zone:hover {
+  border-color: var(--line-strong);
+}
+:root[data-theme="white"] .btn-ghost,
+:root[data-theme="white"] .beta,
+:root[data-theme="white"] .breadcrumb button,
+:root[data-theme="white"] .favorite:hover,
+:root[data-theme="white"] .project-description,
+:root[data-theme="white"] .meta-icon,
+:root[data-theme="white"] .project-tabs > button,
+:root[data-theme="white"] .metrics span,
+:root[data-theme="white"] .compact-details dt,
+:root[data-theme="white"] .dataset-mini button > small,
+:root[data-theme="white"] .recommendation small,
+:root[data-theme="white"] .recommendation > svg,
+:root[data-theme="white"] .results-panel h4 span,
+:root[data-theme="white"] .results-panel th,
+:root[data-theme="white"] .project-details dt,
+:root[data-theme="white"] .project-details dd,
+:root[data-theme="white"] .sharing-people > span,
+:root[data-theme="white"] .notification-menu small,
+:root[data-theme="white"] .segmented button,
+:root[data-theme="white"] .preview-label,
+:root[data-theme="white"] .convergence-bottom,
+:root[data-theme="white"] .parameter-hint,
+:root[data-theme="white"] .inline-callout,
+:root[data-theme="white"] .matrix-label,
+:root[data-theme="white"] .notes-panel textarea,
+:root[data-theme="white"] .project-card > svg,
+:root[data-theme="white"] .dialog-description,
+:root[data-theme="white"] .dialog-content form > label,
+:root[data-theme="white"] .form-grid > label,
+:root[data-theme="white"] .dialog-content legend,
+:root[data-theme="white"] .upload-zone > svg,
+:root[data-theme="white"] .command-search,
+:root[data-theme="white"] .command-results > button > span,
+:root[data-theme="white"] .shortcuts h4,
+:root[data-theme="white"] .shortcuts kbd {
+  color: var(--text-secondary);
+}
+:root[data-theme="white"] .tag,
+:root[data-theme="white"] .avatar,
+:root[data-theme="white"] .beta,
+:root[data-theme="white"] .meta-icon,
+:root[data-theme="white"] .step-number,
+:root[data-theme="white"] .chart-tools select,
+:root[data-theme="white"] .results-panel table,
+:root[data-theme="white"] .workspace-footer kbd,
+:root[data-theme="white"] .inspector-section,
+:root[data-theme="white"] .device-image,
+:root[data-theme="white"] .dropdown,
+:root[data-theme="white"] .toast,
+:root[data-theme="white"] .segmented,
+:root[data-theme="white"] .inline-callout,
+:root[data-theme="white"] .dialog-content,
+:root[data-theme="white"] .dialog-content input:not([type="checkbox"]):not([type="file"]),
+:root[data-theme="white"] .dialog-content textarea,
+:root[data-theme="white"] .dialog-content select,
+:root[data-theme="white"] .checkbox-label,
+:root[data-theme="white"] .form-error,
+:root[data-theme="white"] .command-search kbd,
+:root[data-theme="white"] .command-results > button > span,
+:root[data-theme="white"] .shortcuts kbd {
+  border-color: var(--line);
+}
+:root[data-theme="white"] .breadcrumb svg,
+:root[data-theme="white"] .favorite,
+:root[data-theme="white"] .metric-caption,
+:root[data-theme="white"] .experiment-status,
+:root[data-theme="white"] .chart-legend .legend-reset,
+:root[data-theme="white"] .chart-foot,
+:root[data-theme="white"] .chart-foot b,
+:root[data-theme="white"] .results-subtitle button,
+:root[data-theme="white"] .workspace-footer,
+:root[data-theme="white"] .workspace-footer svg,
+:root[data-theme="white"] .footer-divider,
+:root[data-theme="white"] .inspector-bottom,
+:root[data-theme="white"] .notification-menu em,
+:root[data-theme="white"] .notification-footer,
+:root[data-theme="white"] .profile-menu > small,
+:root[data-theme="white"] .eyebrow,
+:root[data-theme="white"] .filter-bar > span,
+:root[data-theme="white"] .data-table th,
+:root[data-theme="white"] .dataset-name small,
+:root[data-theme="white"] .parameter-row > div:first-child > span,
+:root[data-theme="white"] .parameter-row output small,
+:root[data-theme="white"] .range-bounds,
+:root[data-theme="white"] .parameter-hint p,
+:root[data-theme="white"] .trend-panel h3 small,
+:root[data-theme="white"] .trend-foot,
+:root[data-theme="white"] .inline-callout p,
+:root[data-theme="white"] .matrix-scale,
+:root[data-theme="white"] .correlation-detail h2 > span,
+:root[data-theme="white"] .correlation-number small,
+:root[data-theme="white"] .notes-toolbar,
+:root[data-theme="white"] .notes-footer,
+:root[data-theme="white"] .project-card > div > span:last-child,
+:root[data-theme="white"] .project-card b,
+:root[data-theme="white"] .model-facts small,
+:root[data-theme="white"] .compute-stats small,
+:root[data-theme="white"] .dialog-close,
+:root[data-theme="white"] .checkbox-label small,
+:root[data-theme="white"] .form-note,
+:root[data-theme="white"] .form-note svg,
+:root[data-theme="white"] .team-list small,
+:root[data-theme="white"] .upload-zone > span,
+:root[data-theme="white"] .command-search kbd,
+:root[data-theme="white"] .command-results small,
+:root[data-theme="white"] .command-results > button > svg,
+:root[data-theme="white"] .command-footer,
+:root[data-theme="white"] .empty-state,
+:root[data-theme="white"] .settings-row p,
+:root[data-theme="white"] .shortcuts > span {
+  color: var(--muted);
+}
+:root[data-theme="white"] .mini-spark,
+:root[data-theme="white"] .toast > button,
+:root[data-theme="white"] .filter-bar > span svg,
+:root[data-theme="white"] .run-log,
+:root[data-theme="white"] .correlation-number,
+:root[data-theme="white"] .saved-label {
+  color: var(--green);
+}
+:root[data-theme="white"] .metrics,
+:root[data-theme="white"] .metric-caption,
+:root[data-theme="white"] .dataset-mini button,
+:root[data-theme="white"] .chart-foot,
+:root[data-theme="white"] .inspector-bottom,
+:root[data-theme="white"] .notification-footer,
+:root[data-theme="white"] .convergence-bottom,
+:root[data-theme="white"] .fit-info,
+:root[data-theme="white"] .notes-footer,
+:root[data-theme="white"] .dialog-footer,
+:root[data-theme="white"] .command-footer {
+  border-top-color: var(--line);
+}
+:root[data-theme="white"] .metrics > div,
+:root[data-theme="white"] .results-panel,
+:root[data-theme="white"] .results-panel td + td,
+:root[data-theme="white"] .inspector,
+:root[data-theme="white"] .fit-note {
+  border-left-color: var(--line);
+}
+:root[data-theme="white"] .legend-circle,
+:root[data-theme="white"] .avatar-stack .avatar:first-child,
+:root[data-theme="white"] .running-icon,
+:root[data-theme="white"] .command-search {
+  border-color: var(--line-strong);
+}
+:root[data-theme="white"] .results-panel th,
+:root[data-theme="white"] .results-panel td,
+:root[data-theme="white"] .dropdown-title,
+:root[data-theme="white"] .profile-menu > small,
+:root[data-theme="white"] .data-table th,
+:root[data-theme="white"] .data-table td,
+:root[data-theme="white"] .preview-label,
+:root[data-theme="white"] .panel-heading,
+:root[data-theme="white"] .parameter-row,
+:root[data-theme="white"] .notes-toolbar,
+:root[data-theme="white"] .team-list > div,
+:root[data-theme="white"] .settings-row {
+  border-bottom-color: var(--line);
+}
+:root[data-theme="white"] .avatar-stack .avatar {
+  border-color: var(--line);
+}
+:root[data-theme="white"] .segmented button.selected,
+:root[data-theme="white"] .data-table .selected-row {
+  background: var(--selected-bg);
+}
+:root[data-theme="white"] .dialog-content input[readonly] {
+  color: var(--muted) !important;
+}
+:root[data-theme="white"] .dialog-content input[readonly] {
+  background: var(--raised-bg) !important;
+}
+:root[data-theme="white"] .upload-zone {
+  border-color: var(--line-strong);
+}
+:root[data-theme="white"] .form-error {
+  color: var(--error-text);
+}
+:root[data-theme="white"] .form-error {
+  background: var(--error-bg);
+}
