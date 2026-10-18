@@ -2044,26 +2044,26 @@ a {
   display: block;
   font-size: 10px;
   font-weight: 500;
-  color: #a8b2c3;
+  color: var(--text-secondary);
   margin-bottom: 18px;
 }
 .dialog-content input:not([type="checkbox"]):not([type="file"]),
 .dialog-content textarea,
 .dialog-content select {
   display: block;
-  border: 1px solid #2d333e;
+  border: 1px solid var(--line);
   border-radius: 5px;
-  background: #06080c;
-  color: #d9e1ee;
-  padding: 10px 11px;
+  background: var(--panel-bg);
+  color: var(--text-secondary);
+  padding: 9px 11px;
   width: 100%;
   margin-top: 8px;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.4;
 }
 .dialog-content input[readonly] {
-  color: #65758e !important;
-  background: #0b0e14 !important;
+  color: var(--muted) !important;
+  background: var(--raised-bg) !important;
 }
 .form-grid {
   display: grid;
@@ -2073,7 +2073,7 @@ a {
 }
 .form-grid > label {
   font-size: 10px;
-  color: #a8b2c3;
+  color: var(--text-secondary);
 }
 .dialog-footer {
   display: flex;

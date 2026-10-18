@@ -29,9 +29,6 @@
 :root[data-theme="white"] .parameter-row output,
 :root[data-theme="white"] .inline-callout strong,
 :root[data-theme="white"] .notes-toolbar > span:first-child,
-:root[data-theme="white"] .dialog-content input:not([type="checkbox"]):not([type="file"]),
-:root[data-theme="white"] .dialog-content textarea,
-:root[data-theme="white"] .dialog-content select,
 :root[data-theme="white"] .checkbox-label strong,
 :root[data-theme="white"] .upload-zone > strong,
 :root[data-theme="white"] .empty-state h3 {
@@ -44,10 +41,7 @@
 :root[data-theme="white"] .project-tabs,
 :root[data-theme="white"] .chart-tools select,
 :root[data-theme="white"] .inspector,
-:root[data-theme="white"] .dialog-overlay,
-:root[data-theme="white"] .dialog-content input:not([type="checkbox"]):not([type="file"]),
-:root[data-theme="white"] .dialog-content textarea,
-:root[data-theme="white"] .dialog-content select {
+:root[data-theme="white"] .dialog-overlay {
   background: var(--panel-bg);
 }
 :root[data-theme="white"] ::-webkit-scrollbar-thumb,
@@ -156,9 +150,6 @@
 :root[data-theme="white"] .segmented,
 :root[data-theme="white"] .inline-callout,
 :root[data-theme="white"] .dialog-content,
-:root[data-theme="white"] .dialog-content input:not([type="checkbox"]):not([type="file"]),
-:root[data-theme="white"] .dialog-content textarea,
-:root[data-theme="white"] .dialog-content select,
 :root[data-theme="white"] .checkbox-label,
 :root[data-theme="white"] .form-error,
 :root[data-theme="white"] .command-search kbd,
@@ -270,12 +261,6 @@
 :root[data-theme="white"] .segmented button.selected,
 :root[data-theme="white"] .data-table .selected-row {
   background: var(--selected-bg);
-}
-:root[data-theme="white"] .dialog-content input[readonly] {
-  color: var(--muted) !important;
-}
-:root[data-theme="white"] .dialog-content input[readonly] {
-  background: var(--raised-bg) !important;
 }
 :root[data-theme="white"] .upload-zone {
   border-color: var(--line-strong);

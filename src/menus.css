@@ -48,6 +48,21 @@
 .select-trigger[data-state="open"] > svg {
   transform: rotate(180deg);
 }
+:is(.dialog-content, .spice-settings)
+  :is(input:not([type="checkbox"]):not([type="file"]), textarea):not(
+    [readonly],
+    :disabled,
+    [aria-invalid="true"]
+  ):is(:hover, :focus-visible) {
+  background: var(--raised-bg);
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+:is(.dialog-content, .spice-settings)
+  :is(input:not([type="checkbox"]):not([type="file"]), textarea)::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
 .select-content {
   z-index: 150;
   min-width: var(--radix-select-trigger-width);
@@ -141,6 +156,7 @@
   padding: 9px 11px;
   margin-top: 8px;
   font-size: 11px;
+  line-height: 1.4;
 }
 :root .dropdown > button,
 :root[data-theme] .dropdown > button {
