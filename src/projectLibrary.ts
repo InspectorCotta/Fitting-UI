@@ -7,6 +7,7 @@ import {
   type Experiment,
   type Tab,
 } from './data';
+import { exampleSavedFits, normalizeSavedFits, type SavedFit } from './savedFits';
 
 export const PROJECTS_KEY = 'mosfit:projects';
 export const ACTIVE_PROJECT_KEY = 'mosfit:active-project';
@@ -18,6 +19,7 @@ export type ProjectSnapshot = {
   notes: string;
   tags: string[];
   favorite: boolean;
+  savedFits?: SavedFit[];
 };
 export type SavedProject = {
   id: string;
@@ -35,6 +37,7 @@ export function templateProject(name: string, description: string): ProjectSnaps
     notes: '',
     tags: ['GAA', '3 nm', 'BSIM-CMG'],
     favorite: false,
+    savedFits: exampleSavedFits(),
   });
 }
 
@@ -72,7 +75,11 @@ export function readProjectLibrary(): SavedProject[] {
           tabs.includes(entry.lastTab)
         );
       })
-      .filter((entry, index, all) => all.findIndex((other) => other.id === entry.id) === index);
+      .filter((entry, index, all) => all.findIndex((other) => other.id === entry.id) === index)
+      .map((entry) => ({
+        ...entry,
+        snapshot: { ...entry.snapshot, savedFits: normalizeSavedFits(entry.snapshot.savedFits) },
+      }));
   } catch {
     return [];
   }

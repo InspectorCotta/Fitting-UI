@@ -3,6 +3,7 @@ export const tabs = [
   'Datasets',
   'Experiments',
   'Model Fit',
+  'Compare Fits',
   'Parameter Trends',
   'Correlation Matrix',
   'SPICE Export',

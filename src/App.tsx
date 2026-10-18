@@ -20,6 +20,7 @@ import {
   FlaskConical,
   Folder,
   Globe2,
+  GitCompareArrows,
   Layers3,
   Lightbulb,
   Moon,
@@ -28,6 +29,7 @@ import {
   Play,
   Plus,
   Search,
+  Save,
   Settings2,
   ShieldCheck,
   SlidersHorizontal,
@@ -48,6 +50,13 @@ import { Dialog } from './components/ui/dialog';
 import { Select } from './components/ui/select';
 import { CurveChart } from './Chart';
 import { FitWorkbench } from './FitWorkbench';
+import { FitComparison } from './FitComparison';
+import {
+  createDemoSavedFit,
+  demoParameterShift,
+  MAX_SAVED_FITS,
+  normalizeSavedFits,
+} from './savedFits';
 import { WaferArt } from './components/WaferArt';
 import { Sidebar, type Theme, type Workspace } from './Sidebar';
 import { useWorkspaceNavigation } from './useWorkspaceNavigation';
@@ -84,7 +93,8 @@ type Modal =
   | 'search'
   | 'chart'
   | 'settings'
-  | 'newProject';
+  | 'newProject'
+  | 'saveFit';
 type Values = number[];
 function readSaved<T>(key: string, fallback: T): T {
   try {
@@ -149,6 +159,12 @@ export default function App() {
     ),
   );
   const [history, setHistory] = useState<Values[]>([]);
+  const [savedFits, setSavedFits] = useState(() =>
+    normalizeSavedFits(readSaved<unknown>('mosfit:saved-fits', undefined)),
+  );
+  const [fitName, setFitName] = useState('');
+  const [fitError, setFitError] = useState('');
+  const [lastSavedFitId, setLastSavedFitId] = useState<string>();
   const [future, setFuture] = useState<Values[]>([]);
   const [toast, setToast] = useState('');
   const [query, setQuery] = useState('');
@@ -184,8 +200,9 @@ export default function App() {
       notes,
       tags,
       favorite,
+      savedFits,
     }),
-    [project, datasets, experiments, values, notes, tags, favorite],
+    [project, datasets, experiments, values, notes, tags, favorite, savedFits],
   );
   const [projectLibrary, setProjectLibrary] = useState<SavedProject[]>(() => {
     const saved = readProjectLibrary();
@@ -244,12 +261,7 @@ export default function App() {
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sliderStart = useRef<Values | null>(null);
-  const shift =
-    (values[0] - 0.412) * 1.5 +
-    (320 - values[1]) / 5500 +
-    (values[2] - 1.1) * 0.045 +
-    (values[3] - 245) / 15000 +
-    (values[4] - 0.065) * 0.15;
+  const shift = demoParameterShift(values);
   const bestExperiment = experiments
     .filter((e) => e.status === 'Completed')
     .reduce((a, b) => (a.error < b.error ? a : b));
@@ -283,6 +295,8 @@ export default function App() {
     setNotes(data.notes);
     setTags(data.tags);
     setFavorite(data.favorite);
+    setSavedFits(normalizeSavedFits(data.savedFits));
+    setLastSavedFitId(undefined);
     setHistory([]);
     setFuture([]);
     sliderStart.current = null;
@@ -309,6 +323,48 @@ export default function App() {
     setEditName('');
     setEditDescription('');
     setModal('newProject');
+  }
+  function openSaveFit() {
+    let index = 1;
+    while (savedFits.some((fit) => fit.name.toLowerCase() === `fit snapshot ${index}`)) index++;
+    setFitName(`Fit snapshot ${index}`);
+    setFitError('');
+    setModal('saveFit');
+  }
+  function saveFit() {
+    const name = fitName.trim();
+    if (!name) {
+      setFitError('Give this fit a name.');
+      return;
+    }
+    if (name.length > 60) {
+      setFitError('Use a name of 60 characters or fewer.');
+      return;
+    }
+    if (savedFits.some((fit) => fit.name.toLowerCase() === name.toLowerCase())) {
+      setFitError('That fit name is already in use.');
+      return;
+    }
+    if (savedFits.length >= MAX_SAVED_FITS) {
+      setFitError('Delete a saved fit before adding another snapshot.');
+      return;
+    }
+    try {
+      const fit = createDemoSavedFit(name, values);
+      const next = [fit, ...savedFits];
+      // Check persistence before telling the user that a snapshot was saved.
+      localStorage.setItem('mosfit:saved-fits', JSON.stringify(next));
+      setSavedFits(next);
+      setLastSavedFitId(fit.id);
+      setModal(null);
+      notify(`Fit “${name}” saved. Open Compare Fits to inspect it.`);
+    } catch (error) {
+      setFitError(
+        error instanceof Error && error.message.startsWith('Save a fit')
+          ? error.message
+          : 'This browser could not save the fit. Free some storage and try again.',
+      );
+    }
   }
   useEffect(() => {
     setMenu(null);
@@ -356,6 +412,9 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('mosfit:notes', JSON.stringify(notes));
   }, [notes]);
+  useEffect(() => {
+    localStorage.setItem('mosfit:saved-fits', JSON.stringify(savedFits));
+  }, [savedFits]);
   useEffect(() => {
     localStorage.setItem('mosfit:datasets', JSON.stringify(datasets));
   }, [datasets]);
@@ -471,6 +530,7 @@ export default function App() {
           datasets,
           experiments,
           parameters: initialParameters.map((p, i) => ({ ...p, value: values[i] })),
+          savedFits,
           notes,
           tags,
         },
@@ -985,7 +1045,12 @@ export default function App() {
             <h2>Experiments</h2>
             <p>Compare fits and follow your model’s progress.</p>
           </div>
-          {runButton()}
+          <div className="inline-actions">
+            <Button variant="outline" onClick={() => navigate('Compare Fits')}>
+              <GitCompareArrows size={15} /> Compare fits
+            </Button>
+            {runButton()}
+          </div>
         </div>
         {progress !== null && (
           <section className="panel run-progress">
@@ -1170,6 +1235,16 @@ export default function App() {
             <p>Inspect transfer, output, and capacitance fits. Arrange plots and save a view.</p>
           </div>
           <div className="inline-actions">
+            <Button
+              variant="outline"
+              onClick={openSaveFit}
+              disabled={savedFits.length >= MAX_SAVED_FITS}
+            >
+              <Save size={15} /> Save fit
+            </Button>
+            <Button variant="outline" onClick={() => navigate('Compare Fits')}>
+              <GitCompareArrows size={15} /> Compare fits
+            </Button>
             <Button
               variant="outline"
               size="icon"
@@ -1770,6 +1845,20 @@ export default function App() {
                   TrendsView()
                 ) : tab === 'Correlation Matrix' ? (
                   CorrelationView()
+                ) : tab === 'Compare Fits' ? (
+                  <FitComparison
+                    key={activeProjectId}
+                    fits={savedFits}
+                    preferredCandidateId={lastSavedFitId}
+                    onSaveCurrent={openSaveFit}
+                    onDelete={(id) => {
+                      setSavedFits((fits) => fits.filter((fit) => fit.id !== id));
+                      if (lastSavedFitId === id) setLastSavedFitId(undefined);
+                      notify('Saved fit deleted. The live model is unchanged.');
+                    }}
+                    notify={notify}
+                    download={download}
+                  />
                 ) : tab === 'SPICE Export' ? (
                   <SpiceExport
                     key={activeProjectId}
@@ -1818,6 +1907,7 @@ export default function App() {
                               datasets,
                               experiments,
                               parameters: values,
+                              savedFits,
                               notes,
                               tags,
                             },
@@ -2332,6 +2422,49 @@ export default function App() {
           <div className="command-footer">
             <Command size={12} /> Ctrl / ⌘ K to open <span>Tab to navigate · Enter to select</span>
           </div>
+        </Dialog>
+        <Dialog
+          open={modal === 'saveFit'}
+          onOpenChange={(open) => !open && setModal(null)}
+          title="Save fit snapshot"
+          description="Capture the current parameters and demo curves for comparison. The saved snapshot stays fixed while you keep tuning."
+        >
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              saveFit();
+            }}
+          >
+            <label>
+              Fit name
+              <input
+                required
+                maxLength={60}
+                aria-invalid={!!fitError}
+                value={fitName}
+                onChange={(event) => {
+                  setFitName(event.target.value);
+                  setFitError('');
+                }}
+              />
+            </label>
+            <p className="fit-save-caption">
+              {project.name} · synthetic 300 K measurements · saved in this browser
+            </p>
+            {fitError && (
+              <p className="form-error" role="alert">
+                {fitError}
+              </p>
+            )}
+            <div className="dialog-footer">
+              <Button type="button" variant="ghost" onClick={() => setModal(null)}>
+                Cancel
+              </Button>
+              <Button type="submit">
+                <Save size={15} /> Save snapshot
+              </Button>
+            </div>
+          </form>
         </Dialog>
         <Dialog
           open={modal === 'chart'}

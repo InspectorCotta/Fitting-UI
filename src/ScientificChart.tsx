@@ -6,7 +6,8 @@ import { Select } from './components/ui/select';
 import { PlotlySurface } from './PlotlySurface';
 import { loadPlotly } from './plotly';
 import { CurveTooltip } from './CurveTooltip';
-import { curvePairAt, type CurvePair } from './curveHover';
+import { curvePairAt, interpolateCurve, type CurvePair } from './curveHover';
+import { createFitComparisonFigure } from './savedFits';
 import { usePlotGestures } from './usePlotGestures';
 import {
   createFigure,
@@ -32,6 +33,7 @@ export function CurveChart({
   fill = false,
   samples,
   modelLabel = 'Model',
+  comparison,
 }: {
   shift?: number;
   output?: boolean;
@@ -47,6 +49,7 @@ export function CurveChart({
   fill?: boolean;
   samples?: CurveSamples[];
   modelLabel?: string;
+  comparison?: { label: string; samples: CurveSamples[] };
 }) {
   const kind = requestedKind || (output ? 'output' : 'transfer');
   const info = plotInfo[kind];
@@ -85,13 +88,16 @@ export function CurveChart({
     else setLocalView(next);
   }
   const figure = useMemo(
-    () => createFigure(kind, shift, activeView, theme, samples),
-    [kind, shift, activeView, theme, samples],
+    () =>
+      comparison && samples
+        ? createFitComparisonFigure(kind, samples, comparison.samples, activeView, theme)
+        : createFigure(kind, shift, activeView, theme, samples),
+    [kind, shift, activeView, theme, samples, comparison],
   );
   const { zoomBox, dragging } = usePlotGestures(plotArea, plotRef, figure.layout, update, () =>
     setHover(null),
   );
-  useEffect(() => setHover(null), [kind, activeView, shift, samples]);
+  useEffect(() => setHover(null), [kind, activeView, shift, samples, comparison]);
   function inspect(event: PlotMouseEvent) {
     if (dragging) return;
     const point = event.points[0];
@@ -112,7 +118,16 @@ export function CurveChart({
         y: event.event.clientY - bounds.top,
       };
     setCursor(lastCursor.current);
-    setHover(curvePairAt(figure.data, point.curveNumber, point.x, activeView.scale === 'log'));
+    const baselineTrace =
+      comparison && samples && point.curveNumber >= samples.length * 2
+        ? (point.curveNumber - samples.length * 2) * 2
+        : point.curveNumber;
+    const pair = curvePairAt(figure.data, baselineTrace, point.x, activeView.scale === 'log');
+    const candidate = pair && comparison?.samples[pair.series];
+    const value = candidate
+      ? interpolateCurve(candidate.modelX, candidate.modelY, point.x, activeView.scale === 'log')
+      : null;
+    setHover(pair ? { ...pair, ...(value !== null ? { candidate: value } : {}) } : null);
   }
   function relayout(event: Record<string, unknown>) {
     const patch: Partial<ChartView> = {};
@@ -263,7 +278,16 @@ export function CurveChart({
           onUnhover={() => setHover(null)}
           plotRef={plotRef}
         />
-        {hover && <CurveTooltip kind={kind} pair={hover} cursor={cursor} container={plotArea} />}
+        {hover && (
+          <CurveTooltip
+            kind={kind}
+            pair={hover}
+            cursor={cursor}
+            container={plotArea}
+            modelLabel={modelLabel}
+            candidateLabel={comparison?.label}
+          />
+        )}
         {zoomBox && <div className="plot-right-zoom-box" style={zoomBox} aria-hidden="true" />}
       </div>
       <div className="scientific-legend">
@@ -272,9 +296,15 @@ export function CurveChart({
           Measured
         </span>
         <span>
-          <i className="legend-line" />
+          <i className={`legend-line ${comparison ? 'comparison-baseline-line' : ''}`} />
           {modelLabel}
         </span>
+        {comparison && (
+          <span>
+            <i className="legend-line" />
+            {comparison.label}
+          </span>
+        )}
         <div className="series-toggles">
           {info.series.map((name, i) => (
             <button

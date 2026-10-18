@@ -1,6 +1,12 @@
 import type { Data } from 'plotly.js';
 
-export type CurvePair = { series: number; x: number; measured: number; model: number };
+export type CurvePair = {
+  series: number;
+  x: number;
+  measured: number;
+  model: number;
+  candidate?: number;
+};
 export function interpolateCurve(x: number[], y: number[], voltage: number, logarithmic: boolean) {
   if (x.length < 2 || x.length !== y.length || voltage < x[0] || voltage > x[x.length - 1])
     return null;

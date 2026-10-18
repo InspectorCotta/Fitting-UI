@@ -7,11 +7,15 @@ export function CurveTooltip({
   pair,
   cursor,
   container,
+  modelLabel = 'Model',
+  candidateLabel = 'Candidate',
 }: {
   kind: PlotKind;
   pair: CurvePair;
   cursor: { x: number; y: number };
   container: RefObject<HTMLDivElement | null>;
+  modelLabel?: string;
+  candidateLabel?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<{ left: number; top: number } | null>(null);
@@ -59,12 +63,23 @@ export function CurveTooltip({
       <div className="curve-tooltip-value">
         <span>
           <i className="tooltip-model" />
-          Model
+          {modelLabel}
         </span>
         <b>
           {formatCurveValue(pair.model)} <small>{info.unit}</small>
         </b>
       </div>
+      {pair.candidate !== undefined && (
+        <div className="curve-tooltip-value">
+          <span>
+            <i className="tooltip-model" />
+            {candidateLabel}
+          </span>
+          <b>
+            {formatCurveValue(pair.candidate)} <small>{info.unit}</small>
+          </b>
+        </div>
+      )}
     </div>
   );
 }
