@@ -155,7 +155,7 @@ export function createFigure(
     zeroline: false,
     ticks: 'outside' as const,
     tickcolor: palette.axis,
-    tickfont: { size: 10 },
+    tickfont: { size: 11 },
     automargin: true,
     showspikes: false,
   };
@@ -190,7 +190,7 @@ export function createFigure(
       hoverlabel: {
         bgcolor: palette.tooltip,
         bordercolor: palette.axis,
-        font: { color: palette.text, size: 10 },
+        font: { color: palette.text, size: 11 },
       },
       dragmode: 'pan',
       showlegend: false,

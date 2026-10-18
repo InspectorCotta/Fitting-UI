@@ -12,6 +12,9 @@
   --line: #202126;
   --surface: #090a0c;
   --radius: 7px;
+  --font-small: 11px;
+  --control-size: 36px;
+  --resize-hit-size: 20px;
   color-scheme: dark;
 }
 * {
@@ -194,7 +197,7 @@ a {
 .btn-sm {
   min-height: 28px;
   padding: 6px 9px;
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .btn-icon {
   width: 31px;
@@ -211,7 +214,7 @@ a {
   padding: 5px 9px;
   border-radius: 20px;
   white-space: nowrap;
-  font-size: 10px;
+  font-size: var(--font-small);
   font-weight: 550;
   line-height: 1.2;
 }
@@ -234,7 +237,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 10px;
+  font-size: var(--font-small);
   padding: 5px 8px;
   border: 1px solid #1e2026;
   background: #111216;
@@ -251,7 +254,7 @@ a {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .avatar-main {
   background: #08080e;
@@ -336,7 +339,7 @@ a {
   background: #7086ff;
 }
 .beta {
-  font-size: 8px;
+  font-size: var(--font-small);
   letter-spacing: 0.6px;
   border: 1px solid #29292d;
   border-radius: 5px;
@@ -469,7 +472,7 @@ a {
 .project-metadata small {
   display: block;
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--font-small);
   margin-top: 4px;
 }
 .project-tabs {
@@ -543,7 +546,7 @@ a {
   white-space: nowrap;
 }
 .summary-heading p {
-  font-size: 10px;
+  font-size: var(--font-small);
   line-height: 1.4;
   margin-top: 4px;
   white-space: nowrap;
@@ -587,7 +590,7 @@ a {
 .metrics span {
   display: block;
   color: #9295a1;
-  font-size: 10px;
+  font-size: var(--font-small);
   margin-top: 6px;
   white-space: nowrap;
 }
@@ -603,7 +606,7 @@ a {
   margin-top: 14px;
   padding-top: 10px;
   color: #777f8a;
-  font-size: 9px;
+  font-size: var(--font-small);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -615,7 +618,7 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #7b818d;
   margin-top: 13px;
 }
@@ -623,7 +626,7 @@ a {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
   gap: 7px 9px;
-  font-size: 10px;
+  font-size: var(--font-small);
   margin: 14px 0 0;
 }
 .compact-details dt {
@@ -646,7 +649,7 @@ a {
 .top-link {
   margin-left: auto;
   align-self: flex-start;
-  font-size: 9px;
+  font-size: var(--font-small);
   padding-top: 4px;
 }
 .dataset-mini {
@@ -659,7 +662,7 @@ a {
   border-top: 1px solid #191b1f;
   width: 100%;
   padding: 13px 0;
-  font-size: 10px;
+  font-size: var(--font-small);
   text-align: left;
   white-space: nowrap;
 }
@@ -673,7 +676,7 @@ a {
   flex-shrink: 0;
 }
 .dataset-mini button > small {
-  font-size: 9px;
+  font-size: var(--font-small);
   color: #898e9c;
   margin-left: auto;
 }
@@ -684,10 +687,10 @@ a {
   gap: 9px;
 }
 .recommendation-panel .summary-heading h3 {
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .recommendation-panel .summary-heading p {
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .recommendation {
   display: flex;
@@ -706,13 +709,13 @@ a {
 .recommendation strong {
   display: block;
   font-weight: 550;
-  font-size: 10px;
+  font-size: var(--font-small);
   transition: 0.2s;
 }
 .recommendation small {
   display: block;
   color: #9095a2;
-  font-size: 9px;
+  font-size: var(--font-small);
   line-height: 1.35;
   margin-top: 3px;
 }
@@ -750,7 +753,7 @@ a {
   font-size: 13px;
 }
 .chart-heading p {
-  font-size: 10px;
+  font-size: var(--font-small);
   margin-top: 4px;
 }
 .chart-tools {
@@ -766,7 +769,7 @@ a {
   border-color: #25262e;
 }
 .chart-tools select {
-  font-size: 9px;
+  font-size: var(--font-small);
   height: 27px;
   padding: 0 20px 0 7px;
   border-radius: 4px;
@@ -797,7 +800,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  font-size: 9px;
+  font-size: var(--font-small);
   padding: 0 0 16px 3px;
 }
 .chart-legend > span {
@@ -829,7 +832,7 @@ a {
   gap: 9px;
   align-items: center;
   white-space: nowrap;
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .chart-legend > button i {
   height: 2px;
@@ -843,7 +846,7 @@ a {
   color: #fff;
 }
 .chart-legend .legend-reset {
-  font-size: 8px;
+  font-size: var(--font-small);
   color: #767e8c;
   padding-top: 2px;
 }
@@ -852,7 +855,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 8px;
+  font-size: var(--font-small);
   color: #666f7d;
   padding: 12px 0;
   gap: 10px;
@@ -879,12 +882,12 @@ a {
   min-width: 0;
 }
 .results-panel h4 {
-  font-size: 10px;
+  font-size: var(--font-small);
   margin: 3px 0 12px;
 }
 .results-panel h4 span {
   font-weight: 400;
-  font-size: 9px;
+  font-size: var(--font-small);
   color: #a2a5af;
 }
 .results-panel table {
@@ -894,7 +897,7 @@ a {
   width: 100%;
   border-radius: 4px;
   overflow: hidden;
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .results-panel th {
   text-align: left;
@@ -957,13 +960,13 @@ a {
   border-radius: 1px;
 }
 .results-link {
-  font-size: 9px;
+  font-size: var(--font-small);
   padding-top: 13px;
 }
 .workspace-footer {
   display: flex;
   justify-content: space-between;
-  font-size: 9px;
+  font-size: var(--font-small);
   color: #606976;
   padding: 14px 4px 18px;
   gap: 10px;
@@ -977,7 +980,7 @@ a {
   color: #647a72;
 }
 .workspace-footer kbd {
-  font-size: 8px;
+  font-size: var(--font-small);
   border: 1px solid #20242b;
   border-radius: 3px;
   padding: 1px 3px;
@@ -1005,11 +1008,11 @@ a {
 .inspector-actions > .btn {
   flex: 1;
   padding: 10px;
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .inspector-actions .btn-outline {
   padding: 10px;
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .inspector-section {
   padding: 15px 10px 17px;
@@ -1039,7 +1042,7 @@ a {
 .project-details {
   display: grid;
   grid-template-columns: 82px minmax(0, 1fr);
-  font-size: 10px;
+  font-size: var(--font-small);
   gap: 8px 10px;
   margin: 0;
   line-height: 1.4;
@@ -1083,7 +1086,7 @@ a {
   border: 2px solid #020202;
   width: 27px;
   height: 27px;
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .avatar-stack .avatar:first-child {
   margin-left: 0;
@@ -1091,7 +1094,7 @@ a {
   z-index: 2;
 }
 .sharing-people > span {
-  font-size: 8px;
+  font-size: var(--font-small);
   display: flex;
   align-items: center;
   gap: 4px;
@@ -1102,7 +1105,7 @@ a {
   gap: 6px;
   align-items: center;
   color: #5d6571;
-  font-size: 9px;
+  font-size: var(--font-small);
   margin-top: auto;
   padding: 14px 10px;
   border-top: 1px solid #181a20;
@@ -1155,7 +1158,7 @@ a {
 }
 .dropdown-title .link-button {
   padding: 0;
-  font-size: 10px;
+  font-size: var(--font-small);
   width: auto;
   color: #829aff;
 }
@@ -1171,14 +1174,14 @@ a {
   display: block;
 }
 .notification-menu small {
-  font-size: 10px;
+  font-size: var(--font-small);
   display: block;
   margin-top: 5px;
   color: #8f95a5;
   line-height: 1.5;
 }
 .notification-menu em {
-  font-size: 9px;
+  font-size: var(--font-small);
   color: #646b7d;
   display: block;
   margin-top: 8px;
@@ -1196,7 +1199,7 @@ a {
 }
 .notification-footer {
   text-align: center;
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #606a7e;
   border-top: 1px solid #252831;
   padding: 12px 5px 8px;
@@ -1207,7 +1210,7 @@ a {
   padding: 6px 9px 0;
 }
 .profile-menu > small {
-  font-size: 9px;
+  font-size: var(--font-small);
   color: #7d879a;
   padding-bottom: 12px;
   border-bottom: 1px solid #252831;
@@ -1268,7 +1271,7 @@ a {
 }
 .eyebrow {
   display: block;
-  font-size: 8px;
+  font-size: var(--font-small);
   letter-spacing: 1.5px;
   color: #737e91;
   font-weight: 600;
@@ -1295,7 +1298,7 @@ a {
   gap: 6px;
   align-items: center;
   color: #7c8697;
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .filter-bar > span svg {
   color: #558575;
@@ -1311,7 +1314,7 @@ a {
 .segmented button {
   padding: 7px 11px;
   border-radius: 4px;
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #8992a2;
 }
 .segmented button.selected {
@@ -1333,7 +1336,7 @@ a {
   white-space: nowrap;
 }
 .data-table th {
-  font-size: 9px;
+  font-size: var(--font-small);
   font-weight: 500;
   color: #7a8597;
   padding: 13px 15px;
@@ -1370,7 +1373,7 @@ a {
 }
 .dataset-name small {
   display: block;
-  font-size: 9px;
+  font-size: var(--font-small);
   color: #758094;
   margin-top: 5px;
 }
@@ -1419,7 +1422,7 @@ a {
   font-size: 20px;
 }
 .run-progress-heading p {
-  font-size: 10px;
+  font-size: var(--font-small);
   margin-top: 5px;
 }
 .running-icon {
@@ -1450,7 +1453,7 @@ a {
   display: flex;
   gap: 8px;
   font-family: Consolas, monospace;
-  font-size: 9px;
+  font-size: var(--font-small);
   color: #739c89;
   margin-top: 13px;
   align-items: center;
@@ -1458,7 +1461,7 @@ a {
 .live-dot {
   margin-left: auto;
   color: var(--green);
-  font-size: 8px;
+  font-size: var(--font-small);
   letter-spacing: 1px;
   animation: blink 1.4s infinite;
 }
@@ -1479,7 +1482,7 @@ a {
   align-items: center;
   justify-content: space-between;
   color: #8e9aac;
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .convergence-bottom > span {
   display: flex;
@@ -1515,7 +1518,7 @@ a {
   align-items: center;
   gap: 8px;
   border-top: 1px solid #20232b;
-  font-size: 9px;
+  font-size: var(--font-small);
   padding: 12px 16px;
 }
 .fit-info > span {
@@ -1549,7 +1552,7 @@ a {
 .parameter-row > div:first-child > span {
   grid-row: 2;
   color: #6d7a8e;
-  font-size: 9px;
+  font-size: var(--font-small);
   margin-top: 3px;
 }
 .parameter-row output {
@@ -1561,7 +1564,7 @@ a {
   font-variant-numeric: tabular-nums;
 }
 .parameter-row output small {
-  font-size: 8px;
+  font-size: var(--font-small);
   color: #77879f;
 }
 .parameter-row input[type="range"] {
@@ -1575,7 +1578,7 @@ a {
   display: flex;
   justify-content: space-between;
   color: #525f73;
-  font-size: 8px;
+  font-size: var(--font-small);
   margin-top: 5px;
 }
 .parameter-hint {
@@ -1585,7 +1588,7 @@ a {
   padding-top: 14px;
 }
 .parameter-hint p {
-  font-size: 9px;
+  font-size: var(--font-small);
   color: #768295;
   line-height: 1.5;
 }
@@ -1622,11 +1625,11 @@ a {
   margin-top: 3px;
 }
 .fit-note p {
-  font-size: 10px;
+  font-size: var(--font-small);
   margin: 8px 0 15px;
 }
 .fit-note .btn {
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .trend-grid {
   display: grid;
@@ -1637,7 +1640,7 @@ a {
   padding: 19px;
 }
 .trend-panel .eyebrow {
-  font-size: 9px;
+  font-size: var(--font-small);
   letter-spacing: 0.3px;
   margin-bottom: 7px;
 }
@@ -1651,7 +1654,7 @@ a {
   font-weight: 500;
 }
 .trend-panel h3 small {
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #758399;
 }
 .trend-panel svg {
@@ -1664,7 +1667,7 @@ a {
   display: flex;
   justify-content: space-between;
   color: #69778c;
-  font-size: 9px;
+  font-size: var(--font-small);
   margin-top: 5px;
 }
 .trend-foot > span {
@@ -1687,13 +1690,13 @@ a {
   color: #c1ccdf;
 }
 .inline-callout p {
-  font-size: 10px;
+  font-size: var(--font-small);
   margin-top: 5px;
   color: #6e7c92;
 }
 .inline-callout > .btn {
   margin-left: auto;
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .correlation-layout {
   display: grid;
@@ -1712,7 +1715,7 @@ a {
   display: contents;
 }
 .matrix-label {
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #8c9bb2;
   display: flex;
   align-items: center;
@@ -1745,7 +1748,7 @@ a {
   align-items: center;
   gap: 13px;
   color: #63778b;
-  font-size: 9px;
+  font-size: var(--font-small);
   margin: 23px 0 0 54px;
 }
 .matrix-scale i {
@@ -1778,7 +1781,7 @@ a {
 }
 .correlation-number small {
   display: block;
-  font-size: 9px;
+  font-size: var(--font-small);
   font-weight: 400;
   color: #6f8097;
   letter-spacing: 0;
@@ -1798,7 +1801,7 @@ a {
   padding: 15px 0;
   border-bottom: 1px solid #22262e;
   color: #68788f;
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .notes-toolbar > span:first-child {
   display: flex;
@@ -1826,7 +1829,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 9px;
+  font-size: var(--font-small);
   color: #68778c;
   border-top: 1px solid #20262e;
   padding: 10px 0;
@@ -1835,7 +1838,7 @@ a {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #688775;
 }
 .global-content {
@@ -1882,7 +1885,7 @@ a {
 }
 .project-card > div > span:last-child {
   display: block;
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #708097;
   margin-top: 16px;
 }
@@ -1923,7 +1926,7 @@ a {
 }
 .model-facts small {
   display: block;
-  font-size: 8px;
+  font-size: var(--font-small);
   color: #63758d;
   margin-bottom: 7px;
   letter-spacing: 1px;
@@ -1986,7 +1989,7 @@ a {
 .compute-stats small {
   display: block;
   color: #63768b;
-  font-size: 8px;
+  font-size: var(--font-small);
   letter-spacing: 1px;
   margin-bottom: 8px;
 }
@@ -2042,7 +2045,7 @@ a {
 }
 .dialog-content form > label {
   display: block;
-  font-size: 10px;
+  font-size: var(--font-small);
   font-weight: 500;
   color: var(--text-secondary);
   margin-bottom: 18px;
@@ -2072,7 +2075,7 @@ a {
   margin-bottom: 18px;
 }
 .form-grid > label {
-  font-size: 10px;
+  font-size: var(--font-small);
   color: var(--text-secondary);
 }
 .dialog-footer {
@@ -2089,7 +2092,7 @@ a {
   padding: 0;
 }
 .dialog-content legend {
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #a8b2c3;
   margin-bottom: 10px;
 }
@@ -2114,7 +2117,7 @@ a {
   color: #bfcdda;
 }
 .checkbox-label small {
-  font-size: 9px;
+  font-size: var(--font-small);
   display: block;
   margin-top: 4px;
   color: #6e8193;
@@ -2137,7 +2140,7 @@ a {
   border-radius: 5px;
   color: #71879a;
   background: #10151c;
-  font-size: 10px;
+  font-size: var(--font-small);
   line-height: 1.5;
 }
 .form-note svg {
@@ -2159,7 +2162,7 @@ a {
 }
 .team-list small {
   margin-left: auto;
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #6a7b91;
 }
 .upload-zone {
@@ -2189,7 +2192,7 @@ a {
   font-weight: 500;
 }
 .upload-zone > span {
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #697f9c;
 }
 .upload-zone input {
@@ -2225,7 +2228,7 @@ a {
   outline: none !important;
 }
 .command-search kbd {
-  font-size: 9px;
+  font-size: var(--font-small);
   border: 1px solid #293548;
   border-radius: 3px;
   padding: 3px;
@@ -2271,7 +2274,7 @@ a {
   font-weight: 500;
 }
 .command-results small {
-  font-size: 10px;
+  font-size: var(--font-small);
   color: #6a7f9c;
   display: block;
   margin-top: 4px;
@@ -2288,7 +2291,7 @@ a {
   padding-top: 14px;
   margin-top: 15px;
   color: #5f7898;
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .command-footer > span {
   margin-left: auto;
@@ -2337,7 +2340,7 @@ a {
   font-weight: 500;
 }
 .settings-row p {
-  font-size: 10px;
+  font-size: var(--font-small);
   margin-top: 5px;
   color: #70849d;
 }
@@ -2359,11 +2362,11 @@ a {
   display: flex;
   justify-content: space-between;
   color: #71859f;
-  font-size: 10px;
+  font-size: var(--font-small);
   padding: 7px 0;
 }
 .shortcuts kbd {
-  font-size: 9px;
+  font-size: var(--font-small);
   padding: 3px 5px;
   border-radius: 3px;
   background: #141d29;
@@ -2487,7 +2490,7 @@ a {
     padding: 15px 0;
   }
   .dataset-mini button > small {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .recommendation {
     padding-top: 14px;
@@ -2496,7 +2499,7 @@ a {
     font-size: 11px;
   }
   .recommendation small {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .recommendation-panel .summary-heading h3 {
     font-size: 11px;
@@ -2532,7 +2535,7 @@ a {
     font-size: 12px;
   }
   .results-panel h4 span {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .inspector {
     padding: 23px 15px 0;
@@ -2581,7 +2584,7 @@ a {
   }
   .project-tabs > button {
     padding: 15px 10px;
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .summary-grid {
     gap: 8px;
@@ -2600,10 +2603,10 @@ a {
     width: 19px;
   }
   .summary-heading h3 {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .summary-heading p {
-    font-size: 9px;
+    font-size: var(--font-small);
     max-width: 132px;
   }
   .summary-heading p > span {
@@ -2613,29 +2616,29 @@ a {
     display: none;
   }
   .recommendation-panel .summary-heading h3 {
-    font-size: 9px;
+    font-size: var(--font-small);
     white-space: normal;
     line-height: 1.5;
   }
   .metric-caption {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .metrics strong {
     font-size: 19px;
   }
   .metrics span {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .dataset-mini button {
-    font-size: 9px;
+    font-size: var(--font-small);
     gap: 6px;
     padding: 14px 0;
   }
   .dataset-mini button > small {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .compact-details {
-    font-size: 9px;
+    font-size: var(--font-small);
     gap: 8px 6px;
   }
   .recommendation {
@@ -2643,15 +2646,15 @@ a {
     padding-top: 12px;
   }
   .recommendation strong {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .recommendation small {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .step-number {
     width: 23px;
     height: 23px;
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .recommendation > svg {
     width: 12px;
@@ -2672,18 +2675,18 @@ a {
   .chart-legend {
     width: 84px;
     gap: 14px;
-    font-size: 8px;
+    font-size: var(--font-small);
     padding-left: 0;
   }
   .chart-legend > button {
-    font-size: 8px;
+    font-size: var(--font-small);
     gap: 6px;
   }
   .chart-legend .legend-reset {
-    font-size: 7px;
+    font-size: var(--font-small);
   }
   .chart-foot {
-    font-size: 7px;
+    font-size: var(--font-small);
   }
   .curve-chart {
     padding: 15px 12px 0;
@@ -2692,17 +2695,17 @@ a {
     padding: 0 10px;
   }
   .results-panel h4 {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .results-panel table {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .results-panel td,
   .results-panel th {
     padding: 7px 5px;
   }
   .results-panel h4 span {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .sensitivity {
     gap: 6px;
@@ -2717,7 +2720,7 @@ a {
     gap: 6px;
   }
   .inspector-actions .btn {
-    font-size: 9px;
+    font-size: var(--font-small);
     padding: 9px 7px;
     gap: 5px;
   }
@@ -2728,7 +2731,7 @@ a {
     padding: 13px 9px;
   }
   .project-details {
-    font-size: 9px;
+    font-size: var(--font-small);
     grid-template-columns: 74px 1fr;
     gap: 8px;
   }
@@ -2736,10 +2739,10 @@ a {
     gap: 7px;
   }
   .sharing-people > span {
-    font-size: 7px;
+    font-size: var(--font-small);
   }
   .workspace-footer {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .fit-layout {
     grid-template-columns: minmax(0, 1fr) 245px;
@@ -2758,7 +2761,7 @@ a {
     gap: 4px;
   }
   .matrix-label {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
 }
 @media (max-width: 1120px) {
@@ -2781,7 +2784,7 @@ a {
     font-size: 11px;
   }
   .summary-heading p {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .summary-heading .icon-tile {
     width: 35px;
@@ -2794,7 +2797,7 @@ a {
     grid-template-columns: minmax(0, 1fr) 290px;
   }
   .results-panel table {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .chart-heading {
     flex-wrap: nowrap;
@@ -2803,26 +2806,26 @@ a {
     font-size: 12px;
   }
   .metric-caption {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .recommendation-panel .summary-heading h3 {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .dataset-mini button {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .compact-details {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .chart-foot {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .chart-legend {
     width: 95px;
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .chart-legend > button {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .fit-layout {
     grid-template-columns: minmax(0, 1fr) 270px;
@@ -2861,7 +2864,7 @@ a {
   }
   .summary-heading p {
     max-width: 200px;
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .metrics strong {
     font-size: 25px;
@@ -2873,7 +2876,7 @@ a {
     font-size: 12px;
   }
   .metric-caption {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .compact-details {
     font-size: 11px;
@@ -2883,23 +2886,23 @@ a {
     padding: 13px 0;
   }
   .dataset-mini button > small {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .recommendation-panel .summary-heading h3 {
     font-size: 12px;
   }
   .recommendation-panel .summary-heading p {
     display: block;
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .recommendation {
     padding-top: 10px;
   }
   .recommendation strong {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .recommendation small {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .step-number {
     width: 27px;
@@ -2940,10 +2943,10 @@ a {
     font-size: 11px;
   }
   .results-panel h4 span {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .results-panel table {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .results-link {
     grid-column: 2;
@@ -2960,20 +2963,20 @@ a {
   }
   .chart-legend {
     width: 105px;
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .chart-legend > button {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .svg-chart svg {
     min-height: 260px;
   }
   .project-tabs > button {
-    font-size: 10px;
+    font-size: var(--font-small);
     padding: 14px 10px;
   }
   .workspace-footer > span:nth-child(2) {
-    font-size: 7px;
+    font-size: var(--font-small);
   }
   .fit-layout {
     grid-template-columns: 1fr;
@@ -3081,7 +3084,7 @@ a {
     padding: 19px 15px 16px;
   }
   .breadcrumb {
-    font-size: 9px;
+    font-size: var(--font-small);
     margin-bottom: 12px;
     gap: 9px;
   }
@@ -3093,7 +3096,7 @@ a {
     letter-spacing: -0.8px;
   }
   .project-title .badge {
-    font-size: 8px;
+    font-size: var(--font-small);
     padding: 4px 7px;
     gap: 4px;
   }
@@ -3105,7 +3108,7 @@ a {
     width: 18px;
   }
   .project-description {
-    font-size: 10px;
+    font-size: var(--font-small);
     max-width: 260px;
     line-height: 1.7;
     margin-top: 9px;
@@ -3137,10 +3140,10 @@ a {
     width: 14px;
   }
   .project-metadata strong {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .project-metadata small {
-    font-size: 8px;
+    font-size: var(--font-small);
     margin-top: 3px;
   }
   .project-tabs {
@@ -3149,7 +3152,7 @@ a {
     overflow-x: auto;
   }
   .project-tabs > button {
-    font-size: 9px;
+    font-size: var(--font-small);
     padding: 13px 9px;
   }
   .project-tabs .inspector-toggle {
@@ -3177,12 +3180,12 @@ a {
     width: 15px;
   }
   .summary-heading h3 {
-    font-size: 9px;
+    font-size: var(--font-small);
     white-space: normal;
     line-height: 1.4;
   }
   .summary-heading p {
-    font-size: 7px;
+    font-size: var(--font-small);
     margin-top: 4px;
     max-width: 96px;
   }
@@ -3202,15 +3205,15 @@ a {
     letter-spacing: -0.5px;
   }
   .metrics span {
-    font-size: 7px;
+    font-size: var(--font-small);
     margin-top: 7px;
   }
   .metrics em {
-    font-size: 9px;
+    font-size: var(--font-small);
     margin-top: 11px;
   }
   .metric-caption {
-    font-size: 7px;
+    font-size: var(--font-small);
     line-height: 1.4;
     gap: 4px;
     padding-top: 9px;
@@ -3222,22 +3225,22 @@ a {
     display: none;
   }
   .experiment-status {
-    font-size: 8px;
+    font-size: var(--font-small);
     margin-top: 12px;
     gap: 8px;
   }
   .experiment-status .badge {
-    font-size: 8px;
+    font-size: var(--font-small);
     padding: 4px 7px;
   }
   .compact-details {
-    font-size: 8px;
+    font-size: var(--font-small);
     gap: 8px 6px;
     grid-template-columns: 1fr 1.3fr;
     margin-top: 12px;
   }
   .top-link {
-    font-size: 7px;
+    font-size: var(--font-small);
     position: absolute;
     right: 0;
     top: 32px;
@@ -3246,7 +3249,7 @@ a {
     margin-top: 18px;
   }
   .dataset-mini button {
-    font-size: 8px;
+    font-size: var(--font-small);
     gap: 5px;
     padding: 12px 0;
     flex-wrap: wrap;
@@ -3256,10 +3259,10 @@ a {
     height: 6px;
   }
   .dataset-mini button > small {
-    font-size: 7px;
+    font-size: var(--font-small);
   }
   .recommendation-panel .summary-heading h3 {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .recommendation-panel .summary-heading p {
     display: none;
@@ -3269,17 +3272,17 @@ a {
     padding-top: 12px;
   }
   .recommendation strong {
-    font-size: 8px;
+    font-size: var(--font-small);
     line-height: 1.4;
   }
   .recommendation small {
-    font-size: 7px;
+    font-size: var(--font-small);
     line-height: 1.4;
   }
   .step-number {
     width: 20px;
     height: 20px;
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .recommendation > svg {
     width: 10px;
@@ -3295,7 +3298,7 @@ a {
     font-size: 11px;
   }
   .chart-heading p {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .chart-tools {
     margin-left: 0;
@@ -3304,7 +3307,7 @@ a {
   }
   .chart-tools select {
     margin-right: auto;
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .chart-tools .btn {
     width: 25px;
@@ -3324,19 +3327,19 @@ a {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 10px 13px;
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .chart-legend .legend-divider,
   .chart-legend .legend-reset {
     display: none;
   }
   .chart-legend > button {
-    font-size: 8px;
+    font-size: var(--font-small);
     gap: 5px;
   }
   .chart-legend > span {
     gap: 4px;
-    font-size: 7px;
+    font-size: var(--font-small);
   }
   .chart-legend > span:nth-child(2) {
     margin-right: 30px;
@@ -3351,7 +3354,7 @@ a {
     width: 11px;
   }
   .chart-foot {
-    font-size: 7px;
+    font-size: var(--font-small);
     padding: 10px 0;
   }
   .chart-foot > span:last-child {
@@ -3362,13 +3365,13 @@ a {
     padding: 13px;
   }
   .results-panel h4 {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .results-panel h4 span {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .results-panel table {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .results-panel th,
   .results-panel td {
@@ -3379,7 +3382,7 @@ a {
     margin-bottom: 10px;
   }
   .results-link {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .workspace-footer {
     flex-direction: column;
@@ -3387,7 +3390,7 @@ a {
     padding-bottom: 20px;
   }
   .workspace-footer > span:nth-child(2) {
-    font-size: 7px;
+    font-size: var(--font-small);
     flex-wrap: wrap;
   }
   .section-heading {
@@ -3401,10 +3404,10 @@ a {
     letter-spacing: -0.4px;
   }
   .section-heading p {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .section-heading .btn {
-    font-size: 9px;
+    font-size: var(--font-small);
     min-height: 30px;
     padding: 8px;
   }
@@ -3413,7 +3416,7 @@ a {
     padding: 7px 1px 20px;
   }
   .eyebrow {
-    font-size: 7px;
+    font-size: var(--font-small);
     margin-bottom: 8px;
   }
   .segmented {
@@ -3421,7 +3424,7 @@ a {
     gap: 1px;
   }
   .segmented button {
-    font-size: 8px;
+    font-size: var(--font-small);
     padding: 7px 6px;
     flex: 1;
   }
@@ -3429,10 +3432,10 @@ a {
     display: block;
   }
   .data-table table {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .data-table th {
-    font-size: 8px;
+    font-size: var(--font-small);
     padding: 11px 10px;
   }
   .data-table td {
@@ -3442,25 +3445,25 @@ a {
     gap: 8px;
   }
   .dataset-name strong {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .dataset-name small {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .dataset-name .icon-tile {
     width: 28px;
     height: 29px;
   }
   .data-table .badge {
-    font-size: 8px;
+    font-size: var(--font-small);
     padding: 4px 6px;
   }
   .preview-label {
-    font-size: 9px;
+    font-size: var(--font-small);
     padding: 13px 12px;
   }
   .preview-label .badge {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .dataset-preview .chart-body {
     max-height: none;
@@ -3476,11 +3479,11 @@ a {
     font-size: 11px;
   }
   .run-progress-heading p {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .run-progress-heading > .btn {
     margin-left: auto;
-    font-size: 8px;
+    font-size: var(--font-small);
     min-height: 27px;
   }
   .run-progress-heading > strong {
@@ -3495,7 +3498,7 @@ a {
     width: 16px;
   }
   .run-log {
-    font-size: 8px;
+    font-size: var(--font-small);
     line-height: 1.5;
     align-items: flex-start;
   }
@@ -3508,7 +3511,7 @@ a {
   .convergence-bottom {
     flex-wrap: wrap;
     gap: 14px;
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .convergence-bottom > span:first-child {
     width: 100%;
@@ -3518,7 +3521,7 @@ a {
   }
   .fit-info {
     flex-wrap: wrap;
-    font-size: 8px;
+    font-size: var(--font-small);
     padding: 10px;
   }
   .fit-info > span:first-child {
@@ -3539,7 +3542,7 @@ a {
     font-size: 12px;
   }
   .parameter-row > div:first-child > span {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .parameter-row output {
     font-size: 13px;
@@ -3578,10 +3581,10 @@ a {
     flex-wrap: wrap;
   }
   .inline-callout strong {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .inline-callout p {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .inline-callout > div {
     flex: 1;
@@ -3589,7 +3592,7 @@ a {
   }
   .inline-callout > .btn {
     padding: 5px;
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .correlation-layout {
     grid-template-columns: 1fr;
@@ -3602,13 +3605,13 @@ a {
     gap: 4px;
   }
   .matrix-label {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .matrix-row button {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .matrix-scale {
-    font-size: 7px;
+    font-size: var(--font-small);
     margin-left: 35px;
     gap: 8px;
   }
@@ -3630,24 +3633,24 @@ a {
     margin: 18px 0;
   }
   .correlation-detail p {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .notes-panel {
     padding: 0 12px;
   }
   .notes-toolbar {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .notes-toolbar > span:first-child {
     gap: 5px;
   }
   .notes-panel textarea {
-    font-size: 10px;
+    font-size: var(--font-small);
     min-height: 360px;
     line-height: 1.9;
   }
   .saved-label {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .global-content {
     padding: 23px 14px;
@@ -3671,14 +3674,14 @@ a {
     font-size: 21px;
   }
   .project-card p {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .project-card > div > span:last-child {
-    font-size: 8px;
+    font-size: var(--font-small);
     line-height: 1.6;
   }
   .project-card .badge {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .model-card {
     padding: 20px;
@@ -3697,15 +3700,15 @@ a {
   }
   .model-facts {
     gap: 20px;
-    font-size: 10px;
+    font-size: var(--font-small);
     flex-wrap: wrap;
     margin: 23px 0;
   }
   .model-facts small {
-    font-size: 7px;
+    font-size: var(--font-small);
   }
   .model-card .btn {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .compute-panel {
     padding: 24px 15px;
@@ -3714,7 +3717,7 @@ a {
     font-size: 23px;
   }
   .compute-panel p {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .compute-stats {
     flex-direction: column;
@@ -3729,7 +3732,7 @@ a {
     font-size: 20px;
   }
   .dialog-description {
-    font-size: 10px;
+    font-size: var(--font-small);
     margin-bottom: 20px;
   }
   .dialog-close {
@@ -3745,7 +3748,7 @@ a {
     font-size: 11px;
   }
   .dialog-content .btn {
-    font-size: 10px;
+    font-size: var(--font-small);
   }
   .form-grid {
     gap: 10px;
@@ -3755,7 +3758,7 @@ a {
     gap: 6px;
   }
   .form-note {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .dialog-wide .chart-body {
     min-height: 0;
@@ -3763,10 +3766,10 @@ a {
   .dialog-wide .chart-legend {
     width: auto;
     gap: 12px;
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .dialog-wide .chart-legend > button {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .command-search {
     gap: 9px;
@@ -3786,10 +3789,10 @@ a {
     font-size: 11px;
   }
   .command-results small {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .command-footer {
-    font-size: 8px;
+    font-size: var(--font-small);
     flex-wrap: wrap;
     line-height: 1.5;
   }
@@ -3797,7 +3800,7 @@ a {
     margin-left: 0;
   }
   .toast {
-    font-size: 10px;
+    font-size: var(--font-small);
     width: max-content;
     max-width: calc(100vw - 24px);
     bottom: 15px;
@@ -3812,10 +3815,10 @@ a {
     font-size: 11px;
   }
   .settings-row p {
-    font-size: 9px;
+    font-size: var(--font-small);
   }
   .settings-row .tag {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -890,6 +890,7 @@ export default function App() {
             {['All datasets', 'Transfer', 'Output', 'Capacitance'].map((f) => (
               <button
                 className={filter === f ? 'selected' : ''}
+                aria-pressed={filter === f}
                 key={f}
                 onClick={() => setFilter(f)}
               >

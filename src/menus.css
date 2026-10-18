@@ -27,7 +27,7 @@
   border-radius: 5px;
   background: var(--panel-bg);
   color: var(--text-secondary);
-  font-size: 10px;
+  font-size: var(--font-small);
   text-align: left;
 }
 .select-trigger > span:first-child {
@@ -80,7 +80,7 @@
 }
 .menu-label {
   padding: 8px 9px 6px;
-  font-size: 10px;
+  font-size: var(--font-small);
   font-weight: 500;
   color: var(--muted);
 }
@@ -143,7 +143,7 @@
   height: 27px;
   max-width: 100px;
   padding: 0 7px;
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .plot-tile .chart-tools .select-trigger {
   margin-right: auto;

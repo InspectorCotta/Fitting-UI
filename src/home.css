@@ -28,7 +28,7 @@
 }
 .home-beta {
   color: var(--muted);
-  font-size: 8px;
+  font-size: var(--font-small);
   font-weight: 500;
   letter-spacing: 1px;
   border: 1px solid var(--line-strong);
@@ -65,7 +65,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 10px;
+  font-size: var(--font-small);
   white-space: nowrap;
 }
 .home-featured-project {
@@ -94,7 +94,7 @@
   align-items: center;
   gap: 6px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .home-project-copy h3 {
   font-size: 24px;
@@ -120,7 +120,7 @@
   border-radius: 4px;
   padding: 4px 6px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .home-resume {
   display: flex;
@@ -156,7 +156,7 @@
 }
 .home-device-preview > span {
   color: var(--muted);
-  font-size: 7px;
+  font-size: var(--font-small);
   letter-spacing: 0.8px;
   text-align: center;
   line-height: 1.7;
@@ -198,14 +198,14 @@
 }
 .home-recent-list small {
   display: block;
-  font-size: 9px;
+  font-size: var(--font-small);
   color: var(--muted);
   margin-top: 6px;
 }
 .home-recent-list time {
   margin-left: auto;
   padding-left: 8px;
-  font-size: 9px;
+  font-size: var(--font-small);
   color: var(--muted);
   white-space: nowrap;
 }
@@ -219,7 +219,7 @@
   gap: 7px;
   margin-top: 21px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
   line-height: 1.7;
 }
 .home-storage-note svg {
@@ -263,7 +263,7 @@
 .home-workflow small {
   display: block;
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--font-small);
   line-height: 1.7;
   margin-top: 6px;
 }
@@ -284,7 +284,7 @@
 }
 .home-library-summary dt {
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .home-library-summary dd {
   font-size: 20px;
@@ -296,7 +296,7 @@
   align-items: center;
   gap: 6px;
   margin-top: 22px;
-  font-size: 9px;
+  font-size: var(--font-small);
   color: var(--muted);
 }
 .home-footer {
@@ -308,7 +308,7 @@
   padding-top: 20px;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .home-footer > button {
   display: flex;
@@ -369,7 +369,7 @@
     margin-top: 32px;
   }
   .home-recent-list time {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
 }
 @media (prefers-reduced-motion: reduce) {

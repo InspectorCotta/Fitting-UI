@@ -1,0 +1,180 @@
+/* Shared selection, control sizing, and readable supporting text. */
+:is(:root, :root[data-theme])
+:is(
+  .segmented button.selected,
+  .layout-segment button[aria-pressed="true"],
+  .plot-tile-bar button[aria-pressed="true"],
+  .select-item[data-state="checked"],
+  .sidebar-button.active
+) {
+  background: var(--selected-bg);
+  color: var(--blue);
+  box-shadow: none;
+}
+:is(:root, :root[data-theme]) .sidebar-button.active {
+  border-color: var(--blue);
+}
+.select-indicator {
+  color: var(--blue);
+}
+.plot-filter-options input,
+.plot-filter-tuning input {
+  accent-color: var(--blue);
+}
+:root .data-table .selected-row {
+  background: var(--selected-bg);
+}
+.data-table .selected-row > td:first-child {
+  box-shadow: inset 2px 0 var(--blue);
+}
+:root .btn {
+  min-height: var(--control-size);
+}
+:root .btn-icon,
+.scientific-chart .chart-tools .btn,
+.spice-editor-heading .btn,
+.dialog-content > .dialog-close {
+  width: var(--control-size);
+  min-width: var(--control-size);
+  height: var(--control-size);
+  min-height: var(--control-size);
+}
+.scientific-chart .chart-tools .btn svg {
+  width: 16px;
+  height: 16px;
+}
+.chart-tools .select-trigger,
+.plot-tile .chart-tools .select-trigger,
+.select-trigger,
+.plot-filter-trigger {
+  min-height: var(--control-size);
+  height: auto;
+  font-size: var(--font-small);
+}
+:is(.dialog-content, .spice-settings)
+  input:not([type="checkbox"]):not([type="file"]):not([type="hidden"]) {
+  min-height: var(--control-size);
+}
+.chart-tools .select-trigger,
+.plot-tile .chart-tools .select-trigger {
+  min-width: 106px;
+  max-width: none;
+}
+.segmented button,
+.layout-segment button,
+.plot-tile-bar button,
+.plot-filter-footer button,
+.scientific-legend button {
+  min-height: var(--control-size);
+  min-width: var(--control-size);
+}
+.layout-segment button,
+.plot-tile-bar button {
+  width: var(--control-size);
+  height: var(--control-size);
+  flex-shrink: 0;
+}
+.plot-tile-bar button svg {
+  width: 16px;
+  height: 16px;
+}
+.scientific-legend button {
+  padding: 4px 6px;
+}
+.sidebar .sidebar-button {
+  width: max(38px, var(--control-size));
+  height: max(38px, var(--control-size));
+}
+.select-item,
+:is(:root, :root[data-theme]) .dropdown > button {
+  min-height: var(--control-size);
+}
+.plot-tile-bar {
+  height: auto;
+  min-height: calc(var(--control-size) + 8px);
+  flex-wrap: wrap;
+  padding: 4px 8px;
+}
+.plot-tile-bar > div,
+.scientific-chart .chart-tools {
+  gap: 6px;
+}
+.workbench-toolbar,
+.workbench-actions,
+.filter-bar,
+.segmented,
+.spice-plot-tabs {
+  flex-wrap: wrap;
+}
+.workbench-actions {
+  margin-left: auto;
+}
+.view-picker {
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+.view-picker > .select-trigger {
+  min-width: 0;
+  flex: 1 1 120px;
+}
+.plot-resize-handle {
+  min-height: var(--resize-hit-size);
+}
+.curve-cursor-tooltip {
+  width: 240px;
+}
+.curve-tooltip-heading,
+.curve-tooltip-value {
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+.curve-tooltip-value b {
+  margin-left: auto;
+}
+:root
+  :is(
+    .chart-foot,
+    .workbench-foot,
+    .workspace-footer,
+    .notes-footer,
+    .plot-tile-bar,
+    .scientific-chart .chart-heading p,
+    .scientific-legend,
+    .curve-tooltip-heading > span,
+    .curve-tooltip-value > span,
+    .curve-tooltip-value small
+  ) {
+  color: var(--text-secondary);
+}
+.workbench-foot,
+.workspace-footer,
+.notes-footer,
+.chart-foot {
+  flex-wrap: wrap;
+  line-height: 1.5;
+}
+@media (pointer: coarse) {
+  :root {
+    --control-size: 44px;
+    --resize-hit-size: 32px;
+    --sidebar-width: 60px;
+  }
+  .sidebar {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .sidebar-nav {
+    flex: 0 0 auto;
+    width: auto;
+    overflow: visible;
+  }
+  .sidebar-footer {
+    flex-shrink: 0;
+  }
+  .select-item,
+  :is(:root, :root[data-theme]) .dropdown button,
+  .plot-filter-options > label,
+  .plot-filter-tuning {
+    min-height: var(--control-size);
+  }
+}

@@ -29,7 +29,7 @@
 }
 .spice-engine-note span {
   display: block;
-  font-size: 10px;
+  font-size: var(--font-small);
   line-height: 1.7;
   margin-top: 4px;
 }
@@ -84,7 +84,7 @@
   gap: 12px;
   padding: 10px 13px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .spice-editor-legend > span:first-child {
   display: flex;
@@ -101,7 +101,7 @@
 }
 .spice-editor-footer {
   border-top: 1px solid var(--line);
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .spice-code {
   height: 464px;
@@ -135,7 +135,7 @@
 .spice-line-number {
   color: var(--muted);
   opacity: 0.55;
-  font-size: 9px;
+  font-size: var(--font-small);
   user-select: none;
   text-align: right;
   padding-right: 12px;
@@ -224,11 +224,11 @@
   gap: 7px;
   padding: 3px 0;
   color: var(--text-secondary);
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .spice-structure-bar small {
   color: var(--muted);
-  font-size: 8px;
+  font-size: var(--font-small);
   margin-left: 2px;
 }
 .spice-structure-bar > button:hover {
@@ -238,7 +238,7 @@
   transform: rotate(-90deg);
 }
 .spice-structure-bar .spice-expand-all {
-  font-size: 9px;
+  font-size: var(--font-small);
   color: var(--blue);
 }
 .spice-structure-list {
@@ -264,7 +264,7 @@
   background: var(--hover-bg);
 }
 .spice-structure-kind {
-  font-size: 7px;
+  font-size: var(--font-small);
   letter-spacing: 0.4px;
   color: var(--blue);
   min-width: 36px;
@@ -280,7 +280,7 @@
 }
 .spice-structure-list small {
   margin-left: auto;
-  font-size: 8px;
+  font-size: var(--font-small);
   color: var(--muted);
   flex-shrink: 0;
 }
@@ -349,7 +349,7 @@
 }
 .spice-settings > label:not(.spice-check-option) {
   display: block;
-  font-size: 10px;
+  font-size: var(--font-small);
   color: var(--text-secondary);
   margin-top: 20px;
 }
@@ -370,7 +370,7 @@
   border-color: var(--error-text);
 }
 .spice-field-error {
-  font-size: 10px;
+  font-size: var(--font-small);
   line-height: 1.6;
   margin-top: 7px;
   color: var(--error-text);
@@ -379,7 +379,7 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 10px;
+  font-size: var(--font-small);
   line-height: 1.5;
   margin-top: 17px;
   color: var(--text-secondary);
@@ -392,7 +392,7 @@
   display: block;
   color: var(--muted);
   margin-top: 4px;
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .spice-fitted-heading {
   display: flex;
@@ -404,7 +404,7 @@
   border-top: 1px solid var(--line);
 }
 .spice-fitted-heading > span {
-  font-size: 8px;
+  font-size: var(--font-small);
   color: var(--muted);
 }
 .spice-parameter-list {
@@ -434,14 +434,14 @@
 .spice-parameter-list small {
   display: block;
   color: var(--muted);
-  font-size: 8px;
+  font-size: var(--font-small);
   margin-top: 4px;
 }
 .spice-parameter-list button:hover strong {
   color: var(--green);
 }
 .spice-settings-foot {
-  font-size: 9px;
+  font-size: var(--font-small);
   line-height: 1.7;
   color: var(--muted);
   margin-top: 14px;
@@ -465,7 +465,7 @@
   font-weight: 550;
 }
 .spice-verification-heading p {
-  font-size: 10px;
+  font-size: var(--font-small);
   color: var(--muted);
   margin-top: 7px;
   line-height: 1.7;
@@ -482,13 +482,13 @@
   font-weight: 500;
 }
 .spice-run-status small {
-  font-size: 9px;
+  font-size: var(--font-small);
   color: var(--muted);
 }
 .spice-run-status > span:last-child {
   margin-left: auto;
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .spice-run-status.needs-review {
   color: var(--curve-3);
@@ -514,7 +514,7 @@
   align-items: center;
   gap: 7px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .spice-run-steps > li > span {
   display: grid;
@@ -523,7 +523,7 @@
   height: 17px;
   border-radius: 50%;
   border: 1px solid var(--line-strong);
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .spice-run-steps > .done {
   color: var(--green);
@@ -559,7 +559,7 @@
 }
 .spice-comparison-summary th {
   padding: 10px;
-  font-size: 10px;
+  font-size: var(--font-small);
   font-weight: 500;
   color: var(--muted);
   border-bottom: 1px solid var(--line-strong);
@@ -573,7 +573,7 @@
 .spice-comparison-summary td small {
   display: block;
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
   margin-top: 5px;
 }
 .spice-comparison-summary td button {
@@ -584,7 +584,7 @@
 }
 .spice-comparison-summary p {
   margin-top: 10px;
-  font-size: 9px;
+  font-size: var(--font-small);
   color: var(--muted);
   line-height: 1.7;
 }
@@ -592,7 +592,7 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 9px;
+  font-size: var(--font-small);
   white-space: nowrap;
 }
 .spice-result.pass {
@@ -616,7 +616,7 @@
   padding: 13px 10px;
   border-bottom: 2px solid transparent;
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .spice-plot-tabs > button[aria-selected="true"] {
   color: var(--text);
@@ -625,13 +625,13 @@
 .spice-plot-tabs > span {
   margin-left: auto;
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .spice-coverage-note {
   padding: 14px 18px;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
   line-height: 1.7;
 }
 .spice-coverage-note a {
@@ -693,6 +693,6 @@
     margin-left: 26px;
   }
   .spice-editor-legend > span:last-child {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
 }

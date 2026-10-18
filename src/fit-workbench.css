@@ -10,7 +10,7 @@
   line-height: 1.5;
 }
 .scientific-chart .chart-heading p {
-  font-size: 9px;
+  font-size: var(--font-small);
   line-height: 1.5;
 }
 .scientific-chart .chart-tools {
@@ -47,7 +47,7 @@
   background: var(--panel-bg);
   box-shadow: 0 3px 12px #0002;
   color: var(--text-secondary);
-  font-size: 9px;
+  font-size: var(--font-small);
   line-height: 1.35;
   font-variant-numeric: tabular-nums;
 }
@@ -66,12 +66,12 @@
   flex-shrink: 0;
 }
 .curve-tooltip-heading > strong {
-  font-size: 9px;
+  font-size: var(--font-small);
   font-weight: 550;
 }
 .curve-tooltip-heading > span {
   margin-left: auto;
-  font-size: 8px;
+  font-size: var(--font-small);
   color: var(--muted);
 }
 .curve-tooltip-value {
@@ -87,15 +87,15 @@
   align-items: center;
   gap: 5px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .curve-tooltip-value b {
-  font-size: 9px;
+  font-size: var(--font-small);
   font-weight: 500;
   color: var(--text);
 }
 .curve-tooltip-value small {
-  font-size: 7px;
+  font-size: var(--font-small);
   font-weight: 400;
   color: var(--muted);
 }
@@ -134,7 +134,7 @@
 .plot-tile .chart-tools select {
   max-width: 85px;
   padding-right: 13px;
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .plot-tile .chart-tools .btn {
   width: 22px;
@@ -177,7 +177,7 @@
   gap: 10px 13px;
   padding: 10px 1px 12px;
   color: var(--text-secondary);
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .scientific-legend > span {
   display: inline-flex;
@@ -204,7 +204,7 @@
   align-items: center;
   gap: 5px;
   padding: 0;
-  font-size: 9px;
+  font-size: var(--font-small);
   white-space: nowrap;
 }
 .series-toggles button[aria-pressed="false"] {
@@ -221,11 +221,11 @@
   align-items: center;
   margin-left: auto;
   color: var(--muted);
-  font-size: 8px;
+  font-size: var(--font-small);
   padding: 0;
 }
 .scientific-chart .chart-foot {
-  font-size: 8px;
+  font-size: var(--font-small);
   flex-wrap: wrap;
   padding: 10px 0;
 }
@@ -254,7 +254,7 @@
 }
 .view-picker > label {
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .view-picker select {
   appearance: auto;
@@ -263,7 +263,7 @@
   border: 1px solid var(--line-strong);
   border-radius: 5px;
   padding: 8px 24px 8px 10px;
-  font-size: 10px;
+  font-size: var(--font-small);
   color: var(--text);
 }
 .view-save-state {
@@ -271,7 +271,7 @@
   align-items: center;
   gap: 3px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
   white-space: nowrap;
 }
 .view-save-state svg {
@@ -294,7 +294,7 @@
   border-radius: 5px;
   background: var(--panel-bg);
   color: var(--text-secondary);
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .plot-filter-trigger:hover,
 .plot-filter-trigger[aria-expanded="true"] {
@@ -311,7 +311,7 @@
 }
 .plot-filter-count {
   padding: 2px 4px;
-  font-size: 8px;
+  font-size: var(--font-small);
   border-radius: 3px;
   color: var(--muted);
   background: var(--raised-bg);
@@ -336,14 +336,14 @@
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 10px;
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 .plot-filter-heading strong {
   font-weight: 550;
   color: var(--text);
 }
 .plot-filter-heading > span {
-  font-size: 9px;
+  font-size: var(--font-small);
   color: var(--muted);
 }
 .plot-filter-options {
@@ -383,7 +383,7 @@
   display: block;
   margin-top: 4px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
 }
 .plot-filter-tuning {
   display: flex;
@@ -393,7 +393,7 @@
   margin-top: 9px;
   padding: 13px 6px;
   color: var(--text-secondary);
-  font-size: 10px;
+  font-size: var(--font-small);
   cursor: pointer;
 }
 .plot-filter-footer {
@@ -404,10 +404,10 @@
   border-top: 1px solid var(--line);
   padding-top: 10px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .plot-filter-footer button {
-  font-size: 10px;
+  font-size: var(--font-small);
   color: var(--blue);
   padding: 2px 3px;
 }
@@ -515,7 +515,7 @@
   border-bottom: 1px solid var(--line);
   background: var(--panel-bg);
   color: var(--muted);
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .plot-tile-bar > span > b {
   margin: 0 4px;
@@ -565,7 +565,7 @@
   font-size: 11px;
 }
 .plot-tile .chart-heading p {
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .plot-tile .chart-tools {
   margin-left: 0;
@@ -587,16 +587,16 @@
   gap: 9px;
 }
 .plot-tile .series-toggles button {
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .plot-tile .scientific-legend > span {
-  font-size: 8px;
+  font-size: var(--font-small);
 }
 .plot-tile .scientific-legend .legend-reset {
   margin-left: auto;
 }
 .plot-tile .chart-foot {
-  font-size: 7px;
+  font-size: var(--font-small);
 }
 .plot-tile .chart-foot > span:last-child {
   display: none;
@@ -623,7 +623,7 @@
   flex-wrap: wrap;
   gap: 10px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: var(--font-small);
   padding: 13px 1px 0;
 }
 .workbench-foot > span {
@@ -674,7 +674,7 @@
 .arrange-plot-row small {
   display: block;
   color: var(--muted);
-  font-size: 9px;
+  font-size: var(--font-small);
   margin-top: 5px;
 }
 .arrange-plot-row > div {
@@ -684,7 +684,7 @@
   margin: 13px 0 0 22px;
 }
 .arrange-plot-row > div > label {
-  font-size: 9px;
+  font-size: var(--font-small);
   color: var(--muted);
   display: flex;
   align-items: center;
@@ -709,7 +709,7 @@
 .preset-summary > span:last-child {
   width: 100%;
   color: var(--muted);
-  font-size: 10px;
+  font-size: var(--font-small);
   margin-top: 8px;
 }
 .preset-footer > .btn:first-child:has(svg:only-child) {
@@ -787,7 +787,7 @@
     flex: 1;
   }
   .view-save-state {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
   .workbench-actions {
     margin-left: 0;
@@ -795,7 +795,7 @@
     gap: 6px;
   }
   .workbench-actions .btn {
-    font-size: 9px;
+    font-size: var(--font-small);
     padding: 6px 8px;
   }
   .plot-tile .chart-tools .btn {
@@ -809,7 +809,7 @@
     display: block;
   }
   .workbench-foot {
-    font-size: 7px;
+    font-size: var(--font-small);
   }
   .wafer-art {
     height: max(360px, 120%);
@@ -819,6 +819,6 @@
     opacity: 0.45;
   }
   .scientific-legend {
-    font-size: 8px;
+    font-size: var(--font-small);
   }
 }
