@@ -279,7 +279,7 @@ export function SpiceCode({
         onOpenChange={setExpanded}
         title={artifact.filename}
         description="The complete exported library. Highlighted lines contain the fitted parameter values."
-        wide
+        fullscreen
       >
         {expanded && code()}
       </Dialog>

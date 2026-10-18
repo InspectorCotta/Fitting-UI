@@ -29,6 +29,7 @@ export function CurveChart({
   view,
   onViewChange,
   height,
+  fill = false,
   samples,
   modelLabel = 'Model',
 }: {
@@ -43,6 +44,7 @@ export function CurveChart({
   view?: ChartView;
   onViewChange?: (view: ChartView) => void;
   height?: number;
+  fill?: boolean;
   samples?: CurveSamples[];
   modelLabel?: string;
 }) {
@@ -166,7 +168,7 @@ export function CurveChart({
   }
   return (
     <section
-      className={`curve-chart scientific-chart ${compact ? 'compact' : ''}`}
+      className={`curve-chart scientific-chart ${compact ? 'compact' : ''} ${fill ? 'chart-fill' : ''}`}
       aria-label={`${info.short} plot`}
     >
       <div className="chart-heading">
@@ -242,7 +244,7 @@ export function CurveChart({
       <div
         ref={plotArea}
         className={`scientific-plot ${dragging === 'zoom' ? 'plot-right-zooming' : dragging === 'pan' ? 'plot-panning' : ''}`}
-        style={{ height: height || (compact ? 285 : 335) }}
+        style={fill ? undefined : { height: height || (compact ? 285 : 335) }}
         onMouseLeave={() => setHover(null)}
         onPointerDown={() => setHover(null)}
         onMouseMove={(event) => {

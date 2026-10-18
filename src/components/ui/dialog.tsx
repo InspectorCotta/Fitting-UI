@@ -9,6 +9,7 @@ export function Dialog({
   description,
   children,
   wide = false,
+  fullscreen = false,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -16,12 +17,15 @@ export function Dialog({
   description: string;
   children: ReactNode;
   wide?: boolean;
+  fullscreen?: boolean;
 }) {
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="dialog-overlay" />
-        <DialogPrimitive.Content className={`dialog-content ${wide ? 'dialog-wide' : ''}`}>
+        <DialogPrimitive.Content
+          className={`dialog-content ${wide ? 'dialog-wide' : ''} ${fullscreen ? 'dialog-fullscreen' : ''}`}
+        >
           <DialogPrimitive.Title className="dialog-title">{title}</DialogPrimitive.Title>
           <DialogPrimitive.Description className="dialog-description">
             {description}

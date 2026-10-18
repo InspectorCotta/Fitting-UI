@@ -2337,9 +2337,9 @@ export default function App() {
           onOpenChange={(v) => !v && setModal(null)}
           title="Transfer characteristics"
           description="Simulated measurements and model response across four drain biases."
-          wide
+          fullscreen
         >
-          <CurveChart shift={shift} notify={notify} />
+          <CurveChart shift={shift} notify={notify} fill />
         </Dialog>
         <Dialog
           open={modal === 'settings'}

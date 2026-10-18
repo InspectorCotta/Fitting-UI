@@ -8,6 +8,7 @@ import './fit-workbench.css';
 import './home.css';
 import './spice.css';
 import './menus.css';
+import './fullscreen.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

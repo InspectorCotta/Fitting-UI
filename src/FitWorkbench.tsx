@@ -588,7 +588,7 @@ export function FitWorkbench({
         onOpenChange={(open) => !open && setExpanded(null)}
         title={expanded ? plotInfo[expanded].title : 'Plot'}
         description="Inspect simulated measurements and the live model. View changes also update the workbench plot."
-        wide
+        fullscreen
       >
         {expandedPlot && (
           <CurveChart
@@ -596,7 +596,7 @@ export function FitWorkbench({
             shift={shift}
             view={expandedPlot.view}
             onViewChange={(view) => patchPlot(expandedPlot.id, { view })}
-            height={440}
+            fill
             notify={notify}
           />
         )}
