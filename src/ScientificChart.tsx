@@ -7,6 +7,7 @@ import { PlotlySurface } from './PlotlySurface';
 import { loadPlotly } from './plotly';
 import { CurveTooltip } from './CurveTooltip';
 import { CurveCursorHighlight } from './CurveCursorHighlight';
+import { PlotInfo } from './PlotInfo';
 import { curvePairAt, interpolateCurve, type CurvePair } from './curveHover';
 import { createFitComparisonFigure } from './savedFits';
 import { usePlotGestures } from './usePlotGestures';
@@ -26,7 +27,7 @@ export function CurveChart({
   kind: requestedKind,
   title,
   showTitle = true,
-  subtitle,
+  metadata,
   compact = false,
   onExpand,
   notify,
@@ -47,7 +48,7 @@ export function CurveChart({
   kind?: PlotKind;
   title?: string;
   showTitle?: boolean;
-  subtitle?: string;
+  metadata?: string;
   compact?: boolean;
   onExpand?: () => void;
   notify?: (message: string) => void;
@@ -65,6 +66,7 @@ export function CurveChart({
 }) {
   const kind = requestedKind || (output ? 'output' : 'transfer');
   const info = plotInfo[kind];
+  const plotMetadata = metadata || info.metadata;
   const [localView, setLocalView] = useState<ChartView>(() => defaultChartView(kind));
   const previousKind = useRef(kind);
   const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || 'black');
@@ -230,10 +232,11 @@ export function CurveChart({
       aria-label={`${info.short} plot`}
     >
       <div className="chart-heading">
-        <div>
-          {showTitle && <h3>{title || info.short}</h3>}
-          <p>{subtitle || info.subtitle}</p>
-        </div>
+        {showTitle && (
+          <h3 className="chart-inline-title">
+            {title || info.short} <span>· {plotMetadata}</span>
+          </h3>
+        )}
         <div className="chart-tools">
           {onSelectRegion && (
             <Button
@@ -249,6 +252,7 @@ export function CurveChart({
             </Button>
           )}
           <Select
+            className="chart-scale-select"
             aria-label="Chart scale"
             value={activeView.scale}
             onValueChange={(scale) =>
@@ -257,8 +261,8 @@ export function CurveChart({
             groups={[
               {
                 options: [
-                  { value: 'log', label: 'Log scale' },
-                  { value: 'linear', label: 'Linear scale' },
+                  { value: 'log', label: 'log' },
+                  { value: 'linear', label: 'lin' },
                 ],
               },
             ]}
@@ -310,6 +314,21 @@ export function CurveChart({
           >
             <Download size={15} />
           </Button>
+          <PlotInfo
+            kind={kind}
+            metadata={plotMetadata}
+            selecting={selecting}
+            visibleSeries={info.series.filter((_, i) => !activeView.hidden.includes(i)).length}
+            totalPoints={info.series.reduce(
+              (count, _, i) => count + (samples?.[i]?.x.length ?? 29),
+              0,
+            )}
+            visiblePoints={info.series.reduce(
+              (count, _, i) =>
+                count + (activeView.hidden.includes(i) ? 0 : (samples?.[i]?.x.length ?? 29)),
+              0,
+            )}
+          />
         </div>
       </div>
       {selecting && (
@@ -414,23 +433,6 @@ export function CurveChart({
         <button className="legend-reset" onClick={reset} aria-label="Reset view" title="Reset view">
           <RotateCcw size={14} />
         </button>
-      </div>
-      <div className="chart-foot">
-        <span>
-          <i className="tiny-dot" />
-          {info.series.length - activeView.hidden.length}{' '}
-          {kind === 'capacitance' ? 'capacitances' : 'bias conditions'}
-          <b>·</b>
-          {samples
-            ? samples.reduce((count, series) => count + series.x.length, 0)
-            : info.series.length * 29}{' '}
-          measured points
-        </span>
-        <span>
-          {selecting
-            ? 'Left-drag select · right-drag zoom · Escape cancels a drag'
-            : 'Left-drag pan · right-drag zoom · wheel zoom'}
-        </span>
       </div>
     </section>
   );

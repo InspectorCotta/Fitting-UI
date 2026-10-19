@@ -79,9 +79,9 @@ it('overlays supplied curves, inspects A and B values, and shares fullscreen cha
   );
   await user.click(screen.getByRole('button', { name: 'Expand chart' }));
   const expanded = within(screen.getByRole('dialog', { name: 'Output fit comparison' }));
-  await chooseOption(user, expanded.getByRole('combobox', { name: 'Chart scale' }), 'Log scale');
+  await chooseOption(user, expanded.getByRole('combobox', { name: 'Chart scale' }), 'log');
   await user.click(expanded.getByRole('button', { name: 'Close dialog' }));
-  expect(screen.getByRole('combobox', { name: 'Chart scale' })).toHaveTextContent('Log scale');
+  expect(screen.getByRole('combobox', { name: 'Chart scale' })).toHaveTextContent('log');
 });
 it('keeps empty libraries empty and blocks overlays for incompatible snapshots', async () => {
   const user = userEvent.setup();

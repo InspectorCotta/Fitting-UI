@@ -63,7 +63,7 @@
   margin: 0;
 }
 .chart-fill .chart-heading h3 {
-  display: none;
+  display: block;
 }
 .chart-fill .chart-heading p {
   font-size: 11px;

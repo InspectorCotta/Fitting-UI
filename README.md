@@ -67,6 +67,8 @@ Comparisons require the same model family, measurement-set identity, and referen
 
 ## Plot interaction and design notes
 
+Plot titles keep sweep, temperature, and frequency metadata inline; device identity comes from the project. Scale choices are `lin` and `log`. The **Plot information** button opens a themed, non-modal popover with visible bias/capacitance counts, total measured points, measured points on visible traces, and gesture help. Escape, the close button, or an outside interaction dismisses it; Escape inside an expanded plot closes only the popover. The compact layout removes the former metadata and count footer rows while retaining accessible controls.
+
 The remaining plot-density ideas are recorded in [DESIGN_BACKLOG.md](DESIGN_BACKLOG.md).
 
 Cursor readouts also highlight their exact interpolated plot coordinates: an open measured ring, a filled model dot, and an outlined candidate diamond in comparison views. A brief acquisition halo settles into static markers; reduced motion disables the halo. The pointer-transparent, clipped overlay follows Plotly's rendered axis rectangle, respects linear/log scales, clears during view changes and gestures, and never redraws or modifies curve data. SVG chart exports contain the scientific figure without this transient overlay.

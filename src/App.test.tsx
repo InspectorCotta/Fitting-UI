@@ -140,10 +140,10 @@ describe('MOSFit workbench', () => {
     expect(bias).toHaveAttribute('aria-pressed', 'false');
     await user.click(bias);
     expect(bias).toHaveAttribute('aria-pressed', 'true');
-    await chooseOption(user, screen.getByRole('combobox', { name: 'Chart scale' }), 'Linear scale');
-    expect(screen.getByRole('combobox', { name: 'Chart scale' })).toHaveTextContent('Linear scale');
+    await chooseOption(user, screen.getByRole('combobox', { name: 'Chart scale' }), 'lin');
+    expect(screen.getByRole('combobox', { name: 'Chart scale' })).toHaveTextContent('lin');
     await user.click(screen.getByRole('button', { name: 'Reset chart' }));
-    expect(screen.getByRole('combobox', { name: 'Chart scale' })).toHaveTextContent('Log scale');
+    expect(screen.getByRole('combobox', { name: 'Chart scale' })).toHaveTextContent('log');
   });
   it('consolidates workspace navigation and tools in the sidebar', async () => {
     const user = userEvent.setup();

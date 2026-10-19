@@ -427,8 +427,12 @@ export function FitWorkbench({
                   >
                     <GripVertical size={13} />
                   </span>
-                  <span>
+                  <span
+                    className="plot-tile-title"
+                    title={`${plotInfo[p.id].short} · ${plotInfo[p.id].metadata}`}
+                  >
                     {String(index + 1).padStart(2, '0')} <b>/</b> {plotInfo[p.id].short}
+                    <span className="plot-title-metadata"> · {plotInfo[p.id].metadata}</span>
                   </span>
                   <div>
                     <button

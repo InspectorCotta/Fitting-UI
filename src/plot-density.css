@@ -1,0 +1,64 @@
+.plot-tile-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.plot-title-metadata {
+  color: var(--text-secondary);
+}
+.scientific-chart .chart-inline-title {
+  margin: 0;
+  line-height: 1.5;
+}
+.chart-inline-title > span {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+:root .scientific-chart .chart-tools .chart-scale-select {
+  width: 62px;
+  min-width: 62px;
+  max-width: 62px;
+}
+.plot-info-popover {
+  position: fixed;
+  z-index: 160;
+  width: 280px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  padding: 12px 14px 14px;
+}
+.plot-info-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.plot-info-heading > h2 {
+  font-size: 12px;
+  font-weight: 550;
+}
+.plot-info-popover p {
+  font-size: var(--font-small);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.plot-info-counts {
+  padding: 12px 0;
+  margin: 12px 0;
+  border-block: 1px solid var(--line);
+}
+.plot-info-counts p {
+  color: var(--text);
+}
+.plot-info-counts p + p {
+  margin-top: 7px;
+}
+.plot-info-counts span {
+  color: var(--muted);
+}
+.plot-info-popover .plot-info-help {
+  margin: 0;
+}

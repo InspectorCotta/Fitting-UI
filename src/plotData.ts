@@ -20,7 +20,7 @@ export const plotInfo = {
   transfer: {
     short: 'Transfer',
     title: 'Transfer Characteristics (Ids–Vgs)',
-    subtitle: 'GAA nanosheet · Vds sweep · 300 K',
+    metadata: 'Vds sweep · 300 K',
     x: 'Vgs [V]',
     y: 'Ids [A/µm]',
     unit: 'A/µm',
@@ -30,7 +30,7 @@ export const plotInfo = {
   output: {
     short: 'Output',
     title: 'Output Characteristics (Ids–Vds)',
-    subtitle: 'GAA nanosheet · Vgs sweep · 300 K',
+    metadata: 'Vgs sweep · 300 K',
     x: 'Vds [V]',
     y: 'Ids [mA/µm]',
     unit: 'mA/µm',
@@ -40,7 +40,7 @@ export const plotInfo = {
   capacitance: {
     short: 'Capacitance',
     title: 'Capacitance Characteristics (C–V)',
-    subtitle: 'GAA nanosheet · Vds = 0.05 V · 1 MHz · 300 K',
+    metadata: 'Vds = 0.05 V · 1 MHz · 300 K',
     x: 'Vgs [V]',
     y: 'C [fF/µm]',
     unit: 'fF/µm',

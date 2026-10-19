@@ -151,7 +151,7 @@ describe('configurable Plotly workbench', () => {
     const user = userEvent.setup();
     mount();
     const output = within(screen.getByRole('region', { name: 'Output plot panel' }));
-    await chooseOption(user, output.getByRole('combobox', { name: 'Chart scale' }), 'Log scale');
+    await chooseOption(user, output.getByRole('combobox', { name: 'Chart scale' }), 'log');
     await user.click(output.getByRole('button', { name: 'Vgs = 0.4 V' }));
     await user.click(output.getByRole('button', { name: 'Zoom in' }));
     await user.click(screen.getByRole('button', { name: 'Save view' }));
@@ -179,7 +179,7 @@ describe('configurable Plotly workbench', () => {
       within(screen.getByRole('region', { name: 'Output plot panel' })).getByRole('combobox', {
         name: 'Chart scale',
       }),
-    ).toHaveTextContent('Log scale');
+    ).toHaveTextContent('log');
     await user.click(screen.getByRole('button', { name: '1 column' }));
     await user.click(screen.getByRole('button', { name: 'Save view' }));
     await user.click(screen.getByRole('button', { name: 'Update preset' }));

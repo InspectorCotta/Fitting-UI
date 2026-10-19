@@ -513,7 +513,7 @@ export function SpiceExport({
                     kind={chosen.kind}
                     samples={chosen.series}
                     modelLabel="Exported model (demo)"
-                    subtitle="Bundled synthetic measurements · 300 K · browser replay"
+                    metadata="Bundled synthetic measurements · 300 K · browser replay"
                     height={330}
                     notify={notify}
                   />
