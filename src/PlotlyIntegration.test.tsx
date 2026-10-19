@@ -56,6 +56,29 @@ it('resets and changes scales after native zoom in the persisted workbench', asy
 });
 afterEach(cleanup);
 
+it('renders the selected physical log-axis rectangle and focused candidate using real Plotly', async () => {
+  localStorage.clear();
+  const user = userEvent.setup();
+  render(<FitWorkbench shift={0.025} parameters={null} notify={vi.fn()} />);
+  await user.click(screen.getByRole('button', { name: 'Try an example' }));
+  const dialog = within(screen.getByRole('dialog'));
+  const graph = dialog.getByRole('img', { name: /Simulated Transfer/ }) as PlotlyHTMLElement;
+  await waitFor(() =>
+    expect(graph.layout?.shapes?.[0]).toMatchObject({ x0: -0.15, x1: 0.25, y0: 1e-11, y1: 1e-3 }),
+  );
+  const path = graph.querySelector('.shapelayer path');
+  expect(path?.getAttribute('d')).toMatch(/^M/);
+  expect(path?.getAttribute('d')).not.toContain('NaN');
+  await user.click(dialog.getByRole('button', { name: 'Investigate selection' }));
+  await dialog.findByRole('button', { name: 'Run focused demo fit' }, { timeout: 2500 });
+  await user.click(dialog.getByRole('button', { name: 'Run focused demo fit' }));
+  await waitFor(() => expect(graph.data).toHaveLength(12), { timeout: 2500 });
+  expect(graph.layout.shapes?.[0]).toMatchObject({ y0: 1e-11, y1: 1e-3 });
+  await chooseOption(user, dialog.getByRole('combobox', { name: 'Chart scale' }), 'Linear scale');
+  await waitFor(() => expect(graph.layout.yaxis?.type).toBe('linear'));
+  expect(graph.layout.shapes?.[0]).toMatchObject({ y0: 1e-11, y1: 1e-3 });
+});
+
 it('zooms at the cursor while holding left pan, then continues panning without reverting the zoom', async () => {
   localStorage.clear();
   render(<FitWorkbench shift={0} parameters={null} notify={vi.fn()} />);

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Download, Expand, Focus, Minus, Plus, RotateCcw } from 'lucide-react';
+import { Download, Expand, Focus, Minus, Plus, RotateCcw, Scan } from 'lucide-react';
 import type { PlotMouseEvent } from 'plotly.js';
 import { Button } from './components/ui/button';
 import { Select } from './components/ui/select';
@@ -9,6 +9,7 @@ import { CurveTooltip } from './CurveTooltip';
 import { curvePairAt, interpolateCurve, type CurvePair } from './curveHover';
 import { createFitComparisonFigure } from './savedFits';
 import { usePlotGestures } from './usePlotGestures';
+import { regionFromAxes, type FitRegion } from './fitInvestigation';
 import {
   createFigure,
   defaultChartView,
@@ -34,6 +35,10 @@ export function CurveChart({
   samples,
   modelLabel = 'Model',
   comparison,
+  region,
+  selecting = false,
+  onSelectingChange,
+  onSelectRegion,
 }: {
   shift?: number;
   output?: boolean;
@@ -50,6 +55,10 @@ export function CurveChart({
   samples?: CurveSamples[];
   modelLabel?: string;
   comparison?: { label: string; samples: CurveSamples[] };
+  region?: FitRegion;
+  selecting?: boolean;
+  onSelectingChange?: (selecting: boolean) => void;
+  onSelectRegion?: (region: FitRegion) => void;
 }) {
   const kind = requestedKind || (output ? 'output' : 'transfer');
   const info = plotInfo[kind];
@@ -87,15 +96,46 @@ export function CurveChart({
     if (onViewChange) onViewChange(next);
     else setLocalView(next);
   }
-  const figure = useMemo(
-    () =>
+  const figure = useMemo(() => {
+    const result =
       comparison && samples
         ? createFitComparisonFigure(kind, samples, comparison.samples, activeView, theme)
-        : createFigure(kind, shift, activeView, theme, samples),
-    [kind, shift, activeView, theme, samples, comparison],
-  );
-  const { zoomBox, dragging } = usePlotGestures(plotArea, plotRef, figure.layout, update, () =>
-    setHover(null),
+        : createFigure(kind, shift, activeView, theme, samples);
+    if (region?.kind === kind)
+      result.layout.shapes = [
+        {
+          type: 'rect',
+          xref: 'x',
+          yref: 'y',
+          x0: region.xRange[0],
+          x1: region.xRange[1],
+          y0: region.yRange[0],
+          y1: region.yRange[1],
+          fillcolor: theme === 'white' ? 'rgba(79,95,214,.09)' : 'rgba(113,136,255,.12)',
+          line: { color: theme === 'white' ? '#4f5fd6' : '#7188ff', width: 1.5, dash: 'dot' },
+          layer: 'below',
+        },
+      ];
+    return result;
+  }, [kind, shift, activeView, theme, samples, comparison, region]);
+  function selectRange(range: { xRange: [number, number]; yRange: [number, number] }) {
+    onSelectRegion?.(
+      regionFromAxes(
+        kind,
+        range.xRange,
+        range.yRange,
+        activeView.scale === 'log',
+        activeView.hidden,
+      ),
+    );
+  }
+  const { zoomBox, dragging } = usePlotGestures(
+    plotArea,
+    plotRef,
+    figure.layout,
+    update,
+    () => setHover(null),
+    onSelectRegion ? { enabled: selecting, onSelect: selectRange } : undefined,
   );
   useEffect(() => setHover(null), [kind, activeView, shift, samples, comparison]);
   function inspect(event: PlotMouseEvent) {
@@ -192,6 +232,19 @@ export function CurveChart({
           <p>{subtitle || info.subtitle}</p>
         </div>
         <div className="chart-tools">
+          {onSelectRegion && (
+            <Button
+              variant="outline"
+              size="sm"
+              aria-label="Investigate region"
+              aria-pressed={selecting}
+              onClick={() => onSelectingChange?.(!selecting)}
+              title="Select a region for the demo agent"
+            >
+              <Scan size={15} />
+              <span>Investigate</span>
+            </Button>
+          )}
           <Select
             aria-label="Chart scale"
             value={activeView.scale}
@@ -256,9 +309,26 @@ export function CurveChart({
           </Button>
         </div>
       </div>
+      {selecting && (
+        <div className="region-selection-hint" role="status">
+          <span>Drag a box around the reference points to investigate.</span>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() =>
+              selectRange({
+                xRange: figure.layout.xaxis!.range! as [number, number],
+                yRange: figure.layout.yaxis!.range! as [number, number],
+              })
+            }
+          >
+            Use visible range
+          </Button>
+        </div>
+      )}
       <div
         ref={plotArea}
-        className={`scientific-plot ${dragging === 'zoom' ? 'plot-right-zooming' : dragging === 'pan' ? 'plot-panning' : ''}`}
+        className={`scientific-plot ${selecting ? 'plot-selecting' : ''} ${dragging === 'zoom' ? 'plot-right-zooming' : dragging === 'pan' ? 'plot-panning' : dragging === 'select' ? 'plot-region-selecting' : ''}`}
         style={fill ? undefined : { height: height || (compact ? 285 : 335) }}
         onMouseLeave={() => setHover(null)}
         onPointerDown={() => setHover(null)}
@@ -288,7 +358,13 @@ export function CurveChart({
             candidateLabel={comparison?.label}
           />
         )}
-        {zoomBox && <div className="plot-right-zoom-box" style={zoomBox} aria-hidden="true" />}
+        {zoomBox && (
+          <div
+            className={`plot-right-zoom-box ${dragging === 'select' ? 'plot-region-box' : ''}`}
+            style={zoomBox}
+            aria-hidden="true"
+          />
+        )}
       </div>
       <div className="scientific-legend">
         <span>
@@ -339,7 +415,11 @@ export function CurveChart({
             : info.series.length * 29}{' '}
           measured points
         </span>
-        <span>Left-drag pan · right-drag zoom · wheel zoom</span>
+        <span>
+          {selecting
+            ? 'Left-drag select · right-drag zoom · Escape cancels a drag'
+            : 'Left-drag pan · right-drag zoom · wheel zoom'}
+        </span>
       </div>
     </section>
   );

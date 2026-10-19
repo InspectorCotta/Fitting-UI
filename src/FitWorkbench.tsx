@@ -13,6 +13,8 @@ import {
   Maximize2,
   RotateCcw,
   Save,
+  Scan,
+  Sparkles,
   Settings2,
   Trash2,
   X,
@@ -23,6 +25,12 @@ import { Dialog } from './components/ui/dialog';
 import { Select } from './components/ui/select';
 import { CurveChart } from './Chart';
 import { plotInfo, type ChartView, type PlotKind } from './plotData';
+import { RegionInvestigation } from './RegionInvestigation';
+import {
+  snapshotForInvestigation,
+  type FitRegion,
+  type InvestigationRequest,
+} from './fitInvestigation';
 import {
   builtInPresets,
   clampHeight,
@@ -40,10 +48,14 @@ export function FitWorkbench({
   shift,
   parameters,
   notify,
+  values,
+  download,
 }: {
   shift: number;
   parameters: ReactNode;
   notify: (message: string) => void;
+  values?: number[];
+  download?: (name: string, content: string) => void;
 }) {
   const [workspace, setWorkspace] = useState(readFitWorkspace);
   const { config, selectedId } = workspace;
@@ -54,6 +66,10 @@ export function FitWorkbench({
   const [error, setError] = useState('');
   const [dragging, setDragging] = useState<PlotKind | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [selecting, setSelecting] = useState<PlotKind | null>(null);
+  const [investigation, setInvestigation] = useState<InvestigationRequest | null>(null);
+  const [agentOpen, setAgentOpen] = useState(false);
+  const reviewTrigger = useRef<HTMLButtonElement>(null);
   const filterRoot = useRef<HTMLDivElement>(null);
   const filterTrigger = useRef<HTMLButtonElement>(null);
   const resize = useRef<{ id: PlotKind; startY: number; startHeight: number } | null>(null);
@@ -136,7 +152,22 @@ export function FitWorkbench({
   }
   function choosePreset(id: string) {
     const preset = presets.find((p) => p.id === id);
-    if (preset) setWorkspace({ config: cloneConfig(preset.config), selectedId: id });
+    if (preset) {
+      setWorkspace({ config: cloneConfig(preset.config), selectedId: id });
+      setSelecting(null);
+    }
+  }
+  function investigate(region: FitRegion, source = snapshotForInvestigation(shift, values)) {
+    setInvestigation({
+      schemaVersion: 1,
+      id: crypto.randomUUID(),
+      region,
+      source,
+      prompt: 'Improve the fit in this region while preserving the fit elsewhere.',
+    });
+    setExpanded(null);
+    setSelecting(null);
+    setAgentOpen(true);
   }
   function openSave() {
     setName(selectedId?.startsWith('user-') ? selected?.name || '' : 'My fit view');
@@ -324,6 +355,45 @@ export function FitWorkbench({
           </Button>
         </div>
       </div>
+      <div className="region-workbench-entry">
+        <span className="region-entry-icon">
+          <Scan size={19} />
+        </span>
+        <div>
+          <strong>Give your next fit a focus.</strong>
+          <p>
+            Choose Investigate on a plot, then draw around the mismatch. A demo agent builds a
+            focused review.
+          </p>
+        </div>
+        <div>
+          {investigation && (
+            <Button
+              ref={reviewTrigger}
+              variant="outline"
+              size="sm"
+              onClick={() => setAgentOpen(true)}
+            >
+              Review investigation
+            </Button>
+          )}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              investigate({
+                kind: 'transfer',
+                xRange: [-0.15, 0.25],
+                yRange: [1e-11, 1e-3],
+                series: [0, 1, 2, 3],
+              })
+            }
+          >
+            <Sparkles size={14} /> Try an example
+          </Button>
+        </div>
+        <span className="region-demo-badge">DEMO AGENT</span>
+      </div>
       <div className={`fit-workbench-layout ${config.showParameters ? '' : 'without-parameters'}`}>
         <div className="plot-board">
           <div className={`plot-grid plot-columns-${config.columns}`} data-testid="plot-grid">
@@ -404,6 +474,10 @@ export function FitWorkbench({
                   height={p.height}
                   onExpand={() => setExpanded(p.id)}
                   notify={notify}
+                  selecting={selecting === p.id}
+                  onSelectingChange={(active) => setSelecting(active ? p.id : null)}
+                  onSelectRegion={investigate}
+                  region={investigation?.region}
                 />
                 <div
                   className="plot-resize-handle"
@@ -598,9 +672,29 @@ export function FitWorkbench({
             onViewChange={(view) => patchPlot(expandedPlot.id, { view })}
             fill
             notify={notify}
+            selecting={selecting === expandedPlot.id}
+            onSelectingChange={(active) => setSelecting(active ? expandedPlot.id : null)}
+            onSelectRegion={investigate}
+            region={investigation?.region}
           />
         )}
       </Dialog>
+      {investigation && (
+        <RegionInvestigation
+          key={investigation.id}
+          request={investigation}
+          open={agentOpen}
+          onOpenChange={setAgentOpen}
+          download={download}
+          returnFocusRef={reviewTrigger}
+          onRegionChange={(region) => investigate(region, investigation.source)}
+          onReselect={() => {
+            setAgentOpen(false);
+            setExpanded(investigation.region.kind);
+            setSelecting(investigation.region.kind);
+          }}
+        />
+      )}
     </div>
   );
 }

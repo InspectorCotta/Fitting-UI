@@ -1267,7 +1267,10 @@ export default function App() {
           </div>
         </div>
         <FitWorkbench
+          key={activeProjectId}
           shift={shift}
+          values={values}
+          download={download}
           notify={notify}
           parameters={
             <section className="panel parameters-panel">

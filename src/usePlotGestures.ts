@@ -12,7 +12,7 @@ import {
 
 type Box = { left: number; top: number; width: number; height: number };
 type Gesture = {
-  mode: 'pan' | 'zoom';
+  mode: 'pan' | 'zoom' | 'select';
   pointerId: number;
   bounds: DOMRect;
   offset: PlotPoint;
@@ -29,11 +29,15 @@ export function usePlotGestures(
   layout: Partial<Layout>,
   onChange: (range: { xRange: AxisRange; yRange: AxisRange }) => void,
   clearHover: () => void,
+  selection?: {
+    enabled: boolean;
+    onSelect: (range: { xRange: AxisRange; yRange: AxisRange }) => void;
+  },
 ) {
-  const latest = useRef({ layout, onChange, clearHover });
-  latest.current = { layout, onChange, clearHover };
+  const latest = useRef({ layout, onChange, clearHover, selection });
+  latest.current = { layout, onChange, clearHover, selection };
   const [box, setBox] = useState<Box | null>(null);
-  const [dragging, setDragging] = useState<'pan' | 'zoom' | null>(null);
+  const [dragging, setDragging] = useState<'pan' | 'zoom' | 'select' | null>(null);
   useEffect(() => {
     const node = container.current;
     if (!node) return;
@@ -62,8 +66,15 @@ export function usePlotGestures(
       release(previous);
     }
     function start(event: PointerEvent) {
+      if (event.isPrimary === false) return;
       if (event.button !== 0 && event.button !== 2) return;
-      if (event.pointerType && event.pointerType !== 'mouse' && event.button === 0) return;
+      if (
+        event.pointerType &&
+        event.pointerType !== 'mouse' &&
+        event.button === 0 &&
+        !latest.current.selection?.enabled
+      )
+        return;
       const bounds = plotBounds(),
         { xaxis, yaxis } =
           (plot.current as Partial<PlotlyHTMLElement>)?.layout || latest.current.layout;
@@ -80,7 +91,7 @@ export function usePlotGestures(
       event.stopImmediatePropagation();
       const outer = node!.getBoundingClientRect();
       gesture = {
-        mode: event.button === 0 ? 'pan' : 'zoom',
+        mode: event.button === 0 ? (latest.current.selection?.enabled ? 'select' : 'pan') : 'zoom',
         pointerId: event.pointerId,
         bounds,
         offset: { x: bounds.left - outer.left, y: bounds.top - outer.top },
@@ -131,7 +142,7 @@ export function usePlotGestures(
       event.stopImmediatePropagation();
       const current = gesture;
       const range =
-        current.mode === 'zoom'
+        current.mode !== 'pan'
           ? rangesForSelection(
               current.start,
               position(event, current.bounds),
@@ -141,7 +152,10 @@ export function usePlotGestures(
             )
           : null;
       cancel();
-      if (range) latest.current.onChange(range);
+      if (range) {
+        if (current.mode === 'select') latest.current.selection?.onSelect(range);
+        else latest.current.onChange(range);
+      }
     }
     function mouseDown(event: MouseEvent) {
       const bounds = plotBounds();
@@ -212,6 +226,6 @@ export function usePlotGestures(
       document.removeEventListener('keydown', escape, true);
       window.removeEventListener('blur', cancel);
     };
-  }, [container, plot]);
+  }, [container, plot, selection?.enabled]);
   return { zoomBox: box, dragging };
 }
