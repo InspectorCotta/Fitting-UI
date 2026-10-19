@@ -468,6 +468,7 @@ export function FitWorkbench({
                 </div>
                 <CurveChart
                   kind={p.id}
+                  showTitle={false}
                   shift={shift}
                   view={p.view}
                   onViewChange={(view: ChartView) => patchPlot(p.id, { view })}

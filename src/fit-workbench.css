@@ -174,8 +174,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px 13px;
-  padding: 10px 1px 12px;
+  gap: 4px 10px;
+  padding: 6px 1px;
   color: var(--text-secondary);
   font-size: var(--font-small);
 }
@@ -217,8 +217,11 @@
 }
 .scientific-legend .legend-reset {
   display: flex;
-  gap: 4px;
   align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--control-size);
+  height: var(--control-size);
   margin-left: auto;
   color: var(--muted);
   font-size: var(--font-small);
@@ -561,11 +564,9 @@
 .plot-tile .scientific-chart {
   padding: 12px 10px 0;
 }
-.plot-tile .chart-heading h3 {
-  font-size: 11px;
-}
 .plot-tile .chart-heading p {
   font-size: var(--font-small);
+  margin-top: 0;
 }
 .plot-tile .chart-tools {
   margin-left: 0;
@@ -583,8 +584,7 @@
   min-height: 44px;
 }
 .plot-tile .series-toggles {
-  width: 100%;
-  gap: 9px;
+  display: contents;
 }
 .plot-tile .series-toggles button {
   font-size: var(--font-small);

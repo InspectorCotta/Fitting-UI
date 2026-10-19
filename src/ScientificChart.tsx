@@ -24,6 +24,7 @@ export function CurveChart({
   output = false,
   kind: requestedKind,
   title,
+  showTitle = true,
   subtitle,
   compact = false,
   onExpand,
@@ -44,6 +45,7 @@ export function CurveChart({
   output?: boolean;
   kind?: PlotKind;
   title?: string;
+  showTitle?: boolean;
   subtitle?: string;
   compact?: boolean;
   onExpand?: () => void;
@@ -228,7 +230,7 @@ export function CurveChart({
     >
       <div className="chart-heading">
         <div>
-          <h3>{title || info.title}</h3>
+          {showTitle && <h3>{title || info.short}</h3>}
           <p>{subtitle || info.subtitle}</p>
         </div>
         <div className="chart-tools">
@@ -400,8 +402,8 @@ export function CurveChart({
             </button>
           ))}
         </div>
-        <button className="legend-reset" onClick={reset}>
-          <RotateCcw size={11} /> Reset view
+        <button className="legend-reset" onClick={reset} aria-label="Reset view" title="Reset view">
+          <RotateCcw size={14} />
         </button>
       </div>
       <div className="chart-foot">
