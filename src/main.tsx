@@ -13,6 +13,7 @@ import './interface.css';
 import './fit-comparison.css';
 import './to220-easter-egg.css';
 import './fit-investigation.css';
+import './curve-cursor.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

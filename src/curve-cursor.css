@@ -1,0 +1,60 @@
+.curve-cursor-highlight {
+  position: absolute;
+  z-index: 6;
+  pointer-events: none;
+  overflow: hidden;
+}
+.curve-cursor-link {
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+  opacity: 0.3;
+}
+.curve-marker-core {
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+}
+.cursor-marker-model .curve-marker-core {
+  fill: currentColor;
+  stroke: var(--chart-bg);
+  stroke-width: 1;
+}
+.cursor-marker-candidate .curve-marker-core {
+  fill: none;
+  stroke-width: 1.8;
+}
+.curve-marker-halo {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: curve-cursor-acquire 320ms ease-out both;
+}
+@keyframes curve-cursor-acquire {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.55);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .curve-marker-halo {
+    animation: none;
+  }
+}
+:root:has(.app-shell.reduce-motion) .curve-marker-halo {
+  animation: none;
+}
+.tooltip-candidate {
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--muted);
+  transform: rotate(45deg);
+  margin: 0 2px;
+}

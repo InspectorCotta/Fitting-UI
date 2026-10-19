@@ -72,7 +72,7 @@ export function CurveTooltip({
       {pair.candidate !== undefined && (
         <div className="curve-tooltip-value">
           <span>
-            <i className="tooltip-model" />
+            <i className="tooltip-candidate" />
             {candidateLabel}
           </span>
           <b>

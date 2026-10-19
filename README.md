@@ -65,6 +65,12 @@ This remains a UI demonstration. `createDemoSavedFit` and `exampleSavedFits` in 
 
 Comparisons require the same model family, measurement-set identity, and reference samples; mismatches show an explanation instead of misleading overlays. Demo relative errors use a denominator floor of one millionth of each reference curve's peak magnitude to handle zero-current samples. Changes in RMS are reported as B minus A in percentage points; parameter movement is not labeled as an improvement. No backend service, credentials, or scientific fitting logic is needed to explore this workflow.
 
+## Plot interaction and design notes
+
+The remaining plot-density ideas are recorded in [DESIGN_BACKLOG.md](DESIGN_BACKLOG.md).
+
+Cursor readouts also highlight their exact interpolated plot coordinates: an open measured ring, a filled model dot, and an outlined candidate diamond in comparison views. A brief acquisition halo settles into static markers; reduced motion disables the halo. The pointer-transparent, clipped overlay follows Plotly's rendered axis rectangle, respects linear/log scales, clears during view changes and gestures, and never redraws or modifies curve data. SVG chart exports contain the scientific figure without this transient overlay.
+
 ## Region-agent integration boundary
 
 `src/fitInvestigation.ts` defines versioned `InvestigationRequest`, physical-unit `FitRegion`, a bounded `RegionBlock` component plan, and the abortable `FitAgent` adapter (`investigate` and `runFocusedFit`). `RegionInvestigation` accepts that adapter; `demoFitAgent.ts` is the only mock integration. It uses delayed, deterministic rules and captured numeric samples, with no network calls, LLM, API keys, backend, or optimizer. Different plots and prompt categories produce different hypotheses and card ordering. Hypotheses are examples for later sensitivity checks, not inferred parameter causality.

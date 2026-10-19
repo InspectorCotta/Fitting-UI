@@ -7,6 +7,44 @@ export type CurvePair = {
   model: number;
   candidate?: number;
 };
+
+export type CursorMarker = { role: 'model' | 'measured' | 'candidate'; x: number; y: number };
+/** Map the same physical values as the tooltip into the rendered Cartesian rectangle. */
+export function projectCurvePair(
+  pair: CurvePair,
+  axes: { xRange: number[]; yRange: number[]; logarithmic: boolean },
+  size: { width: number; height: number },
+): CursorMarker[] {
+  const { xRange, yRange, logarithmic } = axes;
+  if (
+    size.width <= 0 ||
+    size.height <= 0 ||
+    !Number.isFinite(size.width) ||
+    !Number.isFinite(size.height) ||
+    xRange.length !== 2 ||
+    yRange.length !== 2 ||
+    ![...xRange, ...yRange, pair.x].every(Number.isFinite) ||
+    xRange[0] === xRange[1] ||
+    yRange[0] === yRange[1]
+  )
+    return [];
+  const fractionX = (pair.x - xRange[0]) / (xRange[1] - xRange[0]);
+  if (fractionX < 0 || fractionX > 1) return [];
+  const values = [
+    { role: 'model' as const, value: pair.model },
+    { role: 'measured' as const, value: pair.measured },
+    ...(pair.candidate === undefined
+      ? []
+      : [{ role: 'candidate' as const, value: pair.candidate }]),
+  ];
+  return values.flatMap(({ role, value }) => {
+    if (!Number.isFinite(value) || (logarithmic && value <= 0)) return [];
+    const axisValue = logarithmic ? Math.log10(value) : value;
+    const fractionY = (axisValue - yRange[0]) / (yRange[1] - yRange[0]);
+    if (fractionY < 0 || fractionY > 1) return [];
+    return [{ role, x: fractionX * size.width, y: (1 - fractionY) * size.height }];
+  });
+}
 export function interpolateCurve(x: number[], y: number[], voltage: number, logarithmic: boolean) {
   if (x.length < 2 || x.length !== y.length || voltage < x[0] || voltage > x[x.length - 1])
     return null;

@@ -6,6 +6,7 @@ import { Select } from './components/ui/select';
 import { PlotlySurface } from './PlotlySurface';
 import { loadPlotly } from './plotly';
 import { CurveTooltip } from './CurveTooltip';
+import { CurveCursorHighlight } from './CurveCursorHighlight';
 import { curvePairAt, interpolateCurve, type CurvePair } from './curveHover';
 import { createFitComparisonFigure } from './savedFits';
 import { usePlotGestures } from './usePlotGestures';
@@ -139,9 +140,9 @@ export function CurveChart({
     () => setHover(null),
     onSelectRegion ? { enabled: selecting, onSelect: selectRange } : undefined,
   );
-  useEffect(() => setHover(null), [kind, activeView, shift, samples, comparison]);
+  useEffect(() => setHover(null), [kind, activeView, shift, samples, comparison, selecting]);
   function inspect(event: PlotMouseEvent) {
-    if (dragging) return;
+    if (dragging || selecting) return;
     const point = event.points[0];
     if (
       !point ||
@@ -350,6 +351,14 @@ export function CurveChart({
           onUnhover={() => setHover(null)}
           plotRef={plotRef}
         />
+        {hover && !dragging && !selecting && (
+          <CurveCursorHighlight
+            pair={hover}
+            container={plotArea}
+            plot={plotRef}
+            layout={figure.layout}
+          />
+        )}
         {hover && (
           <CurveTooltip
             kind={kind}

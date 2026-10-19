@@ -8,6 +8,8 @@ import type { PlotlyHTMLElement } from 'plotly.js';
 import { FitWorkbench } from './FitWorkbench';
 import { loadPlotly } from './plotly';
 import { FIT_VIEW_KEY } from './fitViews';
+import { createFigure, defaultChartView } from './plotData';
+import { curvePairAt, projectCurvePair } from './curveHover';
 
 // Use the installed renderer here; component tests use a faster Plotly mock.
 vi.unmock('./plotly');
@@ -55,6 +57,48 @@ it('resets and changes scales after native zoom in the persisted workbench', asy
   await waitFor(() => expect(graph.layout.yaxis?.range).toEqual([0, 0.0004]));
 });
 afterEach(cleanup);
+
+it('projects cursor readouts against the real Plotly axes while leaving scientific traces untouched', async () => {
+  render(<CurveChart kind="transfer" shift={0.025} />);
+  const graph = screen.getByRole('img', { name: /Simulated Transfer/ }) as PlotlyHTMLElement & {
+    emit: (name: string, event: unknown) => void;
+  };
+  await waitFor(() => expect(graph.layout?.yaxis?.type).toBe('log'));
+  const rect = graph.querySelector<SVGRectElement>('.nsewdrag')!;
+  rect.getBoundingClientRect = () => new DOMRect(100, 80, 400, 200);
+  const area = graph.closest('.scientific-plot') as HTMLElement;
+  area.getBoundingClientRect = () => new DOMRect(40, 30, 500, 300);
+  const before = JSON.stringify({ data: graph.data, x: graph.layout.xaxis, y: graph.layout.yaxis });
+  const figure = createFigure('transfer', 0.025, defaultChartView('transfer'), 'black');
+  const pair = curvePairAt(figure.data, 1, 0.1, true)!;
+  await act(async () =>
+    graph.emit('plotly_hover', {
+      points: [{ curveNumber: 1, x: pair.x, y: pair.measured }],
+      event: new MouseEvent('mousemove', { clientX: 260, clientY: 180 }),
+    }),
+  );
+  const overlay = area.querySelector('.curve-cursor-highlight');
+  expect(overlay).toHaveStyle({ left: '60px', top: '50px' });
+  const expected = projectCurvePair(
+    pair,
+    { xRange: graph.layout.xaxis!.range!, yRange: graph.layout.yaxis!.range!, logarithmic: true },
+    { width: 400, height: 200 },
+  );
+  for (const marker of expected) {
+    const position = overlay!
+      .querySelector(`.cursor-marker-${marker.role}`)!
+      .getAttribute('transform')!
+      .match(/[-\d.]+/g)!
+      .map(Number);
+    expect(position[0]).toBeCloseTo(marker.x);
+    expect(position[1]).toBeCloseTo(marker.y);
+  }
+  expect(JSON.stringify({ data: graph.data, x: graph.layout.xaxis, y: graph.layout.yaxis })).toBe(
+    before,
+  );
+  await act(async () => graph.emit('plotly_unhover', {}));
+  expect(area.querySelector('.curve-cursor-highlight')).toBeNull();
+});
 
 it('renders the selected physical log-axis rectangle and focused candidate using real Plotly', async () => {
   localStorage.clear();
