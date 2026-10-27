@@ -1,0 +1,46 @@
+.workbench-parameters .parameter-controls { display: grid; gap: 6px; }
+.parameter-dials { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.parameter-control-card { min-width: 0; border: 1px solid var(--line); border-radius: 6px; background: linear-gradient(155deg, color-mix(in srgb, var(--text) 4%, transparent), transparent 70%); }
+.dial-card { padding: 7px 4px 5px; text-align: center; }
+.dial-card.is-dragging { border-color: var(--green); background-color: color-mix(in srgb, var(--green) 5%, transparent); }
+.dial-name { min-width: 0; }
+.dial-name strong { display: block; font-size: 11px; line-height: 15px; letter-spacing: .05em; }
+.dial-name span { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin-top: 1px; font-size: 9px; line-height: 13px; color: var(--muted); }
+.dial-control { width: 56px; height: 56px; margin: 2px auto 0; position: relative; border-radius: 50%; cursor: ns-resize; touch-action: none; user-select: none; outline: none; }
+.dial-control:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.dial-control svg { width: 100%; height: 100%; overflow: visible; }
+.dial-track, .dial-progress { fill: none; stroke-width: 3; stroke-linecap: round; }
+.dial-track { stroke: color-mix(in srgb, var(--text) 13%, transparent); }
+.dial-progress { stroke: var(--green); filter: drop-shadow(0 0 3px color-mix(in srgb, var(--green) 28%, transparent)); }
+.tick { stroke: var(--muted); opacity: .3; stroke-width: 1; }
+.tick.active { stroke: var(--green); opacity: .8; }
+.dial-baseline { stroke: var(--text); opacity: .7; stroke-width: 1.5; }
+.dial-knob { position: absolute; inset: 21%; border-radius: 50%; background: radial-gradient(circle at 32% 23%, #45494b 0%, #292d30 38%, #15191b 75%); border: 1px solid #50565a; box-shadow: 0 2px 5px #000b, inset 0 1px 1px #ffffff38, inset 0 -2px 3px #0008; }
+.dial-knob i { position: absolute; width: 2px; height: 9px; left: calc(50% - 1px); top: 3px; border-radius: 2px; background: var(--green); box-shadow: 0 0 4px color-mix(in srgb, var(--green) 50%, transparent); }
+.dial-readout { display: grid; justify-items: center; gap: 0; min-width: 0; }
+.dial-readout input { width: 62px; max-width: 100%; min-width: 0; height: 23px; border: 1px solid transparent; border-radius: 4px; padding: 2px 0; background: transparent; color: var(--text); font: 600 12px ui-monospace, monospace; text-align: center; appearance: textfield; }
+.dial-readout input::-webkit-inner-spin-button, .dial-readout input::-webkit-outer-spin-button { appearance: none; margin: 0; }
+.dial-readout input:hover { border-color: var(--line); }
+.dial-readout input:focus { outline: 1px solid var(--green); }
+.dial-readout span { font-size: 9px; line-height: 12px; color: var(--muted); }
+.dial-bounds { display: flex; justify-content: space-between; color: var(--muted); font: 9px ui-monospace, monospace; }
+.parameter-mode-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 10px 0; }
+.parameter-mode-switch { display: inline-flex; gap: 2px; border: 1px solid var(--line); padding: 2px; border-radius: 6px; }
+.parameter-mode-switch button { display: inline-flex; align-items: center; gap: 5px; border: 0; border-radius: 4px; padding: 6px 9px; min-height: 30px; background: transparent; color: var(--muted); font: inherit; font-size: 11px; cursor: pointer; }
+.parameter-mode-switch button[aria-pressed="true"] { background: color-mix(in srgb, var(--green) 12%, transparent); color: var(--green); }
+.parameter-mode-switch button:focus-visible { outline: 2px solid var(--green); outline-offset: 1px; }
+.parameter-live { display: inline-flex; align-items: center; gap: 4px; color: var(--green); font-size: 10px; }
+.parameter-live i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+.workbench-parameters .parameter-hint { align-items: flex-start; padding-top: 10px; }
+.workbench-parameters .parameter-hint p { font-size: 10px; line-height: 1.5; }
+.fit-workbench-layout { grid-template-columns: minmax(0, 1fr) 290px; }
+.fit-workbench-layout.without-parameters { grid-template-columns: minmax(0, 1fr); }
+.workbench-parameters .parameter-sliders { grid-template-columns: minmax(0, 1fr); }
+.slider-card { display: grid; grid-template-columns: minmax(0, 1fr) 78px; column-gap: 10px; padding: 9px 10px; }
+.slider-card .dial-name { grid-column: 1; grid-row: 1; align-self: center; }
+.slider-card .dial-readout { grid-column: 2; grid-row: 1; }
+.slider-card .parameter-range { grid-column: 1 / -1; grid-row: 2; width: 100%; height: 22px; margin: 3px 0 0; accent-color: var(--green); cursor: ew-resize; }
+.slider-card .dial-bounds { grid-column: 1 / -1; grid-row: 3; }
+:root[data-theme="white"] .dial-knob { background: radial-gradient(circle at 32% 23%, #fff, #d2d6d8 60%, #adb3b8); border-color: #9ca4aa; box-shadow: 0 2px 5px #0003, inset 0 1px 1px #fff; }
+@media (max-width: 1000px) { .fit-workbench-layout { grid-template-columns: minmax(0, 1fr); } .workbench-parameters { position: static; } .parameter-dials { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); } .workbench-parameters .parameter-sliders { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); } }
+@media (pointer: coarse) { .dial-readout input { height: 30px; } .parameter-mode-switch button { min-height: 36px; } }

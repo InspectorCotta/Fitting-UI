@@ -57,21 +57,48 @@ describe('MOSFit workbench', () => {
       expect(screen.getByRole('main')).not.toBeEmptyDOMElement();
     }
   });
-  it('keeps sliders mounted while editing and supports undo and redo', async () => {
+  it('keeps dial inputs mounted while editing and supports undo and redo', async () => {
     const user = userEvent.setup();
     render(<App />);
     await user.click(screen.getByRole('tab', { name: 'Model Fit' }));
-    const slider = screen.getByRole('slider', { name: 'VTH0' });
-    fireEvent.pointerDown(slider);
+    const slider = screen.getByRole('spinbutton', { name: 'VTH0 exact value' });
+    fireEvent.focus(slider);
     fireEvent.change(slider, { target: { value: '.49' } });
-    expect(screen.getByRole('slider', { name: 'VTH0' })).toBe(slider);
-    fireEvent.pointerUp(slider);
-    expect(slider).toHaveValue('0.49');
+    expect(screen.getByRole('spinbutton', { name: 'VTH0 exact value' })).toBe(slider);
+    fireEvent.blur(slider);
+    expect(slider).toHaveValue(0.49);
     await user.click(screen.getByRole('button', { name: 'Undo parameter change' }));
-    expect(slider).toHaveValue('0.412');
+    expect(slider).toHaveValue(0.412);
     await user.click(screen.getByRole('button', { name: 'Redo parameter change' }));
-    expect(slider).toHaveValue('0.49');
+    expect(slider).toHaveValue(0.49);
     expect(JSON.parse(localStorage.getItem('mosfit:parameters')!)[0]).toBe(0.49);
+  });
+  it('switches control styles without losing values or undo history and remembers the choice', async () => {
+    const user = userEvent.setup();
+    const view = render(<App />);
+    await user.click(screen.getByRole('tab', { name: 'Model Fit' }));
+    expect(screen.getByRole('button', { name: 'Dials' })).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.keyDown(screen.getByRole('slider', { name: 'VTH0' }), { key: 'ArrowUp' });
+    fireEvent.keyUp(screen.getByRole('slider', { name: 'VTH0' }));
+    await user.click(screen.getByRole('button', { name: 'Sliders' }));
+    const slider = screen.getByRole('slider', { name: 'VTH0' });
+    expect(slider).toHaveAttribute('type', 'range');
+    expect(slider).toHaveValue('0.413');
+    fireEvent.pointerDown(slider);
+    fireEvent.change(slider, { target: { value: '0.47' } });
+    fireEvent.pointerUp(slider);
+    await user.click(screen.getByRole('button', { name: 'Dials' }));
+    expect(screen.getByRole('slider', { name: 'VTH0' })).toHaveAttribute('aria-valuenow', '0.47');
+    await user.click(screen.getByRole('button', { name: 'Undo parameter change' }));
+    expect(screen.getByRole('slider', { name: 'VTH0' })).toHaveAttribute('aria-valuenow', '0.413');
+    await user.click(screen.getByRole('button', { name: 'Redo parameter change' }));
+    expect(screen.getByRole('spinbutton', { name: 'VTH0 exact value' })).toHaveValue(0.47);
+    await user.click(screen.getByRole('button', { name: 'Sliders' }));
+    expect(JSON.parse(localStorage.getItem('mosfit:parameter-control')!)).toBe('sliders');
+    view.unmount();
+    render(<App />);
+    expect(screen.getByRole('button', { name: 'Sliders' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('slider', { name: 'VTH0' })).toHaveValue('0.47');
   });
   it('runs and cancels an experiment, then completes a new extraction', async () => {
     render(<App />);
@@ -180,7 +207,7 @@ describe('MOSFit workbench', () => {
     expect(JSON.parse(localStorage.getItem('mosfit:theme')!)).toBe('white');
     await user.click(screen.getByRole('button', { name: 'All set' }));
     await user.click(screen.getByRole('tab', { name: 'Model Fit' }));
-    expect(screen.getByRole('slider', { name: 'VTH0' })).toHaveValue('0.47');
+    expect(screen.getByRole('spinbutton', { name: 'VTH0 exact value' })).toHaveValue(0.47);
     cleanup();
     render(<App />);
     expect(document.documentElement).toHaveAttribute('data-theme', 'white');
@@ -212,7 +239,7 @@ describe('MOSFit workbench', () => {
     const user = userEvent.setup();
     render(<App />);
     await user.click(screen.getByRole('tab', { name: 'Model Fit' }));
-    const slider = screen.getByRole('slider', { name: 'VTH0' });
+    const slider = screen.getByRole('spinbutton', { name: 'VTH0 exact value' });
     fireEvent.change(slider, { target: { value: '0.47' } });
     const navigation = within(screen.getByRole('navigation', { name: 'Workspace navigation' }));
     await user.click(navigation.getByRole('button', { name: 'Datasets' }));
@@ -235,7 +262,7 @@ describe('MOSFit workbench', () => {
     expect(screen.queryByRole('tablist')).not.toBeInTheDocument();
     await traverse('back');
     expect(screen.getByRole('tab', { name: 'Model Fit' })).toHaveAttribute('aria-selected', 'true');
-    expect(screen.getByRole('slider', { name: 'VTH0' })).toHaveValue('0.47');
+    expect(screen.getByRole('spinbutton', { name: 'VTH0 exact value' })).toHaveValue(0.47);
     await traverse('back');
     expect(screen.getByRole('tab', { name: 'Overview' })).toHaveAttribute('aria-selected', 'true');
     await traverse('forward');

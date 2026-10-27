@@ -125,7 +125,7 @@ it('keeps the App live parameters and saved-fit library unchanged after a focuse
   window.history.replaceState(null, '', '/#/project/model-fit?project=project-demo');
   render(<App />);
   const parameters = initialParameters.map((p) =>
-    screen.getByRole('slider', { name: p.name }).getAttribute('value'),
+    screen.getByRole('slider', { name: p.name }).getAttribute('aria-valuenow'),
   );
   const saved = localStorage.getItem('mosfit:saved-fits');
   await user.click(screen.getByRole('button', { name: 'Try an example' }));
@@ -137,7 +137,7 @@ it('keeps the App live parameters and saved-fit library unchanged after a focuse
   await user.click(dialog.getByRole('button', { name: 'Close dialog' }));
   expect(
     initialParameters.map((p) =>
-      screen.getByRole('slider', { name: p.name }).getAttribute('value'),
+      screen.getByRole('slider', { name: p.name }).getAttribute('aria-valuenow'),
     ),
   ).toEqual(parameters);
   expect(localStorage.getItem('mosfit:saved-fits')).toBe(saved);

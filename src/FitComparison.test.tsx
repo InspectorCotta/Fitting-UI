@@ -128,7 +128,7 @@ it('saves frozen snapshots, validates names, persists them, and keeps projects s
   await user.type(screen.getByLabelText('Fit name'), 'Saved baseline');
   await user.click(screen.getByRole('button', { name: 'Save snapshot' }));
   const baseline = JSON.parse(localStorage.getItem('mosfit:saved-fits')!)[0];
-  fireEvent.change(screen.getByRole('slider', { name: 'VTH0' }), { target: { value: '0.49' } });
+  fireEvent.change(screen.getByRole('spinbutton', { name: 'VTH0 exact value' }), { target: { value: '0.49' } });
   expect(JSON.parse(localStorage.getItem('mosfit:saved-fits')!)[0]).toEqual(baseline);
   await user.click(screen.getByRole('button', { name: 'Save fit' }));
   await user.clear(screen.getByLabelText('Fit name'));
