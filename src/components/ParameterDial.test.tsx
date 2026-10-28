@@ -8,12 +8,32 @@ function setup() {
   const onBegin = vi.fn(), onCommit = vi.fn();
   function Harness() {
     const [value, setValue] = useState(0.412);
-    return <ParameterDial parameter={initialParameters[0]} value={value} onBegin={onBegin} onChange={setValue} onCommit={onCommit} />;
+    const [expanded, setExpanded] = useState(false);
+    return <ParameterDial expanded={expanded} onToggle={() => setExpanded(v => !v)} parameter={initialParameters[0]} value={value} onBegin={onBegin} onChange={setValue} onCommit={onCommit} />;
   }
   render(<Harness />);
   return { dial: screen.getByRole('slider', { name: 'VTH0' }), input: screen.getByRole('spinbutton'), onBegin, onCommit };
 }
 describe('Parameter dial', () => {
+  it('expands without changing the value, exposes metadata, and collapses with Escape', () => {
+    const { dial, input, onBegin, onCommit } = setup();
+    const toggle = screen.getByRole('button', { name: 'Expand VTH0 details' });
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByRole('region', { name: 'VTH0 details' })).not.toBeInTheDocument();
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('region', { name: 'VTH0 details' })).toBeInTheDocument();
+    expect(screen.getByText('Reference sensitivity')).toBeVisible();
+    expect(screen.getByText('0.28')).toBeVisible();
+    expect(screen.getByRole('button', { name: 'Reset VTH0 to baseline' })).toBeDisabled();
+    expect(screen.getByRole('slider', { name: 'VTH0' })).toBe(dial);
+    expect(screen.getByRole('spinbutton')).toBe(input);
+    expect(onBegin).not.toHaveBeenCalled();
+    expect(onCommit).not.toHaveBeenCalled();
+    fireEvent.keyDown(toggle, { key: 'Escape' });
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(toggle).toHaveFocus();
+  });
   it('updates continuously through a captured drag and commits once', () => {
     const { dial, onBegin, onCommit } = setup();
     fireEvent.pointerDown(dial, { button: 0, clientY: 200 });

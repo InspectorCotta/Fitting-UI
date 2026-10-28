@@ -100,6 +100,31 @@ describe('MOSFit workbench', () => {
     expect(screen.getByRole('button', { name: 'Sliders' })).toHaveAttribute('aria-pressed', 'true');
     expect(screen.getByRole('slider', { name: 'VTH0' })).toHaveValue('0.47');
   });
+  it('expands one tile, restores real earlier values with undo, and keeps details when switching styles', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(screen.getByRole('tab', { name: 'Model Fit' }));
+    await user.click(screen.getByRole('button', { name: 'Expand VTH0 details' }));
+    const dial = screen.getByRole('slider', { name: 'VTH0' });
+    for (let i = 0; i < 2; i++) {
+      fireEvent.keyDown(dial, { key: 'ArrowUp' }); fireEvent.keyUp(dial);
+    }
+    expect(dial).toHaveAttribute('aria-valuenow', '0.414');
+    await user.click(screen.getByRole('button', { name: 'Restore VTH0 to 0.413 V' }));
+    expect(dial).toHaveAttribute('aria-valuenow', '0.413');
+    await user.click(screen.getByRole('button', { name: 'Undo parameter change' }));
+    expect(dial).toHaveAttribute('aria-valuenow', '0.414');
+    await user.click(screen.getByRole('button', { name: 'Reset VTH0 to baseline' }));
+    expect(dial).toHaveAttribute('aria-valuenow', '0.412');
+    await user.click(screen.getByRole('button', { name: 'Expand U0 details' }));
+    expect(screen.queryByRole('region', { name: 'VTH0 details' })).not.toBeInTheDocument();
+    expect(screen.getByRole('region', { name: 'U0 details' })).toBeVisible();
+    await user.click(screen.getByRole('button', { name: 'Sliders' }));
+    expect(screen.getByRole('region', { name: 'U0 details' })).toBeVisible();
+    expect(screen.getByRole('slider', { name: 'U0' })).toHaveAttribute('type', 'range');
+    await user.click(screen.getByRole('button', { name: 'Collapse U0 details' }));
+    expect(screen.queryByRole('region', { name: 'U0 details' })).not.toBeInTheDocument();
+  });
   it('runs and cancels an experiment, then completes a new extraction', async () => {
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: 'Run experiment' }));

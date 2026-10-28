@@ -159,6 +159,7 @@ export default function App() {
       initialParameters.map((p) => p.value),
     ),
   );
+  const [expandedParameter, setExpandedParameter] = useState<string | null>(null);
   const [parameterControl, setParameterControl] = useState<'dials' | 'sliders'>(() =>
     readSaved<string>('mosfit:parameter-control', 'dials') === 'sliders' ? 'sliders' : 'dials',
   );
@@ -655,6 +656,9 @@ export default function App() {
           <>
             {initialParameters.map((p, i) => (
               <ParameterDial mode={parameterControl} key={p.name} parameter={p} value={values[i]}
+                expanded={expandedParameter === p.name}
+                onToggle={() => setExpandedParameter(current => current === p.name ? null : p.name)}
+                parameterHistory={[...history.map(snapshot => snapshot[i]), ...(sliderStart.current ? [sliderStart.current[i]] : [])]}
                 onBegin={() => { if (!sliderStart.current) sliderStart.current = [...currentValues.current]; }}
                 onChange={(value) => changeValue(i, value)} onCommit={commitSlider} />
             ))}
@@ -1277,8 +1281,8 @@ export default function App() {
               <div className="parameter-hint">
                 <Lightbulb size={15} />
                 <p id="parameter-instructions">{parameterControl === 'dials'
-                  ? 'Drag ↕ · Shift: fine · Double-click: reset. Type values or use arrow keys.'
-                  : 'Drag to adjust. Type exact values or use arrow keys. Changes update the plots live.'}</p>
+                  ? 'Click a parameter name for details. Drag ↕ · Shift: fine · Double-click: reset.'
+                  : 'Click a parameter name for details. Drag, type a value, or use arrow keys to adjust.'}</p>
               </div>
             </section>
           }

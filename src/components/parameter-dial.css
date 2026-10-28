@@ -44,3 +44,75 @@
 :root[data-theme="white"] .dial-knob { background: radial-gradient(circle at 32% 23%, #fff, #d2d6d8 60%, #adb3b8); border-color: #9ca4aa; box-shadow: 0 2px 5px #0003, inset 0 1px 1px #fff; }
 @media (max-width: 1000px) { .fit-workbench-layout { grid-template-columns: minmax(0, 1fr); } .workbench-parameters { position: static; } .parameter-dials { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); } .workbench-parameters .parameter-sliders { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); } }
 @media (pointer: coarse) { .dial-readout input { height: 30px; } .parameter-mode-switch button { min-height: 36px; } }
+/* Parameter tiles keep their compact controls; details open in the same tile. */
+.workbench-parameters .parameter-controls { align-items: start; }
+.parameter-tile-toggle { position: relative; display: block; width: 100%; padding: 0 10px 2px 0; border: 0; border-radius: 3px; background: none; color: var(--text); text-align: inherit; font: inherit; cursor: pointer; }
+.parameter-tile-toggle > svg { position: absolute; right: -1px; top: 2px; color: var(--muted); transition: transform 160ms ease, color 160ms ease; }
+.parameter-tile-toggle:hover > strong, .parameter-tile-toggle:hover > svg { color: var(--green); }
+.parameter-tile-toggle:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+.parameter-control-card { transition: border-color 160ms ease, background-color 160ms ease; }
+.parameter-control-card.is-expanded { grid-column: 1 / -1; padding: 10px; border-color: color-mix(in srgb, var(--green) 50%, var(--line)); background-color: color-mix(in srgb, var(--green) 3%, transparent); }
+.is-expanded > .parameter-tile-toggle { text-align: left; margin-bottom: 10px; padding-right: 22px; }
+.is-expanded > .parameter-tile-toggle > svg { transform: rotate(180deg); color: var(--green); }
+.is-expanded > .dial-name span { white-space: normal; font-size: 11px; line-height: 16px; margin-top: 3px; }
+.dial-card.is-expanded { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 0 12px; text-align: left; }
+.dial-card.is-expanded > .parameter-tile-toggle { grid-column: 1 / -1; }
+.dial-card.is-expanded > .parameter-widget { grid-column: 1; align-self: start; padding-top: 4px; }
+.dial-card.is-expanded .dial-control { width: 72px; height: 72px; }
+.dial-card.is-expanded .dial-knob i { height: 12px; }
+.dial-card.is-expanded .dial-readout { margin-top: 3px; }
+.parameter-tile-details { min-width: 0; text-align: left; animation: parameter-details-in 160ms ease-out; }
+.dial-card.is-expanded > .parameter-tile-details { grid-column: 2; border-left: 1px solid var(--line); padding-left: 12px; }
+.parameter-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 8px; margin: 0 0 12px; }
+.parameter-detail-grid > div { min-width: 0; }
+.parameter-detail-grid dt { color: var(--muted); font-size: 9px; line-height: 13px; }
+.parameter-detail-grid dd { margin: 2px 0 0; color: var(--text); font: 11px ui-monospace, monospace; overflow-wrap: anywhere; }
+.parameter-detail-grid small { color: var(--muted); font-size: 8px; }
+.parameter-delta { grid-column: 1 / -1; }
+.parameter-delta dd { color: var(--green); }
+.parameter-reference { display: flex; justify-content: space-between; gap: 8px; font-size: 9px; color: var(--muted); }
+.parameter-reference strong { color: var(--text); font: 10px ui-monospace, monospace; }
+.parameter-sensitivity-bar { height: 3px; margin-top: 5px; border-radius: 2px; background: color-mix(in srgb, var(--text) 10%, transparent); overflow: hidden; }
+.parameter-sensitivity-bar i { display: block; height: 100%; background: var(--green); }
+.parameter-reference-note { margin: 5px 0 12px; color: var(--muted); font-size: 8px; line-height: 12px; }
+.parameter-baseline-reset { min-height: 30px; margin-top: 10px; padding: 5px 8px; font: inherit; font-size: 10px; }
+.parameter-baseline-reset:disabled { opacity: .4; cursor: default; }
+.slider-card { display: block; }
+.slider-card > .dial-name { margin-bottom: 5px; }
+.slider-card .parameter-widget { display: grid; grid-template-columns: minmax(0, 1fr) 64px; gap: 0 8px; }
+.slider-card .parameter-range { grid-column: 1; grid-row: 1; align-self: center; margin: 0; }
+.slider-card .dial-readout { grid-column: 2; grid-row: 1 / 3; }
+.slider-card .dial-bounds { grid-column: 1; grid-row: 2; }
+.slider-card > .parameter-tile-details { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.slider-card .parameter-detail-grid { grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)); }
+@keyframes parameter-details-in { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .parameter-tile-details { animation: none; } .parameter-tile-toggle > svg, .parameter-control-card { transition: none; } }
+@media (pointer: coarse) { .parameter-tile-toggle { min-height: 36px; } .parameter-baseline-reset { min-height: 36px; } }
+.parameter-baseline-reset { border: 1px solid var(--line); background: var(--hover-bg); border-radius: 4px; color: var(--text); cursor: pointer; }
+.parameter-baseline-reset:hover:not(:disabled) { color: var(--green); border-color: var(--green); }
+.parameter-baseline-reset:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.parameter-timeline { grid-column: 1 / -1; min-width: 0; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+.parameter-timeline-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.parameter-timeline-heading strong { color: var(--text); font-size: 10px; font-weight: 550; }
+.parameter-timeline-heading > span { color: var(--muted); font-size: 9px; }
+.parameter-timeline-direction { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 8px; margin-top: 9px; }
+.parameter-timeline-direction > span:nth-child(2) { flex: 1; color: var(--green); text-align: center; }
+.parameter-timeline-viewport { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--line) transparent; border-radius: 3px; }
+.parameter-timeline-viewport:focus-visible { outline: 1px solid var(--green); outline-offset: 2px; }
+.parameter-timeline-track { display: flex; width: max-content; min-width: 100%; margin: 0; padding: 3px 0 5px; list-style: none; }
+.parameter-timeline-track > li { position: relative; flex: 1 0 62px; }
+.parameter-timeline-track > li::after { content: ''; position: absolute; top: 27px; left: 50%; width: 100%; height: 1px; background: color-mix(in srgb, var(--green) 38%, var(--line)); pointer-events: none; }
+.parameter-timeline-track > li:last-child::after { content: none; }
+.parameter-timeline-point { position: relative; z-index: 1; display: grid; justify-items: center; align-content: start; width: 100%; gap: 7px; min-height: 68px; padding: 5px 2px; border: 1px solid transparent; border-radius: 5px; background: none; color: var(--muted); font: inherit; }
+button.parameter-timeline-point { cursor: pointer; }
+.parameter-timeline-label { font-size: 8px; line-height: 10px; }
+.parameter-timeline-point > i { display: block; width: 9px; height: 9px; border-radius: 50%; background: var(--hover-bg); border: 1px solid color-mix(in srgb, var(--green) 65%, var(--line)); }
+.parameter-timeline-point > strong { color: var(--text); font: 10px ui-monospace, monospace; line-height: 13px; }
+.is-current > .parameter-timeline-point { background: color-mix(in srgb, var(--green) 8%, transparent); border-color: color-mix(in srgb, var(--green) 30%, transparent); }
+.is-current .parameter-timeline-label, .is-current .parameter-timeline-point > strong { color: var(--green); }
+.is-current .parameter-timeline-point > i { background: var(--green); border-color: var(--green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 13%, transparent); }
+button.parameter-timeline-point:hover:not(:disabled) { background: var(--hover-bg); }
+button.parameter-timeline-point:hover:not(:disabled) > i { background: var(--green); }
+button.parameter-timeline-point:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }
+button.parameter-timeline-point:disabled { cursor: default; }
+.parameter-timeline-help { margin: 4px 0 0; color: var(--muted); font-size: 9px; line-height: 14px; }

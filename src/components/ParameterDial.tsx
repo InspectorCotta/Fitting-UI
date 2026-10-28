@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { ParameterTimeline } from './ParameterTimeline';
+import { ChevronDown } from 'lucide-react';
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 
-type Parameter = { name: string; label: string; min: number; max: number; step: number; value: number; unit: string };
-type Props = { mode?: 'dials' | 'sliders'; parameter: Parameter; value: number; onBegin: () => void; onChange: (value: number) => void; onCommit: () => void };
+type Parameter = { name: string; label: string; min: number; max: number; step: number; value: number; unit: string; sensitivity: number };
+type Props = { expanded: boolean; onToggle: () => void; parameterHistory?: number[]; mode?: 'dials' | 'sliders'; parameter: Parameter; value: number; onBegin: () => void; onChange: (value: number) => void; onCommit: () => void };
 const point = (angle: number, radius: number) => {
   const a = angle * Math.PI / 180;
   return [50 + radius * Math.sin(a), 50 - radius * Math.cos(a)];
@@ -10,7 +12,10 @@ function arc(start: number, end: number) {
   const a = point(start, 41), b = point(end, 41);
   return `M ${a[0]} ${a[1]} A 41 41 0 ${end - start > 180 ? 1 : 0} 1 ${b[0]} ${b[1]}`;
 }
-export function ParameterDial({ parameter: p, value, onBegin, onChange, onCommit, mode = 'dials' }: Props) {
+export function ParameterDial({ parameter: p, value, onBegin, onChange, onCommit, mode = 'dials', expanded, onToggle, parameterHistory = [] }: Props) {
+  const detailsId = useId();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const restore = (next: number) => { onBegin(); onChange(next); onCommit(); };
   const digits = (p.step.toString().split('.')[1] || '').length;
   const format = (n: number) => n.toFixed(digits);
   const [draft, setDraft] = useState(format(value));
@@ -37,8 +42,14 @@ export function ParameterDial({ parameter: p, value, onBegin, onChange, onCommit
     const next = e.key === 'Home' ? p.min : e.key === 'End' ? p.max : value + (['ArrowUp', 'ArrowRight', 'PageUp'].includes(e.key) ? step : -step);
     onChange(clamp(next));
   }
-  return <div title={`${p.label} · ${p.min}–${p.max} ${p.unit}`} className={`parameter-control-card ${mode === 'dials' ? 'dial-card' : 'slider-card'}${dragging ? ' is-dragging' : ''}`}>
-    <div className="dial-name"><strong>{p.name}</strong><span>{p.label}</span></div>
+  return <div title={`${p.label} · ${p.min}–${p.max} ${p.unit}`} className={`parameter-control-card ${mode === 'dials' ? 'dial-card' : 'slider-card'}${dragging ? ' is-dragging' : ''}${expanded ? ' is-expanded' : ''}`}
+    onKeyDown={e => { if (e.key === 'Escape' && expanded && !(e.target instanceof HTMLInputElement)) { e.stopPropagation(); onToggle(); toggleRef.current?.focus(); } }}>
+    <button className="dial-name parameter-tile-toggle" type="button" ref={toggleRef}
+      aria-label={`${expanded ? 'Collapse' : 'Expand'} ${p.name} details`} aria-expanded={expanded} aria-controls={detailsId}
+      onClick={onToggle}>
+      <strong>{p.name}</strong><span>{p.label}</span><ChevronDown size={12} aria-hidden="true" />
+    </button>
+    <div className="parameter-widget">
     {mode === 'sliders' ? <input className="parameter-range" type="range" aria-label={p.name}
       min={p.min} max={p.max} step={p.step} value={value} aria-describedby="parameter-instructions"
       onPointerDown={e => { onBegin(); e.currentTarget.setPointerCapture(e.pointerId); }}
@@ -82,5 +93,22 @@ export function ParameterDial({ parameter: p, value, onBegin, onChange, onCommit
       <span>{p.unit || 'unitless'}</span>
     </div>
     {mode === 'sliders' && <div className="dial-bounds"><span>{p.min}</span><span>{p.max}</span></div>}
+    </div>
+    {expanded && <><section id={detailsId} className="parameter-tile-details" aria-label={`${p.name} details`}>
+      <dl className="parameter-detail-grid">
+        <div><dt>Minimum</dt><dd>{format(p.min)} <small>{p.unit}</small></dd></div>
+        <div><dt>Maximum</dt><dd>{format(p.max)} <small>{p.unit}</small></dd></div>
+        <div><dt>Step</dt><dd>{format(p.step)} <small>{p.unit}</small></dd></div>
+        <div><dt>Baseline</dt><dd>{format(p.value)} <small>{p.unit}</small></dd></div>
+        <div className="parameter-delta"><dt>From baseline</dt><dd>{value > p.value ? '+' : ''}{format(value - p.value)} <small>{p.unit}</small></dd></div>
+      </dl>
+      <div className="parameter-reference"><span>Reference sensitivity</span><strong>{p.sensitivity.toFixed(2)}</strong></div>
+      <div className="parameter-sensitivity-bar" aria-hidden="true"><i style={{ width: `${Math.max(0, Math.min(1, p.sensitivity)) * 100}%` }} /></div>
+      <p className="parameter-reference-note">Demo reference · not recalculated live</p>
+      <button className="parameter-baseline-reset" type="button" disabled={value === p.value}
+        onClick={() => restore(p.value)} aria-label={`Reset ${p.name} to baseline`}>Reset to baseline</button>
+    </section>
+    <ParameterTimeline name={p.name} unit={p.unit} digits={digits} history={parameterHistory} value={value} onRestore={restore} />
+    </>}
   </div>;
 }
