@@ -91,3 +91,15 @@ bun run format
 ```
 
 The interaction suite covers all screens, parameter editing/undo/redo, experiment completion and cancellation, command navigation, note persistence, CSV validation/import, native history, plot layout and preset persistence, and chart controls. Plotly lifecycle integration is tested with a mock renderer in jsdom, alongside checks on the actual figure data and axis configuration. Automated browser visual inspection was unavailable in the authoring session.
+
+## Parameter controls
+
+The Model Fit panel supports compact rotary dials and sliders. Use the **Sliders / Dials** switch above the controls; your selection is remembered in this browser. Switching preserves parameter values and undo/redo history. Both styles support exact numeric entry and update the demo plots live.
+
+Dials fit three across in the desktop parameter panel. Drag vertically to adjust, hold Shift for fine control, double-click to reset a parameter to its baseline, or use arrow keys. Page Up/Down changes ten steps; Home/End selects the bounds. Hover a parameter card to see its full description and range.
+
+Hosted preview: https://mosfit-dial-edition.freesun2.chatgpt.site (private; sign in with ChatGPT).
+
+Click a parameter name or chevron to expand its tile. One tile opens at a time, showing bounds, step size, baseline, change from baseline, and reference sensitivity. The sensitivity values are fixed demo references.
+
+Each expanded tile has a chronological **Start → edits → Now** timeline for this session. Click a past point to restore that parameter as a new undoable edit; returns to previous values remain visible. Unchanged snapshots are skipped and long timelines scroll horizontally. Sliders and dials share the same timeline.

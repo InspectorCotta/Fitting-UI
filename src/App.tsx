@@ -45,6 +45,7 @@ import {
   X,
   Zap,
 } from 'lucide-react';
+import { ParameterDial } from './components/ParameterDial';
 import { Button } from './components/ui/button';
 import { Dialog } from './components/ui/dialog';
 import { Select } from './components/ui/select';
@@ -158,6 +159,11 @@ export default function App() {
       initialParameters.map((p) => p.value),
     ),
   );
+  const [expandedParameter, setExpandedParameter] = useState<string | null>(null);
+  const [parameterControl, setParameterControl] = useState<'dials' | 'sliders'>(() =>
+    readSaved<string>('mosfit:parameter-control', 'dials') === 'sliders' ? 'sliders' : 'dials',
+  );
+  useEffect(() => { localStorage.setItem('mosfit:parameter-control', JSON.stringify(parameterControl)); }, [parameterControl]);
   const [history, setHistory] = useState<Values[]>([]);
   const [savedFits, setSavedFits] = useState(() =>
     normalizeSavedFits(readSaved<unknown>('mosfit:saved-fits', undefined)),
@@ -261,6 +267,8 @@ export default function App() {
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sliderStart = useRef<Values | null>(null);
+  const currentValues = useRef(values);
+  currentValues.current = values;
   const shift = demoParameterShift(values);
   const bestExperiment = experiments
     .filter((e) => e.status === 'Completed')
@@ -371,13 +379,16 @@ export default function App() {
     setModal(null);
   }, [workspace, tab]);
   function changeValue(i: number, value: number) {
-    setValues((v) => v.map((x, j) => (i === j ? value : x)));
+    currentValues.current = currentValues.current.map((x, j) => (i === j ? value : x));
+    setValues(currentValues.current);
   }
   function commitSlider() {
     if (sliderStart.current) {
       const before = sliderStart.current;
-      setHistory((h) => [...h, before]);
-      setFuture([]);
+      if (before.some((v, i) => v !== currentValues.current[i])) {
+        setHistory((h) => [...h, before]);
+        setFuture([]);
+      }
       sliderStart.current = null;
     }
   }
@@ -640,46 +651,16 @@ export default function App() {
   }
   function Parameters({ full = false }: { full?: boolean }) {
     return (
-      <div className={full ? 'parameter-sliders' : 'fitted-table'}>
+      <div className={full ? `parameter-controls parameter-${parameterControl}` : 'fitted-table'}>
         {full ? (
           <>
             {initialParameters.map((p, i) => (
-              <div className="parameter-row" key={p.name}>
-                <div>
-                  <strong>{p.name}</strong>
-                  <span>{p.label}</span>
-                  <output>
-                    {values[i].toFixed(p.step < 0.01 ? 3 : p.step < 1 ? 2 : 0)}{' '}
-                    <small>{p.unit}</small>
-                  </output>
-                </div>
-                <input
-                  aria-label={p.name}
-                  type="range"
-                  min={p.min}
-                  max={p.max}
-                  step={p.step}
-                  value={values[i]}
-                  onPointerDown={() => {
-                    sliderStart.current = [...values];
-                  }}
-                  onPointerUp={commitSlider}
-                  onBlur={commitSlider}
-                  onKeyDown={() => {
-                    if (!sliderStart.current) sliderStart.current = [...values];
-                  }}
-                  onKeyUp={commitSlider}
-                  onChange={(e) => changeValue(i, +e.target.value)}
-                />
-                <div className="range-bounds">
-                  <span>
-                    {p.min} {p.unit}
-                  </span>
-                  <span>
-                    {p.max} {p.unit}
-                  </span>
-                </div>
-              </div>
+              <ParameterDial mode={parameterControl} key={p.name} parameter={p} value={values[i]}
+                expanded={expandedParameter === p.name}
+                onToggle={() => setExpandedParameter(current => current === p.name ? null : p.name)}
+                parameterHistory={[...history.map(snapshot => snapshot[i]), ...(sliderStart.current ? [sliderStart.current[i]] : [])]}
+                onBegin={() => { if (!sliderStart.current) sliderStart.current = [...currentValues.current]; }}
+                onChange={(value) => changeValue(i, value)} onCommit={commitSlider} />
             ))}
           </>
         ) : (
@@ -1289,10 +1270,19 @@ export default function App() {
                   Reset
                 </Button>
               </div>
+              <div className="parameter-mode-bar">
+                <div className="parameter-mode-switch" role="group" aria-label="Parameter control style">
+                  <button type="button" aria-pressed={parameterControl === 'sliders'} onClick={() => { commitSlider(); setParameterControl('sliders'); }}><SlidersHorizontal size={12} /> Sliders</button>
+                  <button type="button" aria-pressed={parameterControl === 'dials'} onClick={() => { commitSlider(); setParameterControl('dials'); }}><Settings2 size={12} /> Dials</button>
+                </div>
+                <span className="parameter-live"><i />Live</span>
+              </div>
               {Parameters({ full: true })}
               <div className="parameter-hint">
                 <Lightbulb size={15} />
-                <p>VTH0 and U0 have the most influence. Try a small change first.</p>
+                <p id="parameter-instructions">{parameterControl === 'dials'
+                  ? 'Click a parameter name for details. Drag ↕ · Shift: fine · Double-click: reset.'
+                  : 'Click a parameter name for details. Drag, type a value, or use arrow keys to adjust.'}</p>
               </div>
             </section>
           }

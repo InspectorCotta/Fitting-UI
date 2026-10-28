@@ -15,6 +15,7 @@ import './to220-easter-egg.css';
 import './fit-investigation.css';
 import './curve-cursor.css';
 import './plot-density.css';
+import './components/parameter-dial.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

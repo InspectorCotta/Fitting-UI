@@ -35,7 +35,7 @@ it('starts at Home and opens it from both sidebar controls, preserving project d
   expect(window.location.hash).toBe('#/home');
   expect(document.title).toBe('MOSFit Studio — Home');
   await user.click(screen.getByRole('button', { name: /Model workbench/ }));
-  expect(screen.getByRole('slider', { name: 'VTH0' })).toBeInTheDocument();
+  expect(screen.getByRole('spinbutton', { name: 'VTH0 exact value' })).toBeInTheDocument();
   cleanup();
   render(<App />);
   expect(screen.getByRole('tab', { name: 'Model Fit' })).toHaveAttribute('aria-selected', 'true');
@@ -52,7 +52,7 @@ it('creates separate projects, orders recents by opening time and restores notes
     target: { value: 'Keep the baseline measurements.' },
   });
   await user.click(screen.getByRole('tab', { name: 'Model Fit' }));
-  fireEvent.change(screen.getByRole('slider', { name: 'VTH0' }), { target: { value: '0.46' } });
+  fireEvent.change(screen.getByRole('spinbutton', { name: 'VTH0 exact value' }), { target: { value: '0.46' } });
   await user.click(screen.getByRole('button', { name: 'Home' }));
   now += 60_000;
   await user.click(screen.getByRole('button', { name: 'New project' }));
@@ -66,8 +66,8 @@ it('creates separate projects, orders recents by opening time and restores notes
     target: { value: 'Sweep 200–400 K.' },
   });
   await user.click(screen.getByRole('tab', { name: 'Model Fit' }));
-  expect(screen.getByRole('slider', { name: 'VTH0' })).toHaveValue('0.412');
-  fireEvent.change(screen.getByRole('slider', { name: 'VTH0' }), { target: { value: '0.48' } });
+  expect(screen.getByRole('spinbutton', { name: 'VTH0 exact value' })).toHaveValue(0.412);
+  fireEvent.change(screen.getByRole('spinbutton', { name: 'VTH0 exact value' }), { target: { value: '0.48' } });
   await user.click(screen.getByRole('button', { name: 'Home' }));
   expect(document.querySelector('.home-featured-project h3')).toHaveTextContent(
     'Temperature study',
@@ -75,7 +75,7 @@ it('creates separate projects, orders recents by opening time and restores notes
   expect(JSON.parse(localStorage.getItem(PROJECTS_KEY)!)).toHaveLength(2);
   now += 60_000;
   await user.click(screen.getByRole('button', { name: 'Open RX90_GAA' }));
-  expect(screen.getByRole('slider', { name: 'VTH0' })).toHaveValue('0.46');
+  expect(screen.getByRole('spinbutton', { name: 'VTH0 exact value' })).toHaveValue(0.46);
   await user.click(screen.getByRole('tab', { name: 'Notes' }));
   expect(screen.getByRole('textbox', { name: 'Project notes' })).toHaveValue(
     'Keep the baseline measurements.',
@@ -86,7 +86,7 @@ it('creates separate projects, orders recents by opening time and restores notes
   render(<App />);
   expect(document.querySelector('.home-featured-project h3')).toHaveTextContent('RX90_GAA');
   await user.click(screen.getByRole('button', { name: 'Open Temperature study' }));
-  expect(screen.getByRole('slider', { name: 'VTH0' })).toHaveValue('0.48');
+  expect(screen.getByRole('spinbutton', { name: 'VTH0 exact value' })).toHaveValue(0.48);
   await user.click(screen.getByRole('tab', { name: 'Notes' }));
   expect(screen.getByRole('textbox', { name: 'Project notes' })).toHaveValue('Sweep 200–400 K.');
   await user.click(screen.getByRole('button', { name: 'Home' }));
@@ -117,7 +117,7 @@ it('uses project identity in deep links and browser history rather than the last
   expect(screen.getByRole('textbox', { name: 'Project notes' })).toHaveValue('Alpha notebook');
   await user.click(screen.getByRole('button', { name: 'Home' }));
   await user.click(screen.getByRole('button', { name: 'Open Beta' }));
-  expect(screen.getByRole('slider', { name: 'VTH0' })).toHaveValue('0.51');
+  expect(screen.getByRole('spinbutton', { name: 'VTH0 exact value' })).toHaveValue(0.51);
   expect(window.location.hash).toBe('#/project/model-fit?project=beta');
   for (let i = 0; i < 2; i++) {
     await act(async () => {
