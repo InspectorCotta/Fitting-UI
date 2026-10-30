@@ -14,16 +14,16 @@ type Props = {
 
 const steps = ['Initialize', 'Optimize', 'Refine'];
 
-/** Decorative silicon theatre; the readouts use the existing demo runner's progress. */
+/** Illustrative low-side MOSFET switching circuit; the readouts use the existing demo runner's progress. */
 export function FitActivity({ progress, iterations, name, algorithm, temperature, onStop, compact = false }: Props) {
   const id = useId().replaceAll(':', '');
   const [expanded, setExpanded] = useState(!compact);
   const percent = Math.min(100, Math.max(0, progress));
   const stage = percent < 20 ? 0 : percent < 80 ? 1 : 2;
-  const headlines = ['Waking up the silicon.', 'A little less resistance.', 'Finding that sweet spot.'];
-  const descriptions = ['Loading measurements. Giving every electron a job.', 'Tuning parameters, one better curve at a time.', 'Refining the final parameter estimates. Almost there.'];
+  const headlines = ['Waking up the silicon.', 'A little less error.', 'Finding that sweet spot.'];
+  const descriptions = ['Loading measurements and initializing the fit.', 'Tuning parameters, one better curve at a time.', 'Refining the final parameter estimates. Almost there.'];
   const prefix = (key: string) => `${id}-${key}`;
-  const path = 'M25 198H106L146 174H222L282 140L350 180H442L488 154H565';
+  const currentPath = 'M108 156V72Q108 62 118 62H446Q456 62 456 72V198H424V242H456V292Q456 302 446 302H118Q108 302 108 292V208';
   return <section className={`fit-activity ${expanded ? 'is-expanded' : 'is-compact'}`} aria-label="Fit activity" data-stage={stage}
     style={{ '--fit-progress': `${percent}%` } as CSSProperties}>
     <header className="fit-activity-header">
@@ -39,62 +39,72 @@ export function FitActivity({ progress, iterations, name, algorithm, temperature
     <div className="fit-activity-body" id={prefix('scene')} hidden={!expanded}>
       <div className="silicon-scene" aria-hidden="true">
         <div className="silicon-scene-grid" />
-        <span className="silicon-coordinate">Si / FIELD OF POSSIBILITIES</span>
-        <svg viewBox="0 0 590 320" fill="none" focusable="false">
+        <div className="power-stage-heading"><span>01 / THE POWER STAGE</span><span>N-MOS · LOW-SIDE SWITCH</span></div>
+        <svg viewBox="0 0 620 430" fill="none" focusable="false">
           <defs>
-            <linearGradient id={prefix('wafer')} x1="120" y1="80" x2="440" y2="270" gradientUnits="userSpaceOnUse"><stop stopColor="#214763" /><stop offset=".3" stopColor="#122c36" /><stop offset=".65" stopColor="#242445" /><stop offset="1" stopColor="#0b2528" /></linearGradient>
-            <linearGradient id={prefix('rim')}><stop stopColor="#54d5c8" /><stop offset=".45" stopColor="#7695ed" /><stop offset=".7" stopColor="#ad8eeb" /><stop offset="1" stopColor="#54d5c8" /></linearGradient>
-            <linearGradient id={prefix('die')} x2="1" y2="1"><stop stopColor="#183d41" /><stop offset="1" stopColor="#10262d" /></linearGradient>
-            <linearGradient id={prefix('metal')} x2="0" y2="1"><stop stopColor="#d2e9ef" /><stop offset=".5" stopColor="#5e8d9c" /><stop offset="1" stopColor="#aecbd1" /></linearGradient>
-            <radialGradient id={prefix('halo')}><stop stopColor="#45f5b6" stopOpacity=".25" /><stop offset="1" stopColor="#45f5b6" stopOpacity="0" /></radialGradient>
-            <pattern id={prefix('dies')} width="27" height="27" patternUnits="userSpaceOnUse"><rect x="2" y="2" width="23" height="23" rx="2" stroke="#81b8d0" strokeOpacity=".27" /><path d="M7 8h13M7 12h13M7 16h8" stroke="#81b8d0" strokeOpacity=".14" /></pattern>
-            <clipPath id={prefix('clip')}><ellipse cx="290" cy="189" rx="192" ry="97" /></clipPath>
+            <radialGradient id={prefix('field')}><stop stopColor="#43ffd1" stopOpacity=".22" /><stop offset="1" stopColor="#43ffd1" stopOpacity="0" /></radialGradient>
+            <linearGradient id={prefix('copper')} x1="90" y1="60" x2="490" y2="300" gradientUnits="userSpaceOnUse"><stop stopColor="#639d9e" /><stop offset=".45" stopColor="#345c69" /><stop offset="1" stopColor="#76aab0" /></linearGradient>
+            <linearGradient id={prefix('load')} x1="446" y1="92" x2="466" y2="132" gradientUnits="userSpaceOnUse"><stop stopColor="#233c42" /><stop offset=".5" stopColor="#42595b" /><stop offset="1" stopColor="#172d35" /></linearGradient>
           </defs>
-          <ellipse cx="290" cy="209" rx="246" ry="110" fill={`url(#${prefix('halo')})`} className="silicon-halo" />
-          <ellipse cx="290" cy="199" rx="220" ry="110" stroke="#558192" strokeOpacity=".18" strokeDasharray="3 9" />
-          <path d="M70 199a220 110 0 0 1 440 0" stroke="#60afbd" strokeOpacity=".35" />
-          <ellipse cx="290" cy="196" rx="192" ry="97" fill="#07131c" stroke="#3d6581" />
-          <ellipse cx="290" cy="189" rx="192" ry="97" fill={`url(#${prefix('wafer')})`} stroke={`url(#${prefix('rim')})`} strokeWidth="1.5" />
-          <g clipPath={`url(#${prefix('clip')})`}>
-            <g transform="translate(290 189) scale(1 .505) rotate(-30) translate(-290 -189)"><rect x="0" y="-120" width="600" height="600" fill={`url(#${prefix('dies')})`} /></g>
-            <g className="silicon-wafer-scan"><path d="M50 40L470 280" stroke="#72ffcb" strokeOpacity=".09" strokeWidth="65" /><path d="M50 40L470 280" stroke="#9cffdf" strokeOpacity=".6" /></g>
-            <path d="M180 142l40-20 22 11-40 20zM355 219l40-20 22 11-40 20zM167 205l20-10 22 11-20 10z" fill="#63f8c0" fillOpacity=".25" className="silicon-die-blink" />
+          {/* A complete, closed circuit. Animated dashes follow conventional current,
+              through the load and D–S channel, only during the gate's high phase. */}
+          <rect x="65" y="37" width="485" height="291" rx="18" stroke="#29424f" strokeOpacity=".45" />
+          {[[77,49],[538,49],[77,316],[538,316]].map(([x,y]) => <g key={`${x}-${y}`}><circle cx={x} cy={y} r="3.5" fill="#0b1720" stroke="#36535b" /><path d={`M${x-1.5} ${y}h3`} stroke="#597780" /></g>)}
+          <ellipse className="switch-high power-field" cx="440" cy="220" rx="122" ry="110" fill={`url(#${prefix('field')})`} />
+          {/* Supply, load and return. There are no ambiguous wire crossings. */}
+          <g stroke={`url(#${prefix('copper')})`} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M108 156V72Q108 62 118 62H446Q456 62 456 72V92M456 132V164M456 280V292Q456 302 446 302H118Q108 302 108 292V208" />
+            <circle cx="108" cy="182" r="26" fill="#0b1a22" />
+            <path d="M103 171h10M108 166v10M103 194h10" stroke="#b8d3d9" strokeWidth="1.5" />
+            <rect x="446" y="92" width="20" height="40" rx="3" fill={`url(#${prefix('load')})`} />
           </g>
-          <path d="M281 281l9-5 9 5" stroke="#a1c2d3" strokeWidth="2" />
-          <ellipse cx="286" cy="193" rx="85" ry="33" fill="#030e19" fillOpacity=".7" />
-          <path d={path} stroke="#346a71" strokeWidth="2" />
-          <path d={path} stroke="#75ffd0" strokeWidth="2" className="silicon-current" />
-          {[0, 1, 2, 3].map(i => <circle key={i} r="3" fill="#c0ffe9" className="silicon-electron" style={{ '--electron-delay': `${i * -.85}s` } as CSSProperties} />)}
-          <g className="silicon-floating-die">
-            <path d="M186 115l100 58 100-58v17l-100 58-100-58z" fill="#091b26" stroke="#3c7580" />
-            <path d="M286 173v17l100-58v-17" fill="#16343e" />
-            <path d="M186 115l100-58 100 58-100 58z" fill={`url(#${prefix('die')})`} stroke="#83d8cc" />
-            <g transform="matrix(.866 .5 -.866 .5 286 63)">
-              <rect width="108" height="108" rx="3" stroke="#4b928c" />
-              <rect x="7" y="7" width="73" height="94" rx="2" fill={`url(#${prefix('metal')})`} />
-              {Array.from({ length: 10 }, (_, i) => <g key={i}><path d={`M${12 + i * 6.6} 12v84`} stroke="#163c49" strokeWidth="2.8" /><path d={`M${13 + i * 6.6} 12v84`} stroke="#d1fff3" strokeOpacity=".4" strokeWidth=".6" /></g>)}
-              <rect x="86" y="7" width="15" height="20" rx="2" fill="#d6b975" />
-              <path d="M93 31v63H84" stroke="#e7cb7e" strokeWidth="3" />
-              <path d="M93 31v63H84" stroke="#ffecae" strokeWidth="2" className="silicon-gate" />
-              <text x="86" y="21" fill="#42391d" fontSize="8" fontFamily="monospace">G</text>
-            </g>
-            <path d="M218 124q-31-55-70-2M236 134q-28-56-69-2" stroke={`url(#${prefix('metal')})`} strokeWidth="4" strokeLinecap="round" />
-            <path d="M352 104q44-42 81 21" stroke="#d6b975" strokeWidth="2" strokeLinecap="round" />
-            <path d="M186 115l100 58 100-58" stroke="#9fffe0" strokeOpacity=".7" />
+          <rect className="switch-high load-heat" x="443" y="89" width="26" height="46" rx="6" fill="#adffe0" fillOpacity=".12" stroke="#86ffca" strokeWidth="1" />
+          <g className="power-svg-label"><text x="148" y="184">V<tspan dy="3" fontSize="8">DC</tspan></text><text x="479" y="114">LOAD</text><text x="125" y="282">RETURN</text></g>
+          {/* Gate driver referenced to the same source/return node. Its output
+              terminates on the insulated gate electrode, not the channel. */}
+          <path d="M262 250V302" stroke="#52727c" strokeWidth="1.5" />
+          <circle cx="262" cy="302" r="3" fill="#8ab3bb" />
+          <rect x="210" y="195" width="104" height="55" rx="9" fill="#122026" stroke="#806d46" />
+          <path d="M224 230h10v-18h17v18h17v-18h17v18h15" stroke="#c6a66a" strokeWidth="1.5" />
+          <text x="210" y="180" className="power-svg-label">GATE DRIVER</text>
+          <path d="M314 222H407M407 196V248" stroke="#8c7851" strokeWidth="2.5" />
+          <path className="switch-high gate-voltage" d="M314 222H407M407 196V248" stroke="#f7ce80" strokeWidth="2.5" />
+          {/* Enhancement-mode NMOS: segmented channel, body tied to source,
+              body arrow into the N channel. Intrinsic diode: anode S, cathode D. */}
+          <circle cx="445" cy="222" r="52" stroke="#3c5964" strokeWidth="1" strokeDasharray="2 5" />
+          <g stroke="#8cadb7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M456 164V198H424M424 196V208M424 216V228M424 236V248M424 242H456V280M456 242V222H432" />
+            <path d="M456 164H508V216M508 235V280H456" stroke="#4c6e7a" strokeWidth="1.5" />
+            <path d="M500 216h16M508 218l-8 17h16z" stroke="#7498a4" strokeWidth="1.5" fill="#13262e" />
           </g>
-          <g stroke="#70969c" strokeWidth=".7"><path d="M350 71l48-32h60" /><path d="M196 137l-65-44H71" /><path d="M326 230l65 39h66" /></g>
-          <g fill="#a3c6c9" fontFamily="ui-monospace, monospace" fontSize="9" letterSpacing="1.5"><text x="402" y="31">GATE / TUNE</text><text x="71" y="85">SOURCE</text><text x="398" y="284">DRAIN / FLOW</text></g>
-          <g fill="#96ffdb"><circle cx="350" cy="71" r="2" /><circle cx="196" cy="137" r="2" /><circle cx="326" cy="230" r="2" /></g>
+          <path d="M430 217l-8 5 8 5z" fill="#8cadb7" />
+          <path className="switch-high power-channel-glow" d="M424 198V242" stroke="#81ffcf" strokeWidth="8" strokeLinecap="round" />
+          <path className="switch-high" d="M424 198V242" stroke="#c6ffe8" strokeWidth="2.5" strokeLinecap="round" />
+          <g className="switch-high"><path d={currentPath} className="power-current" /><path d="M330 56l7 6-7 6M462 288l-6 7-6-7M184 296l-7 6 7 6" stroke="#98ffda" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></g>
+          {/* Labels and pad rings share the exact terminal coordinates. */}
+          <g className="power-terminal"><circle cx="370" cy="222" r="5" fill="#122026" stroke="#f7ce80" /><circle cx="456" cy="164" r="5" fill="#102128" stroke="#9adccf" /><circle cx="456" cy="280" r="5" fill="#102128" stroke="#9adccf" /></g>
+          <g className="power-terminal-label"><text x="370" y="207" textAnchor="middle" fill="#f7ce80">G</text><text x="440" y="168" textAnchor="end">D</text><text x="440" y="284" textAnchor="end">S</text></g>
+          <text x="551" y="227" className="power-svg-label" textAnchor="middle">Q1</text>
+          <g transform="translate(225 92)"><rect width="124" height="30" rx="15" fill="#11232a" stroke="#36535b" /><g className="switch-low"><circle cx="17" cy="15" r="3" fill="#6a8590" /><text x="30" y="19" className="power-state-text" fill="#91aab2">CHANNEL OFF</text></g><g className="switch-high"><circle cx="17" cy="15" r="3" fill="#86ffd1" /><text x="30" y="19" className="power-state-text" fill="#aaffdc">CHANNEL ON</text></g></g>
+          {/* Both idealized traces share one time cursor and the switch's clock.
+              The static waveforms and CSS transitions use the same 22%/72% edges. */}
+          <rect x="65" y="344" width="485" height="64" rx="9" fill="#07141b" stroke="#263d48" />
+          <g stroke="#29414c" strokeWidth=".6"><path d="M150 363h375M150 389h375M180 351v49M270 351v49M360 351v49M450 351v49" /></g>
+          <text x="85" y="366" className="power-scope-label" fill="#e9c480">V<tspan dy="3" fontSize="7">GS</tspan></text>
+          <text x="85" y="392" className="power-scope-label" fill="#81f4c7">I<tspan dy="3" fontSize="7">D</tspan></text>
+          <path d="M150 370H232.5V356H420V370H525" stroke="#e9c480" strokeWidth="1.5" />
+          <path d="M150 396H232.5V382H420V396H525" stroke="#81f4c7" strokeWidth="1.5" />
+          <g className="power-scope-cursor"><path d="M150 350v52" stroke="#e5ffff" strokeOpacity=".5" /><circle cx="150" cy="351" r="2" fill="#e5ffff" /></g>
         </svg>
-        <span className="silicon-scene-caption"><i /> ELECTRONS IN GOOD HANDS <span>◈ MOSFit</span></span>
+        <div className="power-stage-footer"><span><i /> CONVENTIONAL CURRENT · D → S</span><span>ILLUSTRATIVE LOOP</span></div>
       </div>
       <div className="fit-activity-story">
-        <span className="fit-activity-eyebrow"><i /> SILICON IN MOTION</span>
+        <span className="fit-activity-eyebrow"><i /> POWERING THROUGH THE FIT</span>
         <h3>{headlines[stage]}</h3>
         <p>{descriptions[stage]}</p>
         <ol className="fit-activity-stages" aria-label="Fit stages">{steps.map((step, i) => <li key={step} className={i <= stage ? 'is-reached' : ''} aria-current={i === stage ? 'step' : undefined}><span>{i < stage ? '✓' : `0${i + 1}`}</span>{step}</li>)}</ol>
         <div className="fit-activity-telemetry"><div><span>ITERATION</span><strong>{Math.round(percent / 100 * iterations).toLocaleString()} <small>/ {iterations.toLocaleString()}</small></strong></div><div><span>MODE</span><strong>Demo fit <i /></strong></div></div>
-        <span className="fit-activity-note">The silicon is illustrative. Your curves stay within reach.</span>
+        <span className="fit-activity-note">Gate pulses control the channel. Green marks current.</span>
       </div>
     </div>
     <div className="fit-activity-progress" role="progressbar" aria-label="Fit progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent} aria-valuetext={`${percent.toFixed(0)} percent, ${steps[stage]}`}><span /></div>

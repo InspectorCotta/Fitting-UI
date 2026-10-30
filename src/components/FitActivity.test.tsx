@@ -13,7 +13,7 @@ describe('fit activity', () => {
     expect(screen.getByText('Waking up the silicon.')).toBeVisible();
     rerender(<FitActivity {...props} progress={52} />);
     expect(document.querySelector('.silicon-scene svg')).toBe(artwork);
-    expect(screen.getByText('A little less resistance.')).toBeVisible();
+    expect(screen.getByText('A little less error.')).toBeVisible();
     expect(screen.getByText('260')).toBeVisible();
     fireEvent.click(screen.getByRole('button', { name: 'Collapse fit animation' }));
     rerender(<FitActivity {...props} progress={90} />);
