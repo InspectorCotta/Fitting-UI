@@ -134,8 +134,13 @@ describe('MOSFit workbench', () => {
     vi.useFakeTimers();
     fireEvent.click(screen.getByRole('button', { name: 'Start experiment' }));
     expect(screen.getByText('Running')).toBeInTheDocument();
+    expect(screen.getByRole('progressbar', { name: 'Fit progress' })).toHaveAttribute('aria-valuenow', '0');
     act(() => vi.advanceTimersByTime(2000));
+    fireEvent.click(screen.getByRole('tab', { name: 'Model Fit' }));
+    expect(screen.getByRole('button', { name: 'Expand fit animation' })).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getByRole('progressbar', { name: 'Fit progress' })).toHaveAttribute('aria-valuenow', '24');
     fireEvent.click(screen.getByRole('button', { name: 'Stop run' }));
+    expect(screen.queryByRole('progressbar', { name: 'Fit progress' })).not.toBeInTheDocument();
     expect(screen.queryByText('Running')).not.toBeInTheDocument();
     fireEvent.click(screen.getAllByRole('button', { name: 'Run experiment' })[0]);
     fireEvent.click(screen.getByRole('button', { name: 'Start experiment' }));
@@ -324,3 +329,4 @@ describe('MOSFit workbench', () => {
     expect(screen.getByRole('heading', { name: 'Browser runtime' })).toBeInTheDocument();
   });
 });
+

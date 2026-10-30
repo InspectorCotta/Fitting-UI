@@ -45,6 +45,7 @@ import {
   X,
   Zap,
 } from 'lucide-react';
+import { FitActivity } from './components/FitActivity';
 import { ParameterDial } from './components/ParameterDial';
 import { Button } from './components/ui/button';
 import { Dialog } from './components/ui/dialog';
@@ -1034,38 +1035,8 @@ export default function App() {
           </div>
         </div>
         {progress !== null && (
-          <section className="panel run-progress">
-            <div className="run-progress-heading">
-              <div className="running-icon">
-                <Activity size={21} />
-              </div>
-              <div>
-                <h3>{runName}</h3>
-                <p>
-                  {algorithm} · {temperature} K · iteration{' '}
-                  {Math.round((progress / 100) * iterations)} / {iterations}
-                </p>
-              </div>
-              <strong>{progress}%</strong>
-              <Button variant="outline" onClick={cancelRun}>
-                <Square size={13} /> Stop run
-              </Button>
-            </div>
-            <div className="progress-track">
-              <motion.div animate={{ width: `${progress}%` }} />
-            </div>
-            <div className="run-log">
-              <Terminal size={13} />
-              <span>
-                {progress < 20
-                  ? 'Initializing parameters and loading measurement groups…'
-                  : progress < 70
-                    ? `Optimizing loss… RMS ${(24 - progress * 0.19).toFixed(2)}% · gradient norm ${(1 / (progress + 1)).toExponential(2)}`
-                    : 'Almost there. Refining the final parameter estimates…'}
-              </span>
-              <span className="live-dot">LIVE</span>
-            </div>
-          </section>
+          <FitActivity progress={progress} iterations={iterations} name={runName}
+            algorithm={algorithm} temperature={temperature} onStop={cancelRun} />
         )}
         <div className="panel data-table">
           <table>
@@ -1816,6 +1787,10 @@ export default function App() {
                   <SlidersHorizontal size={15} />
                 </button>
               </div>
+              {progress !== null && tab !== 'Experiments' && (
+                <FitActivity progress={progress} iterations={iterations} name={runName}
+                  algorithm={algorithm} temperature={temperature} onStop={cancelRun} compact />
+              )}
               <motion.div
                 key={tab}
                 id="project-tabpanel"
@@ -2554,3 +2529,4 @@ export default function App() {
     </MotionConfig>
   );
 }
+
