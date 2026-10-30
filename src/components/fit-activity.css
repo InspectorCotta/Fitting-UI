@@ -1,0 +1,61 @@
+.fit-activity { --silicon-green: #78ffd0; position: relative; isolation: isolate; overflow: hidden; border: 1px solid color-mix(in srgb, var(--green) 28%, var(--line)); border-radius: 10px; background: var(--panel-bg, var(--surface)); color: var(--text); animation: silicon-entrance .4s ease-out; }
+.fit-activity-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.silicon-status { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid color-mix(in srgb, var(--green) 35%, transparent); border-radius: 8px; color: var(--green); background: color-mix(in srgb, var(--green) 9%, transparent); }
+.fit-activity-title { flex: 1; min-width: 0; }
+.fit-activity-title > strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 550; }
+.fit-activity-title > span { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; }
+.fit-activity-title b { margin-left: 6px; font: 8px ui-monospace, monospace; letter-spacing: .09em; opacity: .8; }
+.fit-activity-percent { font: 24px ui-monospace, monospace; letter-spacing: -.06em; color: var(--green); font-variant-numeric: tabular-nums; }
+.fit-activity-percent small { margin-left: 3px; font-size: 12px; opacity: .6; }
+.fit-activity button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 32px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 5px; color: var(--text); background: transparent; font: inherit; font-size: 11px; cursor: pointer; }
+.fit-activity button:hover { border-color: var(--green); color: var(--green); background: color-mix(in srgb, var(--green) 6%, transparent); }
+.fit-activity button:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+.fit-activity .fit-activity-toggle { padding: 7px; }
+.fit-activity-body { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(240px, 1fr); }
+.fit-activity-body[hidden] { display: none; }
+.silicon-scene { position: relative; min-width: 0; overflow: hidden; background: radial-gradient(ellipse at 52% 66%, #123a3e55, transparent 65%), #071016; border-right: 1px solid #23404b; }
+.silicon-scene-grid { position: absolute; inset: 0; background-image: linear-gradient(#88bccc07 1px, transparent 1px), linear-gradient(90deg, #88bccc07 1px, transparent 1px); background-size: 24px 24px; mask-image: radial-gradient(ellipse, #000, transparent 80%); }
+.silicon-scene svg { position: relative; display: block; width: 100%; height: 100%; max-height: 340px; min-height: 245px; }
+.silicon-coordinate { position: absolute; top: 14px; left: 18px; z-index: 1; font: 8px ui-monospace, monospace; letter-spacing: .16em; color: #72959f; }
+.silicon-scene-caption { position: absolute; bottom: 14px; left: 18px; right: 18px; display: flex; align-items: center; gap: 6px; color: #7dacae; font: 8px ui-monospace, monospace; letter-spacing: .12em; }
+.silicon-scene-caption > span { margin-left: auto; color: #b1d4d4; }
+.silicon-scene-caption i, .fit-activity-eyebrow i { width: 4px; height: 4px; border-radius: 50%; background: #78ffd0; box-shadow: 0 0 8px #78ffd066; }
+.fit-activity-story { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: 26px 26px 22px; background: radial-gradient(ellipse at 0 50%, color-mix(in srgb, var(--green) 5%, transparent), transparent 80%); }
+.fit-activity-eyebrow { display: flex; align-items: center; gap: 7px; color: var(--green); font: 9px ui-monospace, monospace; letter-spacing: .17em; }
+.fit-activity-story h3 { max-width: 280px; margin: 15px 0 8px; font-size: clamp(22px, 2.4vw, 30px); font-weight: 500; line-height: 1.13; letter-spacing: -.045em; }
+.fit-activity-story > p { max-width: 270px; min-height: 32px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.fit-activity-stages { display: flex; align-items: center; gap: 12px; padding: 0; margin: 22px 0 20px; list-style: none; }
+.fit-activity-stages li { display: flex; align-items: center; gap: 5px; color: var(--muted); font-size: 10px; opacity: .5; }
+.fit-activity-stages li > span { display: grid; place-items: center; width: 21px; height: 21px; border: 1px solid var(--line); border-radius: 50%; font: 8px ui-monospace, monospace; }
+.fit-activity-stages .is-reached { color: var(--green); opacity: 1; }
+.fit-activity-stages .is-reached > span { border-color: color-mix(in srgb, var(--green) 40%, transparent); background: color-mix(in srgb, var(--green) 8%, transparent); }
+.fit-activity-stages [aria-current] > span { box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 6%, transparent); }
+.fit-activity-telemetry { display: flex; gap: 30px; padding-top: 14px; border-top: 1px solid var(--line); }
+.fit-activity-telemetry > div > span { color: var(--muted); font: 8px ui-monospace, monospace; letter-spacing: .1em; }
+.fit-activity-telemetry strong { display: block; margin-top: 6px; font: 14px ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+.fit-activity-telemetry small { color: var(--muted); font-size: 10px; }
+.fit-activity-telemetry i { display: inline-block; width: 4px; height: 4px; margin: 0 0 3px 4px; border-radius: 50%; background: var(--green); }
+.fit-activity-note { margin-top: 17px; color: var(--muted); font-size: 9px; line-height: 1.5; }
+.fit-activity-progress { height: 3px; background: color-mix(in srgb, var(--green) 8%, transparent); }
+.fit-activity-progress > span { display: block; width: var(--fit-progress); height: 100%; background: var(--green); box-shadow: 0 0 14px var(--green); transition: width 160ms linear; }
+.fit-activity.is-compact .fit-activity-header { border-bottom: 0; padding: 10px 15px; }
+.project-tabs + .fit-activity { margin: 18px 0 0; }
+.silicon-floating-die { animation: silicon-float 4s ease-in-out infinite; }
+.silicon-halo { animation: silicon-breathe 4s ease-in-out infinite; }
+.silicon-wafer-scan { animation: silicon-scan 5s ease-in-out infinite; }
+.silicon-die-blink { animation: silicon-breathe 3s ease-in-out infinite; }
+.silicon-current { stroke-dasharray: 18 140; animation: silicon-flow 2.5s linear infinite; filter: drop-shadow(0 0 4px #5affbf); }
+.silicon-gate { stroke-dasharray: 10 80; animation: silicon-flow 2s linear infinite reverse; }
+.silicon-electron { offset-path: path('M25 198H106L146 174H222L282 140L350 180H442L488 154H565'); animation: silicon-electron 3.4s linear infinite; animation-delay: var(--electron-delay); filter: drop-shadow(0 0 5px #78ffd0); }
+[data-stage="0"] .silicon-current, [data-stage="0"] .silicon-electron { opacity: .3; }
+[data-stage="2"] .silicon-halo { opacity: .8; }
+@keyframes silicon-entrance { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes silicon-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes silicon-breathe { 0%, 100% { opacity: .4; } 50% { opacity: 1; } }
+@keyframes silicon-scan { 0% { transform: translateX(-190px); opacity: 0; } 15%, 80% { opacity: 1; } 100% { transform: translateX(290px); opacity: 0; } }
+@keyframes silicon-flow { to { stroke-dashoffset: -316; } }
+@keyframes silicon-electron { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+@media (max-width: 800px) { .fit-activity-body { grid-template-columns: minmax(0, 1.1fr) minmax(220px, 1fr); } .fit-activity-story { padding: 20px 18px; } .fit-activity-stages { gap: 8px; } .fit-activity-stages li { gap: 4px; font-size: 9px; } }
+@media (max-width: 600px) { .fit-activity-body { grid-template-columns: 1fr; } .silicon-scene { border-right: 0; border-bottom: 1px solid #23404b; } .silicon-scene svg { height: 245px; } .fit-activity-story { padding: 20px; } .fit-activity-story h3 { max-width: none; } .fit-activity-story > p { max-width: none; min-height: 0; } .fit-activity-stages { margin: 18px 0; } .fit-activity-header { gap: 8px; padding: 12px; flex-wrap: wrap; } .fit-activity-title { flex-basis: calc(100% - 50px); } .fit-activity-percent { margin-right: auto; font-size: 20px; } .fit-activity button { min-height: 36px; } }
+
+.fit-activity > .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
